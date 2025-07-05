@@ -1,4 +1,4 @@
-# John Aziz
+# John Aziz Site
 
 Welcome! This repository contains the source code for John Aziz’s personal website and blog, inspired by Mozilla.org and
 built with [Jekyll](https://jekyllrb.com/) for GitHub Pages.
