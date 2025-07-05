@@ -2,23 +2,23 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Serve Jekyll Site",
+      "label": "Serve MkDocs Site",
       "type": "shell",
-      "command": "bundle exec jekyll serve",
+      "command": "mkdocs serve",
       "group": "build",
       "problemMatcher": []
     },
     {
-      "label": "Build Jekyll Site",
+      "label": "Build MkDocs Site",
       "type": "shell",
-      "command": "bundle exec jekyll build",
+      "command": "mkdocs build",
       "group": "build",
       "problemMatcher": []
     },
     {
-      "label": "Clean Jekyll Site",
+      "label": "Clean MkDocs Site",
       "type": "shell",
-      "command": "rm -rf _site .jekyll-cache .sass-cache",
+      "command": "rm -rf site/",
       "group": "build",
       "problemMatcher": []
     },

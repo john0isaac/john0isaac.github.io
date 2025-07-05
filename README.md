@@ -1,7 +1,7 @@
 # John Aziz Site
 
 Welcome! This repository contains the source code for John Aziz’s personal website and blog, inspired by Mozilla.org and
-built with [Jekyll](https://jekyllrb.com/) for GitHub Pages.
+built with [MkDocs](https://www.mkdocs.org/) and deployed via GitHub Pages.
 
 ## ✨ Features
 
@@ -17,9 +17,9 @@ built with [Jekyll](https://jekyllrb.com/) for GitHub Pages.
 
 ### Prerequisites
 
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
-- [Bundler](https://bundler.io/)
-- [Jekyll](https://jekyllrb.com/docs/installation/)
+- [Python 3.11+](https://www.python.org/downloads/)
+- [pip](https://pip.pypa.io/en/stable/)
+- [MkDocs](https://www.mkdocs.org/)
 
 ### Installation
 
@@ -27,13 +27,20 @@ built with [Jekyll](https://jekyllrb.com/) for GitHub Pages.
 
    ```sh
    git clone https://github.com/john0isaac/john0isaac.github.io.git
-   cd your-repo
+   cd john0isaac.github.io
    ```
 
-2. Install dependencies:
+2. Create and activate a virtual environment:
 
    ```sh
-   bundle install
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+3. Install dependencies:
+
+   ```sh
+   pip install -r requirements.txt
    ```
 
 ### Running Locally
@@ -41,22 +48,22 @@ built with [Jekyll](https://jekyllrb.com/) for GitHub Pages.
 Start the local development server:
 
 ```sh
-make serve
+mkdocs serve
 ```
 
-Visit [http://localhost:4000](http://localhost:4000) in your browser to view the site.
+Visit [http://localhost:8000](http://localhost:8000) in your browser to view the site.
 
 ## 🛠️ Customization
 
-- **Site settings:** Edit `_config.yml` for title, description, social links, and more.
-- **Content:** Add or edit posts in `_posts/`, and update data files in `_data/`.
-- **Pages:** Modify or add pages like `blog.md`, `projects.md`, and `talks.md`.
-- **Design:** Customize styles in `assets/main.scss` and `_sass/`.
+- **Site settings:** Edit `mkdocs.yml` for title, navigation, and theme options.
+- **Content:** Add or edit Markdown files in the `docs/` folder.
+- **Pages:** Modify or add pages like `docs/blog.md`, `docs/projects.md`, and `docs/talks.md`.
+- **Design:** Customize styles using MkDocs themes or custom CSS.
 
 ## 📦 Deployment
 
 - Push your changes to the main branch of your GitHub repository.
-- The site will be automatically built and deployed via GitHub Pages.
+- The site can be built with `mkdocs build` and deployed via GitHub Pages or other static hosting.
 
 ## 📝 Contributing
 

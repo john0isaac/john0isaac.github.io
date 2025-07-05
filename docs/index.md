@@ -1,15 +1,8 @@
----
-layout: home
-permalink: /
----
-
 # About Me
 
 Software and Data Engineer @ Orange Business, Microsoft MVP
 
 Cairo, Egypt
-
----
 
 ## Summary
 
