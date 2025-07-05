@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Serve Jekyll Site",
+      "type": "shell",
+      "command": "bundle exec jekyll serve",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Jekyll Site",
+      "type": "shell",
+      "command": "bundle exec jekyll build",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Clean Jekyll Site",
+      "type": "shell",
+      "command": "rm -rf _site .jekyll-cache .sass-cache",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Code",
+      "type": "shell",
+      "command": "prettier --write \"**/*.{md,html,css,scss,js,json,yml,yaml}\" || echo 'Prettier not installed. Skipping format.'",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Lint Markdown",
+      "type": "shell",
+      "command": "markdownlint **/*.md || echo 'markdownlint not installed. Skipping lint.'",
+      "group": "test",
+      "problemMatcher": []
+    }
+  ]
+}

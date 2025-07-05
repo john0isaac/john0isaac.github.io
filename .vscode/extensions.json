@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "davidanson.vscode-markdownlint",
+    "rebornix.Ruby",
+    "shopify.ruby-lsp",
+    "yzhang.markdown-all-in-one"
+  ]
+}
