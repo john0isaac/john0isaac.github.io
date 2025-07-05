@@ -26,7 +26,7 @@ built with [Jekyll](https://jekyllrb.com/) for GitHub Pages.
 1. Clone this repository:
 
    ```sh
-   git clone https://github.com/yourusername/your-repo.git
+   git clone https://github.com/john0isaac/john0isaac.github.io.git
    cd your-repo
    ```
 
