@@ -3,16 +3,6 @@
 Welcome! This repository contains the source code for John Aziz’s personal website and blog, inspired by Mozilla.org and
 built with [MkDocs](https://www.mkdocs.org/) and deployed via GitHub Pages.
 
-## ✨ Features
-
-- **Modern, clean, Mozilla-inspired design**
-- Responsive and accessible layout
-- Homepage with professional summary
-- Dedicated blog section
-- Pages for experience, publications, certifications, and contact
-- Easy content management via Markdown and YAML
-- SEO-friendly and optimized for fast loading
-
 ## 🚀 Getting Started
 
 ### Prerequisites
