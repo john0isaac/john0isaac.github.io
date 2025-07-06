@@ -38,7 +38,7 @@ built with [MkDocs](https://www.mkdocs.org/) and deployed via GitHub Pages.
 Start the local development server:
 
 ```sh
-mkdocs serve
+make serve
 ```
 
 Visit [http://localhost:8000](http://localhost:8000) in your browser to view the site.
