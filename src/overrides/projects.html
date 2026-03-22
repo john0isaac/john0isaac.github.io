@@ -1,23 +1,39 @@
 {% extends "main.html" %} {% block content %} {% if page.meta.projects %}
 
 <!-- Category filters -->
-<div class="projects-filters" id="projects-filters">
-  <button class="filter-btn active" data-category="all">All</button>
+<div
+  class="projects-filters"
+  id="projects-filters"
+  role="group"
+  aria-label="Filter by category"
+>
+  <button class="filter-btn active" data-category="all" aria-pressed="true">
+    All
+  </button>
   {% set categories = [] %} {% for project in page.meta.projects %} {% if
   project.category not in categories %} {% set _ =
   categories.append(project.category) %} {% endif %} {% endfor %} {% for cat in
   categories %}
-  <button class="filter-btn" data-category="{{ cat }}">{{ cat }}</button>
+  <button class="filter-btn" data-category="{{ cat }}" aria-pressed="false">
+    {{ cat }}
+  </button>
   {% endfor %}
 </div>
 
 <!-- Technology tag filters -->
-<div class="projects-tag-filters" id="projects-tag-filters">
+<div
+  class="projects-tag-filters"
+  id="projects-tag-filters"
+  role="group"
+  aria-label="Filter by technology"
+>
   {% set techs = [] %} {% for project in page.meta.projects %} {% for tech in
   project.technologies %} {% if tech not in techs %} {% set _ =
   techs.append(tech) %} {% endif %} {% endfor %} {% endfor %} {% for tech in
   techs | sort %}
-  <button class="tag-btn" data-tag="{{ tech }}">{{ tech }}</button>
+  <button class="tag-btn" data-tag="{{ tech }}" aria-pressed="false">
+    {{ tech }}
+  </button>
   {% endfor %}
 </div>
 
@@ -91,7 +107,13 @@
   {% endfor %}
 </div>
 
-<p id="no-results" class="projects-no-results" style="display: none">
+<p
+  id="no-results"
+  class="projects-no-results"
+  style="display: none"
+  role="status"
+  aria-live="polite"
+>
   No projects found matching the selected filters.
 </p>
 
@@ -343,6 +365,26 @@
   .project-card.hidden {
     display: none;
   }
+  /* ── Focus styles for keyboard navigation ────────────── */
+  .filter-btn:focus-visible,
+  .tag-btn:focus-visible,
+  .project-tech-tag:focus-visible,
+  .project-link-btn:focus-visible,
+  .project-info h3 a:focus-visible {
+    outline: 2px solid var(--md-primary-fg-color);
+    outline-offset: 2px;
+  }
+
+  /* ── Reduced motion ─────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>
 
 <script>
@@ -391,8 +433,10 @@
         activeCategory = btn.getAttribute("data-category");
         categoryBtns.forEach(function (b) {
           b.classList.remove("active");
+          b.setAttribute("aria-pressed", "false");
         });
         btn.classList.add("active");
+        btn.setAttribute("aria-pressed", "true");
         applyFilters();
       });
     });
@@ -407,6 +451,12 @@
         b.classList.toggle(
           "active",
           activeTag && b.getAttribute("data-tag") === activeTag,
+        );
+        b.setAttribute(
+          "aria-pressed",
+          activeTag && b.getAttribute("data-tag") === activeTag
+            ? "true"
+            : "false",
         );
       });
       applyFilters();

@@ -2,7 +2,7 @@
 site_name: "John Aziz"
 site_url: https://johnaziz.org
 site_description: >
-  Personal website of John Aziz, a software engineer and open-source enthusiast.
+  John Aziz — Senior AI Software Engineer and Microsoft MVP. Building production-grade AI systems, open-source projects, and cloud-native architectures on Azure.
 
 # Copyright ...................................................
 copyright: >
@@ -82,6 +82,11 @@ extra:
     - icon: fontawesome/brands/x-twitter
       link: https://x.com/john00isaac
       name: John Aziz on X
+  meta:
+    - name: author
+      content: John Aziz
+    - name: robots
+      content: index, follow
 
 # Navigation  ...............................................
 nav:
@@ -109,6 +114,8 @@ hooks:
 # Plugins ...............................................
 plugins:
   - search
+  - meta
+  - privacy
   - macros:
       module_name: main
       render_by_default: false
