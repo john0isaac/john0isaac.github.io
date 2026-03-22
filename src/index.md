@@ -1,22 +1,28 @@
 # About Me
 
-Software and Data Engineer @ Orange Business, Microsoft MVP
+Senior AI Software Engineer @ Lyah, Microsoft MVP
 
 Cairo, Egypt
 
 ## Summary
 
-I'm a Software and Data Engineer with a strong focus on AI, cloud technologies, and community empowerment.
-My journey blends hands-on technical expertise with a deep commitment to knowledge-sharing — both through code and conversations.
+I'm a Senior AI Software Engineer specializing in building production-grade AI and data-driven systems on the cloud.
+My work sits at the intersection of AI engineering, backend systems, and automation,
+with a strong focus on turning complex data and models into reliable, scalable software products.
 
-From building full-stack, cloud-native applications to contributing to open-source tools like the Azure Developer CLI,
-I thrive at the intersection of engineering and innovation.
-As a Microsoft AI MVP and Leader of the Azure Egypt User Group, I’ve hosted and spoken at events,
-mentored early-career developers, and collaborated with Microsoft to grow regional tech ecosystems.
+Professionally, I’ve led and contributed to full-stack and backend systems using Python (FastAPI), cloud-native architectures,
+Kubernetes, CI/CD, and modern frontend frameworks, while designing RAG pipelines, automation workflows,
+and internal platforms that support real business needs. I’ve owned applications end-to-end — from requirements and
+architecture to deployment, monitoring, and production support — and regularly provide technical leadership
+through code reviews and system design guidance.
 
-My mission? To craft reliable, scalable software solutions — and help others do the same.
-Whether it’s through designing internal systems, automating workflows, or writing technical content for global audiences,
-I bring a mix of precision, creativity, and heart to every project.
+Beyond my day job, I’m deeply invested in developer communities and knowledge sharing. As a Microsoft MVP,
+former Leader of the Azure Egypt User Group, and former Microsoft Learn Student Ambassador, I’ve spoken at regional events,
+authored technical content for global audiences, mentored developers, and contributed to open-source projects including
+the Azure Developer CLI.
 
-Let’s connect if you're passionate about AI, cloud,
-or community-led growth - or if you're just down to geek out over cool tech.
+What drives me? Building software that actually lasts — and helping others grow while doing it. Whether it’s crafting
+AI-powered systems, automating workflows, or breaking down complex concepts into practical insights, I bring a mix of
+engineering rigor, curiosity, and a community-first mindset to everything I work on.
+
+💡 Always happy to connect if you’re into AI engineering, cloud architecture, open source, or building strong tech communities.
