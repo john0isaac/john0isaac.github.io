@@ -23,8 +23,8 @@ built with [MkDocs](https://www.mkdocs.org/) and deployed via GitHub Pages.
 2. Create and activate a virtual environment:
 
    ```sh
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
    ```
 
 3. Install dependencies:
@@ -61,4 +61,4 @@ Contributions, issues, and feature requests are welcome! Feel free to open an is
 
 ## 📄 License
 
-© 2025 John Aziz. All rights reserved.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
