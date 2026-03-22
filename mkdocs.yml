@@ -115,7 +115,9 @@ hooks:
 plugins:
   - search
   - meta
-  - privacy
+  - privacy:
+      assets_exclude:
+        - giscus.app/*
   - social
   - macros:
       module_name: main
