@@ -1,4 +1,4 @@
-"""Fetch YouTube channel videos and write them into talks.md."""
+"""Fetch YouTube channel videos and write them into data/videos.yml."""
 
 import argparse
 import json
@@ -9,7 +9,7 @@ from urllib.request import Request, urlopen
 import yaml
 
 YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3"
-TALKS_MD_PATH = Path(__file__).resolve().parent.parent / "src" / "talks.md"
+VIDEOS_DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "videos.yml"
 THUMBNAIL_URL = "https://img.youtube.com/vi/{video_id}/mqdefault.jpg"
 
 
@@ -90,31 +90,18 @@ def fetch_video_statistics(api_key: str, videos: list[dict]) -> None:
             video["views"] = int(stats.get("viewCount", 0))
 
 
-def write_talks_md(videos: list[dict], output_path: Path) -> None:
-    """Write talks.md with video data as YAML front matter."""
-    front_matter = yaml.dump(
-        {"template": "talks.html", "videos": videos},
-        default_flow_style=False,
-        sort_keys=False,
-    )
-    content = f"---\n{front_matter}---\n\n"
-    # Write video titles/descriptions as hidden markdown so MkDocs search indexes them
-    for video in videos:
-        content += f"## {video['title']} {{ #{video['id']} }}\n\n"
-        if video.get("description"):
-            # Escape # at start of lines to prevent markdown heading interpretation
-            desc = video["description"].replace("\n#", "\n\\#")
-            if desc.startswith("#"):
-                desc = "\\" + desc
-            content += f"{desc}\n\n"
-    output_path.write_text(content)
-    print(f"Wrote {len(videos)} videos to {output_path}")
+def write_videos_data(videos: list[dict], data_path: Path) -> None:
+    """Write video data as a standalone YAML file."""
+    data_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(data_path, "w") as f:
+        yaml.dump(videos, f, default_flow_style=False, sort_keys=False)
+    print(f"Wrote {len(videos)} videos to {data_path}")
 
 
 def main() -> None:
-    """Parse arguments, fetch videos, and write talks.md."""
+    """Parse arguments, fetch videos, and write data/videos.yml."""
     parser = argparse.ArgumentParser(
-        description="Sync YouTube videos to talks.md",
+        description="Sync YouTube videos to data/videos.yml",
     )
     parser.add_argument(
         "--channel",
@@ -136,8 +123,8 @@ def main() -> None:
     parser.add_argument(
         "--output",
         type=Path,
-        default=TALKS_MD_PATH,
-        help="Output path for talks.md",
+        default=VIDEOS_DATA_PATH,
+        help="Output path for videos data YAML",
     )
     args = parser.parse_args()
 
@@ -162,7 +149,7 @@ def main() -> None:
     print("Fetching video statistics...")
     fetch_video_statistics(api_key, videos)
 
-    write_talks_md(videos, args.output)
+    write_videos_data(videos, args.output)
 
 
 if __name__ == "__main__":

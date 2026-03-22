@@ -1,4 +1,5 @@
-mkdocs
-mkdocs-material
-mkdocs-rss-plugin
-python-dotenv
+mkdocs==1.6.1
+mkdocs-material==9.7.6
+mkdocs-rss-plugin==1.17.9
+mkdocs-macros-plugin==1.5.0
+python-dotenv==1.2.2

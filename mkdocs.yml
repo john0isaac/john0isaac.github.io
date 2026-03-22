@@ -1,6 +1,6 @@
 # Project information .........................................
 site_name: "John Aziz"
-site_url: https://john0isaac.github.io
+site_url: https://johnaziz.org
 site_description: >
   Personal website of John Aziz, a software engineer and open-source enthusiast.
 
@@ -102,9 +102,16 @@ markdown_extensions:
   - toc:
       toc_depth: 3
 
+# Hooks ................................................
+hooks:
+  - hooks/data_loader.py
+
 # Plugins ...............................................
 plugins:
   - search
+  - macros:
+      module_name: main
+      render_by_default: false
   - blog:
       post_date_format: full
       post_url_date_format: yyyy/MM/dd

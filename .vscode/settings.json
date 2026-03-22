@@ -9,5 +9,6 @@
   },
   "[markdown]": {
     "editor.wordWrap": "on"
-  }
+  },
+  "python-envs.defaultEnvManager": "ms-python.python:venv"
 }
