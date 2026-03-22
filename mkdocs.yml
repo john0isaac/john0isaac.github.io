@@ -119,6 +119,15 @@ plugins:
       assets_exclude:
         - giscus.app/*
   - social
+  - tags
+  - typeset
+  - optimize
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - redirects:
+      redirect_maps: {}
   - macros:
       module_name: main
       render_by_default: false
