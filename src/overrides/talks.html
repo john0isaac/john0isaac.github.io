@@ -1,0 +1,476 @@
+{% extends "main.html" %} {% block content %} {% if page.meta.videos %}
+
+<div class="talks-filters" id="talks-filters">
+  <button class="filter-btn active" data-year="all">All</button>
+  {% set years = [] %} {% for video in page.meta.videos %} {% set year =
+  video.published[:4] %} {% if year not in years %} {% set _ =
+  years.append(year) %} {% endif %} {% endfor %} {% for year in years |
+  sort(reverse=true) %}
+  <button class="filter-btn" data-year="{{ year }}">{{ year }}</button>
+  {% endfor %}
+</div>
+
+<div class="video-grid" id="video-grid">
+  {% for video in page.meta.videos %} {% set year = video.published[:4] %}
+  <div class="video-card" data-year="{{ year }}" id="{{ video.id }}">
+    <a
+      href="https://www.youtube.com/watch?v={{ video.id }}"
+      target="_blank"
+      rel="noopener"
+      class="video-card__thumb-link"
+      aria-label="Watch {{ video.title }} on YouTube"
+    >
+      <div class="video-card__thumb-wrap">
+        <img
+          src="{{ video.thumbnail }}"
+          alt="{{ video.title }}"
+          loading="lazy"
+          class="video-card__thumb"
+        />
+        <div class="video-card__play" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </div>
+      </div>
+    </a>
+    <div class="video-info">
+      <div class="video-meta">
+        <span class="video-date"
+          >{{ video.published | replace("-", " ") }}</span
+        >
+        {% if video.views is defined and video.views %}
+        <span class="video-views" data-views="{{ video.views }}">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            width="13"
+            height="13"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5Zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
+            />
+          </svg>
+        </span>
+        {% endif %}
+      </div>
+      <h3>
+        <a
+          href="https://www.youtube.com/watch?v={{ video.id }}"
+          target="_blank"
+          rel="noopener"
+          >{{ video.title }}</a
+        >
+      </h3>
+      {% if video.description %}
+      <p class="video-description" title="{{ video.description }}">
+        {{ video.description }}
+      </p>
+      {% endif %}
+      <a
+        href="https://www.youtube.com/watch?v={{ video.id }}"
+        target="_blank"
+        rel="noopener"
+        class="video-watch-btn"
+      >
+        Watch
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<p id="no-results" class="talks-no-results" style="display: none">
+  No videos found for this year.
+</p>
+
+{% else %}
+<p class="talks-empty">No videos yet — check back soon.</p>
+{% endif %}
+
+<style>
+  /* ── Hide redundant page title from sidebar/breadcrumb ── */
+  .md-nav--primary > .md-nav__title,
+  .md-content > .md-content__inner > h1:first-of-type:empty {
+    display: none;
+  }
+
+  /* ── Hero ─────────────────────────────────────────────── */
+  .talks-hero {
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 12px;
+    padding: 2rem 2rem 1.75rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: var(--md-code-bg-color);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .talks-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(255, 0, 0, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  [data-md-color-scheme="slate"] .talks-hero::before {
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 70%
+    );
+  }
+
+  .talks-hero__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #ff0000;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .talks-hero__title {
+    margin: 0 0 0.35rem;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--md-default-fg-color);
+  }
+
+  .talks-hero__subtitle {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .talks-hero__stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .talks-stat {
+    font-size: 0.85rem;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .talks-stat strong {
+    color: var(--md-default-fg-color);
+    font-weight: 700;
+  }
+
+  .talks-stat__sep {
+    color: var(--md-default-fg-color--lightest);
+  }
+
+  .talks-yt-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #ff0000;
+    background: rgba(255, 0, 0, 0.08);
+    border: 1px solid rgba(255, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 0.3rem 0.9rem;
+    text-decoration: none;
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+  }
+
+  .talks-yt-link:hover {
+    background: rgba(255, 0, 0, 0.14);
+    border-color: rgba(255, 0, 0, 0.35);
+    color: #ff0000;
+  }
+
+  /* ── Filters ──────────────────────────────────────────── */
+  .talks-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .filter-btn {
+    padding: 0.25rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    background: transparent;
+    color: var(--md-default-fg-color--light);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: inherit;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--md-primary-fg-color);
+    color: var(--md-primary-fg-color);
+  }
+
+  .filter-btn.active {
+    background: var(--md-primary-fg-color);
+    border-color: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color);
+    font-weight: 600;
+  }
+
+  /* ── Grid ─────────────────────────────────────────────── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .video-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Card ─────────────────────────────────────────────── */
+  .video-card {
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--md-code-bg-color);
+    display: flex;
+    flex-direction: column;
+    transition:
+      box-shadow 0.22s,
+      transform 0.22s;
+  }
+
+  .video-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Thumbnail */
+  .video-card__thumb-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .video-card__thumb-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .video-card__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition:
+      opacity 0.22s,
+      transform 0.22s;
+  }
+
+  .video-card:hover .video-card__thumb {
+    opacity: 0.75;
+    transform: scale(1.04);
+  }
+
+  .video-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.22s;
+  }
+
+  .video-card__play svg {
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  }
+
+  .video-card:hover .video-card__play {
+    opacity: 1;
+  }
+
+  /* Info */
+  .video-info {
+    padding: 0.5rem 0.65rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.2rem;
+  }
+
+  .video-date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .video-views {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .video-info .video-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .video-info h3 {
+    margin: 0;
+    font-size: 0.7rem;
+    line-height: 1.35;
+    flex: 1;
+  }
+
+  .video-info h3 a {
+    color: var(--md-default-fg-color);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .video-info h3 a:hover {
+    color: var(--md-primary-fg-color);
+  }
+
+  .video-description {
+    margin: 0;
+    font-size: 0.72rem;
+    color: var(--md-default-fg-color--light);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .video-watch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--md-primary-fg-color);
+    text-decoration: none;
+    align-self: flex-start;
+    transition: gap 0.18s;
+  }
+
+  .video-watch-btn:hover {
+    gap: 0.55rem;
+    color: var(--md-primary-fg-color);
+  }
+
+  /* ── Empty / no-results ───────────────────────────────── */
+  .talks-empty,
+  .talks-no-results {
+    text-align: center;
+    color: var(--md-default-fg-color--light);
+    padding: 3rem 0;
+    font-size: 1rem;
+  }
+
+  /* ── Hidden card (filter) ─────────────────────────────── */
+  .video-card.hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  (function () {
+    var btns = document.querySelectorAll(".filter-btn");
+    var cards = document.querySelectorAll(".video-card");
+    var noResults = document.getElementById("no-results");
+
+    function formatViews(n) {
+      if (n >= 1000000)
+        return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+      if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+      return String(n);
+    }
+
+    document
+      .querySelectorAll(".video-views[data-views]")
+      .forEach(function (el) {
+        var views = parseInt(el.getAttribute("data-views"), 10);
+        if (views > 0) {
+          el.appendChild(document.createTextNode(" " + formatViews(views)));
+        } else {
+          el.style.display = "none";
+        }
+      });
+
+    btns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var year = btn.getAttribute("data-year");
+
+        btns.forEach(function (b) {
+          b.classList.remove("active");
+        });
+        btn.classList.add("active");
+
+        var visible = 0;
+        cards.forEach(function (card) {
+          var match = year === "all" || card.getAttribute("data-year") === year;
+          card.classList.toggle("hidden", !match);
+          if (match) visible++;
+        });
+
+        noResults.style.display = visible === 0 ? "block" : "none";
+      });
+    });
+  })();
+</script>
+
+{% endblock %}

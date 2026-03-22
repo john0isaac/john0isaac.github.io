@@ -1,0 +1,41 @@
+# Sync YouTube videos and update talks.md
+name: Sync YouTube Videos
+
+on:
+  # schedule:
+  #   # Runs every Monday at 6:00 UTC
+  #   - cron: "0 6 * * 1"
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Sync videos
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python scripts/sync_videos.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/talks.md
+          git diff --staged --quiet || git commit -m "chore: sync YouTube videos"
+          git push
