@@ -46,8 +46,8 @@ Visit [http://localhost:8000](http://localhost:8000) in your browser to view the
 ## 🛠️ Customization
 
 - **Site settings:** Edit `mkdocs.yml` for title, navigation, and theme options.
-- **Content:** Add or edit Markdown files in the `docs/` folder.
-- **Pages:** Modify or add pages like `docs/blog.md`, `docs/projects.md`, and `docs/talks.md`.
+- **Content:** Add or edit Markdown files in the `src/` folder.
+- **Pages:** Modify or add pages like `src/blog.md`, `src/projects.md`, and `src/talks.md`.
 - **Design:** Customize styles using MkDocs themes or custom CSS.
 
 ## 📦 Deployment

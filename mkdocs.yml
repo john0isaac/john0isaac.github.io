@@ -6,12 +6,13 @@ site_description: >
 
 # Copyright ...................................................
 copyright: >
-  &copy; 2025 John Aziz
+  &copy; 2026 John Aziz
 
 # Configuration ...............................................
+docs_dir: src
 theme:
   name: material
-  custom_dir: docs/overrides
+  custom_dir: src/overrides
   icon:
     admonition:
       note: fontawesome/solid/note-sticky
