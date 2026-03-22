@@ -1,5 +1,7 @@
 mkdocs==1.6.1
 mkdocs-material==9.7.6
+pillow==12.1.1
+cairosvg==2.9.0
 mkdocs-rss-plugin==1.17.9
 mkdocs-macros-plugin==1.5.0
 python-dotenv==1.2.2

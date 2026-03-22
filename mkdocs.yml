@@ -116,6 +116,7 @@ plugins:
   - search
   - meta
   - privacy
+  - social
   - macros:
       module_name: main
       render_by_default: false
