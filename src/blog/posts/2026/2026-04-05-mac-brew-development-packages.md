@@ -1,6 +1,6 @@
 ---
 title: "My Mac Development Setup with Homebrew"
-date: 2025-04-05
+date: 2026-04-05
 description: A complete Brewfile of the packages, casks, and VS Code extensions I use for development on Mac.
 categories: [Mac]
 tags: [brew, mac, development, setup]

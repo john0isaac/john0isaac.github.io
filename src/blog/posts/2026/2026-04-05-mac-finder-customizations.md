@@ -1,6 +1,6 @@
 ---
 title: "Helpful Mac Finder Customizations"
-date: 2025-04-05
+date: 2026-04-05
 description: Terminal commands to customize Mac Finder for development, including showing the Library folder, hidden files, path bar, and status bar.
 categories: [Mac]
 tags: [finder, mac, terminal, defaults, development]

@@ -1,6 +1,6 @@
 ---
 title: "My Terminal Setup with Zsh and Oh My Zsh"
-date: 2025-04-06
+date: 2026-04-06
 description: "An overview of my terminal configuration using Zsh and Oh My Zsh, including plugins and aliases that enhance my development workflow on macOS."
 categories: [Mac]
 tags: [zsh, oh-my-zsh, mac, development, setup]
