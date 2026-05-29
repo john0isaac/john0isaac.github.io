@@ -32,6 +32,41 @@
       </article>
       {% endfor %}
     </section>
+
+    {% if pagination and pagination.total_pages > 1 %}
+    <nav aria-label="Blog pagination" class="mt-4">
+      <ul class="pagination justify-content-center mb-0">
+        <li class="page-item{% if not pagination.has_previous %} disabled{% endif %}">
+          <a
+            class="page-link"
+            href="{{ pagination.previous_url if pagination.has_previous else '#' }}"
+            {% if not pagination.has_previous %}aria-disabled="true" tabindex="-1"{% endif %}
+            >Previous</a
+          >
+        </li>
+
+        {% for item in pagination.pages %}
+        <li class="page-item{% if item.is_current %} active{% endif %}">
+          <a
+            class="page-link"
+            href="{{ item.url }}"
+            {% if item.is_current %}aria-current="page"{% endif %}
+            >{{ item.number }}</a
+          >
+        </li>
+        {% endfor %}
+
+        <li class="page-item{% if not pagination.has_next %} disabled{% endif %}">
+          <a
+            class="page-link"
+            href="{{ pagination.next_url if pagination.has_next else '#' }}"
+            {% if not pagination.has_next %}aria-disabled="true" tabindex="-1"{% endif %}
+            >Next</a
+          >
+        </li>
+      </ul>
+    </nav>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

@@ -8,6 +8,7 @@ import functools
 import html
 import http.server
 import json
+import math
 import re
 import shutil
 import socketserver
@@ -45,6 +46,7 @@ MARKDOWN_EXTENSIONS = [
     "tables",
     "toc",
 ]
+BLOG_POSTS_PER_PAGE = 10
 
 
 @dataclass(slots=True)
@@ -483,6 +485,18 @@ def build_environment() -> Environment:
     return environment
 
 
+def blog_index_url(page_number: int) -> str:
+    if page_number <= 1:
+        return "/blog/"
+    return f"/blog/page/{page_number}/"
+
+
+def blog_index_output_path(page_number: int) -> Path:
+    if page_number <= 1:
+        return SITE_DIR / "blog" / "index.html"
+    return SITE_DIR / "blog" / "page" / str(page_number) / "index.html"
+
+
 def build_site() -> None:
     if SITE_DIR.exists():
         shutil.rmtree(SITE_DIR)
@@ -533,16 +547,51 @@ def build_site() -> None:
         videos=sorted(videos, key=lambda item: int(item.get("views", 0)), reverse=True)[:3],
         **common_context,
     )
-    render_template(
-        environment,
-        "blog_index.html",
-        page_lookup["/blog/"].output_path,
-        page=page_lookup["/blog/"],
-        posts=posts,
-        blog_archive=blog_archive,
-        current_blog_url=page_lookup["/blog/"].url,
-        **common_context,
-    )
+    total_blog_pages = max(1, math.ceil(len(posts) / BLOG_POSTS_PER_PAGE))
+    for page_number in range(1, total_blog_pages + 1):
+        start = (page_number - 1) * BLOG_POSTS_PER_PAGE
+        end = start + BLOG_POSTS_PER_PAGE
+        paged_posts = posts[start:end]
+
+        blog_page = Page(
+            title=page_lookup["/blog/"].title,
+            description=page_lookup["/blog/"].description,
+            url=blog_index_url(page_number),
+            template="blog_index.html",
+            output_path=blog_index_output_path(page_number),
+            content_html=page_lookup["/blog/"].content_html,
+            body_markdown=page_lookup["/blog/"].body_markdown,
+            metadata=page_lookup["/blog/"].metadata,
+        )
+
+        pagination = {
+            "current_page": page_number,
+            "total_pages": total_blog_pages,
+            "has_previous": page_number > 1,
+            "has_next": page_number < total_blog_pages,
+            "previous_url": blog_index_url(page_number - 1) if page_number > 1 else None,
+            "next_url": blog_index_url(page_number + 1) if page_number < total_blog_pages else None,
+            "pages": [
+                {
+                    "number": number,
+                    "url": blog_index_url(number),
+                    "is_current": number == page_number,
+                }
+                for number in range(1, total_blog_pages + 1)
+            ],
+        }
+
+        render_template(
+            environment,
+            "blog_index.html",
+            blog_page.output_path,
+            page=blog_page,
+            posts=paged_posts,
+            blog_archive=blog_archive,
+            current_blog_url=blog_page.url,
+            pagination=pagination,
+            **common_context,
+        )
     render_template(
         environment,
         "projects.html",
@@ -590,7 +639,12 @@ def build_site() -> None:
     write_text(SITE_DIR / "search.json", json.dumps(search_records, indent=2))
     write_text(SITE_DIR / "rss.xml", render_rss(posts))
 
-    sitemap_urls = [page.url for page in pages if page.url != "/404.html"] + [post.url for post in posts]
+    paginated_blog_urls = [blog_index_url(number) for number in range(1, total_blog_pages + 1)]
+    sitemap_urls = (
+        [page.url for page in pages if page.url not in {"/404.html", "/blog/"}]
+        + paginated_blog_urls
+        + [post.url for post in posts]
+    )
     write_text(SITE_DIR / "sitemap.xml", build_sitemap(sitemap_urls))
     copy_static_assets()
 
