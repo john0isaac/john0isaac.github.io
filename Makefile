@@ -1,17 +1,17 @@
-# Makefile for MkDocs Site
+# Makefile for the Python static site
 
 .PHONY: all build serve clean format lint
 
 all: build
 
 build:
-	mkdocs build
+	python main.py build
 
 serve:
-	mkdocs serve
+	python main.py serve
 
 clean:
-	rm -rf site/
+	python main.py clean
 
 format:
 	prettier --write "**/*.{md,html,css,scss,js,json,yml,yaml}" || echo "Prettier not installed. Skipping format."

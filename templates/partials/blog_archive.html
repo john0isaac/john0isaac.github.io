@@ -1,0 +1,49 @@
+<aside class="blog-archive" aria-label="Blog archive" data-blog-archive>
+  <div class="blog-archive__header">
+    <h2 class="blog-archive__title">Blog Archive</h2>
+    <button
+      class="blog-archive__toggle"
+      type="button"
+      data-blog-archive-toggle
+      aria-expanded="true"
+      aria-label="Collapse blog archive"
+      title="Collapse blog archive"
+    >
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="blog-archive__body" data-blog-archive-body>
+    {% for year in blog_archive %}
+    <details class="blog-archive__year" {% if year.open %}open{% endif %}>
+      <summary class="blog-archive__summary">
+        <span class="blog-archive__label">{{ year.year }}</span>
+        <span class="blog-archive__count">{{ year.count }}</span>
+      </summary>
+
+      <div class="blog-archive__months">
+        {% for month in year.months %}
+        <details class="blog-archive__month" {% if month.open %}open{% endif %}>
+          <summary class="blog-archive__summary">
+            <span class="blog-archive__label">{{ month.month_name }}</span>
+            <span class="blog-archive__count">{{ month.count }}</span>
+          </summary>
+
+          <ul class="blog-archive__posts">
+            {% for item in month.posts %}
+            <li>
+              <a
+                class="blog-archive__post-link{% if current_blog_url == item.url %} is-active{% endif %}"
+                href="{{ item.url }}"
+                >{{ item.title }}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+        </details>
+        {% endfor %}
+      </div>
+    </details>
+    {% endfor %}
+  </div>
+</aside>

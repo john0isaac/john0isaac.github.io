@@ -2,8 +2,17 @@
 title: The Full Guide to Packaging and Deploying ML Models to Production Using Azure
 date: 2023-07-06
 description: A step-by-step coding guide from converting a ML model to ONNX format to deploying it on Azure Machine Learning and integrating with Power Apps.
-categories: [Azure, Machine Learning, Power Platform]
-tags: [azure, azure-ml, onnx, power-apps, power-automate, machine-learning]
+categories:
+  - Azure
+  - Machine Learning
+  - Power Platform
+tags:
+  - Azure
+  - Azure ML
+  - ONNX
+  - Power Apps
+  - Power Automate
+  - Machine Learning
 comments: true
 authors:
   - john0isaac

@@ -1,0 +1,120 @@
+[project]
+name = "john0isaac-github-io"
+description = "John Aziz - Senior AI Software Engineer and Microsoft MVP. Personal website and blog."
+version = "0.1.0"
+authors = [{ name = "John Aziz", email = "johnaziz269@gmail.com" }]
+maintainers = [{ name = "John Aziz", email = "johnaziz269@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "Jinja2>=3.1.6",
+    "Markdown>=3.8.2",
+    "PyYAML>=6.0.3",
+]
+
+[project.urls]
+Homepage = "https://johnaziz.org"
+Repository = "https://github.com/john0isaac/john0isaac.github.io"
+Issues = "https://github.com/john0isaac/john0isaac.github.io/issues"
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "tox",
+    "tox-uv",
+]
+docs = [
+    "Jinja2>=3.1.6",
+    "Markdown>=3.8.2",
+    "PyYAML>=6.0.3",
+]
+pre-commit = [
+    "pre-commit",
+    "pre-commit-uv",
+]
+gha-update = [
+    "gha-update ; python_full_version >= '3.12'",
+]
+typing = [
+    "mypy",
+]
+
+[tool.uv]
+default-groups = ["dev", "docs", "pre-commit", "typing"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+fix = true
+show-fixes = true
+output-format = "full"
+
+[tool.ruff.lint]
+select = [
+    "B",  # flake8-bugbear
+    "E",  # pycodestyle error
+    "F",  # pyflakes
+    "I",  # isort
+    "UP", # pyupgrade
+    "W",  # pycodestyle warning
+]
+
+[tool.mypy]
+python_version = "3.12"
+show_error_codes = true
+pretty = true
+warn_unused_configs = true
+
+[tool.tox]
+env_list = [
+    "docs",
+    "style",
+    "typing",
+]
+
+[tool.tox.env_run_base]
+runner = "uv-venv-lock-runner"
+skip_install = true
+
+[tool.tox.env.docs]
+description = "build the site"
+dependency_groups = ["docs"]
+commands = [["python", "main.py", "build"]]
+
+[tool.tox.env.docs-auto]
+description = "continuously rebuild and serve the site locally"
+dependency_groups = ["docs"]
+commands = [["python", "main.py", "serve"]]
+
+[tool.tox.env.style]
+description = "run all pre-commit hooks on all files"
+dependency_groups = ["pre-commit"]
+commands = [["pre-commit", "run", "--all-files"]]
+
+[tool.tox.env.typing]
+description = "run static type checkers"
+dependency_groups = ["typing"]
+skip_install = true
+commands = [["mypy", "."]]
+
+[tool.tox.env.update-actions]
+description = "update GitHub Actions pins"
+labels = ["update"]
+dependency_groups = ["gha-update"]
+skip_install = true
+commands = [["gha-update"]]
+
+[tool.tox.env.update-pre-commit]
+description = "update pre-commit pins"
+labels = ["update"]
+dependency_groups = ["pre-commit"]
+skip_install = true
+commands = [["pre-commit", "autoupdate", "--freeze", "-j4"]]
+
+[tool.tox.env.update-requirements]
+description = "update uv lock"
+labels = ["update"]
+dependency_groups = []
+no_default_groups = true
+skip_install = true
+commands = [["uv", "lock", {replace = "posargs", default = ["-U"], extend = true}]]

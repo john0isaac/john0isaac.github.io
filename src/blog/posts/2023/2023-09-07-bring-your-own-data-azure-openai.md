@@ -2,8 +2,15 @@
 title: Bring your own Data to Azure OpenAI
 date: 2023-09-07
 description: A step-by-step guide to creating a ChatGPT deployment using your own data on Azure OpenAI and deploying it to a website.
-categories: [Azure, AI]
-tags: [azure-openai, chatgpt, azure-cognitive-search, azure-storage, rag]
+categories:
+  - Azure
+  - AI
+tags:
+  - Azure OpenAI
+  - ChatGPT
+  - Azure Cognitive Search
+  - Azure Storage
+  - RAG
 comments: true
 authors:
   - john0isaac

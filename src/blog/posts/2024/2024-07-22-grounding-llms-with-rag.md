@@ -2,8 +2,13 @@
 title: "Why? and How to Ground Large Language Models using your Data? (RAG)"
 date: 2024-07-22
 description: An explanation of why and how to ground Large Language Models using your data with Retrieval-Augmented Generation (RAG).
-categories: [AI]
-tags: [large-language-models, rag, grounding, azure-openai]
+categories:
+  - AI
+tags:
+  - Large Language Models
+  - RAG
+  - Grounding
+  - Azure OpenAI
 comments: true
 authors:
   - john0isaac

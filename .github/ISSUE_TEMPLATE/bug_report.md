@@ -29,7 +29,8 @@ If applicable, add screenshots to help explain your problem.
 
 - OS: [e.g. macOS, Windows, Linux]
 - Browser [e.g. Chrome, Safari]
-- Jekyll version [e.g. 4.4.1]
+- Python version [e.g. 3.12]
+- Build command [e.g. python main.py build]
 
 ## Additional context
 

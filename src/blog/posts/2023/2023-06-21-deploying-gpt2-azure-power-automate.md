@@ -2,8 +2,16 @@
 title: Deploying a Large Language Model (GPT-2) on Azure Using Power Automate
 date: 2023-06-21
 description: A step-by-step guide on deploying GPT-2 to Azure Machine Learning and using Power Automate to consume its endpoint with Power Apps.
-categories: [Azure, AI, Power Platform]
-tags: [azure, azure-ml, large-language-models, power-apps, power-automate]
+categories:
+  - Azure
+  - AI
+  - Power Platform
+tags:
+  - Azure
+  - Azure ML
+  - Large Language Models
+  - Power Apps
+  - Power Automate
 comments: true
 authors:
   - john0isaac

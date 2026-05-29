@@ -3,7 +3,6 @@
     "esbenp.prettier-vscode",
     "davidanson.vscode-markdownlint",
     "yzhang.markdown-all-in-one",
-    "ms-python.python",
-    "mkdocs.mkdocs"
+    "ms-python.python"
   ]
 }

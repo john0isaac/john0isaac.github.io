@@ -2,8 +2,15 @@
 title: Create and Deploy a Healthcare Chatbot with Azure Health Bot
 date: 2023-06-09
 description: A step-by-step guide to creating a Healthcare chatbot using Azure Health Bot and deploying it to the internet.
-categories: [Azure, Chatbot]
-tags: [azure, azure-health-bot, chatbot, deploy, healthcare]
+categories:
+  - Azure
+  - Chatbot
+tags:
+  - Azure
+  - Azure Health Bot
+  - Chatbot
+  - Deploy
+  - Healthcare
 comments: true
 authors:
   - john0isaac

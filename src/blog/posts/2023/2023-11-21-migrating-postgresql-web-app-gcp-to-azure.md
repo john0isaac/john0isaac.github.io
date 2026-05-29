@@ -2,8 +2,15 @@
 title: Migrating a Full Stack PostgreSQL Web App from Google Cloud to Microsoft Azure
 date: 2023-11-21
 description: A guide to migrating a full stack PostgreSQL web application from Google Cloud Platform to Microsoft Azure.
-categories: [Azure, Cloud Migration]
-tags: [azure, google-cloud, postgresql, migration, web-app]
+categories:
+  - Azure
+  - Cloud Migration
+tags:
+  - Azure
+  - Google Cloud
+  - PostgreSQL
+  - Migration
+  - Web App
 comments: true
 authors:
   - john0isaac

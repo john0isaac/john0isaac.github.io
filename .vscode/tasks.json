@@ -2,23 +2,23 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Serve MkDocs Site",
+      "label": "Serve Site",
       "type": "shell",
-      "command": "mkdocs serve",
+      "command": "python main.py serve",
       "group": "build",
       "problemMatcher": []
     },
     {
-      "label": "Build MkDocs Site",
+      "label": "Build Site",
       "type": "shell",
-      "command": "mkdocs build",
+      "command": "python main.py build",
       "group": "build",
       "problemMatcher": []
     },
     {
-      "label": "Clean MkDocs Site",
+      "label": "Clean Site",
       "type": "shell",
-      "command": "rm -rf site/",
+      "command": "python main.py clean",
       "group": "build",
       "problemMatcher": []
     },

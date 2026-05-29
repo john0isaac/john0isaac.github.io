@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block content %}
+<section class="page-header">
+  <p class="eyebrow">Talks</p>
+  <h1>{{ page.title }}</h1>
+  <p class="lede">{{ page.description }}</p>
+</section>
+
+{% for year in videos | map(attribute='published') | list | map('string') |
+map('truncate', 4, true, '') | unique | list %}
+<section class="talks-section">
+  <h2 class="home-section__label">// {{ year }}</h2>
+  <div class="video-grid d-grid gap-3">
+    {% for video in videos if video.published[:4] == year %}
+    <article class="video-card">
+      <a
+        href="https://www.youtube.com/watch?v={{ video.id }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="video-card__thumb-link"
+        aria-label="Watch {{ video.title }} on YouTube"
+      >
+        <div class="video-card__thumb-wrap">
+          <img
+            src="{{ video.thumbnail }}"
+            alt="{{ video.title }}"
+            loading="lazy"
+            class="video-card__thumb"
+          />
+          <div class="video-card__play" aria-hidden="true">▶</div>
+        </div>
+      </a>
+      <div class="video-info">
+        <div class="video-meta">
+          <span class="video-date"
+            >{{ video.published | replace('-', ' ') }}</span
+          >
+          {% if video.views is defined and video.views %}
+          <span class="video-views">{{ video.views }} views</span>
+          {% endif %}
+        </div>
+        <h3>
+          <a
+            href="https://www.youtube.com/watch?v={{ video.id }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="{{ video.title }}"
+            >{{ video.title }}</a
+          >
+        </h3>
+        {% if video.description %}
+        <p class="video-description" title="{{ video.description }}">{{ video.description }}</p>
+        {% endif %}
+        <a
+          class="video-watch-btn"
+          href="https://www.youtube.com/watch?v={{ video.id }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Watch</a
+        >
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endfor %} {% endblock %}

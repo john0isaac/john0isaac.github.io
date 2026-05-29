@@ -2,8 +2,13 @@
 title: Introduction to Git, GitHub, and Version Control workshop-o-matic Library
 date: 2023-10-14
 description: A workshop-o-matic library for learning Git, GitHub, and Version Control fundamentals.
-categories: [Software Engineering]
-tags: [git, github, version-control, workshop]
+categories:
+  - Software Engineering
+tags:
+  - Git
+  - GitHub
+  - Version Control
+  - Workshop
 comments: true
 authors:
   - john0isaac

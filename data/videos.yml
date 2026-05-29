@@ -1,6 +1,7 @@
 - id: lT4JtTyrCw0
   title: September 2024 | Azd Community Standup
-  description: "Join us for a variety of azd demos! Including...\r\n- An early preview\
+  description:
+    "Join us for a variety of azd demos! Including...\r\n- An early preview\
     \ of extensibility with azd\r\n- Template demo from a community contributor \n\
     \r\n\u23F2\uFE0F Chapters:\n00:00 Welcome to the Azure Developer CLI Community\
     \ Standup\n00:38  Agenda\n00:55 Meet the Team\n01:30 Community Contributors \n\
@@ -13,12 +14,13 @@
     \    \nhttps://aka.ms/azd-user-research-signup   \nhttps://aka.ms/azd-communitycall-signup\
     \ \r\n\r\nFeaturing: Liam Hampton (@liamchampton), Kristen Womack, Grace Kulin\
     \ \r\n\r\n#azure #cloud #developers"
-  published: '2024-09-26'
+  published: "2024-09-26"
   thumbnail: https://img.youtube.com/vi/lT4JtTyrCw0/mqdefault.jpg
   views: 247
 - id: DnvmVRFffMY
   title: Building RAG apps with Azure Cosmos DB for MongoDB
-  description: "RAG (Retrieval Augmented Generation) is the most common approach used\
+  description:
+    "RAG (Retrieval Augmented Generation) is the most common approach used\
     \ to get LLMs to answer questions grounded in a particular domain's data.  Learn\
     \ how to build a RAG app using vCore-based Azure Cosmos DB for MongoDB and its\
     \ new vector search capabilities. We'll walk through a Python web app that uses\
@@ -32,13 +34,15 @@
     \ - https://aka.ms/vcorelangchain\u200B\u200B\n\u200B\u200BAdditional samples,\
     \ docs and more - https://aka.ms/CosmosAISamples\nTry Azure Cosmos DB for Free,\
     \ no credit card required - https://aka.ms/trycosmosdb\n\n[eventID:23329]"
-  published: '2024-09-26'
+  published: "2024-09-26"
   thumbnail: https://img.youtube.com/vi/DnvmVRFffMY/mqdefault.jpg
   views: 739
 - id: XHJj_M84X28
-  title: RAG using Semantic Kernel with Azure OpenAI and Azure Cosmos DB for MongoDB
+  title:
+    RAG using Semantic Kernel with Azure OpenAI and Azure Cosmos DB for MongoDB
     vCore - April 2024
-  description: "Learn about the new capabilities of Azure Cosmos DB for MongoDB vCore\
+  description:
+    "Learn about the new capabilities of Azure Cosmos DB for MongoDB vCore\
     \ and Semantic Kernel that enable you to use vector search and integrate your\
     \ AI-based movie recommendation applications. Vector search enables you to efficiently\
     \ store, index, and query high-dimensional vector data along with operational\
@@ -78,20 +82,22 @@
     \ the Microsoft AI MVP award. He had the privilege of developing official content\
     \ for both the Microsoft Tech Community and Microsoft Learn, contributing to the\
     \ broader knowledge-sharing ecosystem."
-  published: '2024-04-23'
+  published: "2024-04-23"
   thumbnail: https://img.youtube.com/vi/XHJj_M84X28/mqdefault.jpg
   views: 2296
 - id: 3nMhhvpT60o
-  title: 'Learn to Cloud 06: Fundamentals of Google Cloud'
-  description: "Learn about Google Cloud fundamentals and how to get started on it.\r\
+  title: "Learn to Cloud 06: Fundamentals of Google Cloud"
+  description:
+    "Learn about Google Cloud fundamentals and how to get started on it.\r\
     \nProject: Deploy a Flask web application to Google Cloud\r\n\r\n#learntocloud\
     \ #google #gcp #flask #workshops"
-  published: '2024-03-31'
+  published: "2024-03-31"
   thumbnail: https://img.youtube.com/vi/3nMhhvpT60o/mqdefault.jpg
   views: 27
 - id: 4ak1wX2wlUA
   title: Learn Live - Use Generative AI to create a Business Model for your startup
-  description: "Full series information: https://aka.ms/learnlive-microsoft-learn-ai-skills-challenge\r\
+  description:
+    "Full series information: https://aka.ms/learnlive-microsoft-learn-ai-skills-challenge\r\
     \n\r\nMore info here: https://aka.ms/learnlive-microsoft-learn-ai-skills-challenge-Ep3\r\
     \n\r\nFollow on Microsoft Learn:\r\n\r\n- Complete the Learn module: https://aka.ms/learnlive-20240328A\r\
     \n\r\nUse Generative AI (Bing Chat, GPT-4) to Create a Business Model for your\
@@ -114,13 +120,15 @@
     \ https://linkedin.com/in/luisantoniobeltran\r\n\r\nModerators\r\n\r\nDoher Drizzle\
     \ Pablo\r\nFounder And Community Leader, Microsoft MVP\r\nBizApps Pinoy Community\r\
     \n- LinkedIn: https://www.linkedin.com/in/doherdrizzlepablo/"
-  published: '2024-03-28'
+  published: "2024-03-28"
   thumbnail: https://img.youtube.com/vi/4ak1wX2wlUA/mqdefault.jpg
   views: 1694
 - id: bGjIm5YNAHs
-  title: RAG using Semantic Kernel with Azure OpenAI and Azure Cosmos DB | Python
+  title:
+    RAG using Semantic Kernel with Azure OpenAI and Azure Cosmos DB | Python
     Data Science Day
-  description: "\"Learn about the new capabilities of Azure Cosmos DB for MongoDB\
+  description:
+    "\"Learn about the new capabilities of Azure Cosmos DB for MongoDB\
     \ vCore and Semantic Kernel that enables you to use vector search and integrate\
     \ your AI-based applications with your data that's stored in Azure Cosmos DB.\
     \ Vector search enables you to efficiently store, index, and query high-dimensional\
@@ -148,64 +156,72 @@
     \ \nCloud Skills Challenge - through April 15, 2024 \nhttps://aka.ms/Python/DataScienceDay/CSC\
     \ \nGitHub codespaces https://github.com/codespaces \nVS Code Release notes https://code.visualstudio.com/updates\
     \ \n\nFeaturing: John Azia, Microsoft, MVP (@john00isaac)"
-  published: '2024-03-28'
+  published: "2024-03-28"
   thumbnail: https://img.youtube.com/vi/bGjIm5YNAHs/mqdefault.jpg
   views: 909
 - id: xnA-D97glCw
-  title: 'Learn to Cloud 05: Infrastructure as a Code with Terraform'
-  description: "Learn about how terraform can be used to automate the infrastructure\
+  title: "Learn to Cloud 05: Infrastructure as a Code with Terraform"
+  description:
+    "Learn about how terraform can be used to automate the infrastructure\
     \ build process with some simple lines of code.\r\nProject: Getting started with\
     \ Terraform\r\n\r\n#learntocloud #terraform #automate #infrastructure #workshops"
-  published: '2024-03-18'
+  published: "2024-03-18"
   thumbnail: https://img.youtube.com/vi/xnA-D97glCw/mqdefault.jpg
   views: 39
 - id: rlXgYptPTyY
-  title: 'Learn to Cloud 04: Docker and Containerization'
-  description: "Learn about docker images, docker hub, and how to build a docker container\
+  title: "Learn to Cloud 04: Docker and Containerization"
+  description:
+    "Learn about docker images, docker hub, and how to build a docker container\
     \ to containerize your application.\r\nProject: Getting started with Docker and\
     \ Containerization\r\n\r\n#learntocloud #docker #containerization #workshops"
-  published: '2024-03-02'
+  published: "2024-03-02"
   thumbnail: https://img.youtube.com/vi/rlXgYptPTyY/mqdefault.jpg
   views: 28
 - id: VnmlLNIQmKo
-  title: Automatically Create and Send Personalized Certificates using Google Apps
+  title:
+    Automatically Create and Send Personalized Certificates using Google Apps
     Script [Arabic]
-  description: "Using standalone Google apps script on a Google sheet, Google Slide\
+  description:
+    "Using standalone Google apps script on a Google sheet, Google Slide\
     \ to create and send appreciation certificates automatically.\r\n\r\nhttps://github.com/john0isaac/Create-and-Send-Personalized-Certificates-using-GAS\r\
     \n\r\n#GAS #Automation #googleappsscript #googleslides #automatedemail #googlesheets"
-  published: '2024-02-25'
+  published: "2024-02-25"
   thumbnail: https://img.youtube.com/vi/VnmlLNIQmKo/mqdefault.jpg
   views: 150
 - id: x6HqtHX-9fk
-  title: 'Learn to Cloud 03: GitHub workflows and GitHub pages [Arabic]'
-  description: "Learn about GitHub workflows, how to use them in automating tasks\
+  title: "Learn to Cloud 03: GitHub workflows and GitHub pages [Arabic]"
+  description:
+    "Learn about GitHub workflows, how to use them in automating tasks\
     \ on GitHub, and how to use GitHub pages in hosting your website.\r\nProject:\
     \ Getting started with GitHub workflows and GitHub pages\r\n\r\n#learntocloud\
     \ #github #workflows #pages #workshops"
-  published: '2024-02-24'
+  published: "2024-02-24"
   thumbnail: https://img.youtube.com/vi/x6HqtHX-9fk/mqdefault.jpg
   views: 37
 - id: 5LvwDbhhsHg
-  title: 'Learn to Cloud 02: Git, GitHub and Version Control [Arabic]'
-  description: "Learn the Fundamentals of Version Control, Setting Up Git, Working\
+  title: "Learn to Cloud 02: Git, GitHub and Version Control [Arabic]"
+  description:
+    "Learn the Fundamentals of Version Control, Setting Up Git, Working\
     \ with Local Repositories, and Working with GitHub.\r\nProject: Getting Started\
     \ with Git & GitHub\r\n\r\n#learntocloud #Git #GitHub #Version #workshops"
-  published: '2024-02-17'
+  published: "2024-02-17"
   thumbnail: https://img.youtube.com/vi/5LvwDbhhsHg/mqdefault.jpg
   views: 34
 - id: D1MYEFYim6A
-  title: 'Learn to Cloud 01: Linux and Bash Scripting [Arabic]'
-  description: "Learn the basic commands used in your day-to-day work with Linux and\
+  title: "Learn to Cloud 01: Linux and Bash Scripting [Arabic]"
+  description:
+    "Learn the basic commands used in your day-to-day work with Linux and\
     \ how to write a bash script to automate repetitive tasks.\r\nProject: Getting\
     \ Started with Bash Scripts\r\n\r\n\U0001F4D1 Session Slides: https://1drv.ms/p/s!Agn5UoukfO0ehRz_Cm3Q-WdN_krI?e=Ysw6pb\n\
     \u2692\uFE0F More Projects to practice Bash scripting: https://www.freecodecamp.org/news/shell-scripting-crash-course-how-to-write-bash-scripts-in-linux/\n\
     \n#learntocloud #bash  #script #wsl #workshops"
-  published: '2024-02-10'
+  published: "2024-02-10"
   thumbnail: https://img.youtube.com/vi/D1MYEFYim6A/mqdefault.jpg
   views: 247
 - id: EKXSqvdlOIg
   title: Build an AI web app to translate text using Python Flask [Arabic]
-  description: 'Have you ever wanted to incorporate artificial intelligence into a
+  description:
+    "Have you ever wanted to incorporate artificial intelligence into a
     website? Do you want to be able to translate text in your web apps? With AI Services
     and Flask, you can create a website to translate text with a small amount of code.
 
@@ -235,7 +251,7 @@
 
     00:00:00 Opening
 
-    00:02:22 Prerequisities
+    00:02:22 Prerequisites
 
     00:05:19 Introduction
 
@@ -263,18 +279,20 @@
 
     #AI #Azure #MachineLearning #Translator #MSFTAmbassadors
 
-    #MSFTStudentAmbassadors #MSFTAdvocate'
-  published: '2024-01-26'
+    #MSFTStudentAmbassadors #MSFTAdvocate"
+  published: "2024-01-26"
   thumbnail: https://img.youtube.com/vi/EKXSqvdlOIg/mqdefault.jpg
   views: 229
 - id: Pzm5Y7rYUi8
-  title: 'Empowering Tech Entrepreneurs: Harnessing a Large Language Model in Power
-    Platform'
-  description: "Learn about the new capabilities of Azure Machine Learning Registry\
+  title:
+    "Empowering Tech Entrepreneurs: Harnessing a Large Language Model in Power
+    Platform"
+  description:
+    "Learn about the new capabilities of Azure Machine Learning Registry\
     \ that enables you to deploy a Large Language Model (GPT) and integrate it with\
     \ Power Platform John Aziz, a Gold Microsoft Learn Student Ambassador from Egypt\
     \ and Lee Stott Principal Cloud Advocate Manager. \n\nIn this session, you'll\
-    \ learn about Large Language Models and the steps you need to preform to deploy\
+    \ learn about Large Language Models and the steps you need to perform to deploy\
     \ them to Azure Machine Learning, discover how to set up an Azure Machine Learning\
     \ Workspace, deploy the machine learning model, learn about Power Apps and Power\
     \ Automate, and integrate the deployed model with Power Apps. \n\nFollow along\
@@ -290,24 +308,26 @@
     Azure Machine Learning documentation: https://aka.ms/azuremldoc-yt\n\nTutorial\
     \ Integrating a Large Language Model on Azure with Power Platform\nhttps://aka.ms/PPLLMTutorial\
     \  \n\n[eventID:20936]"
-  published: '2023-11-03'
+  published: "2023-11-03"
   thumbnail: https://img.youtube.com/vi/Pzm5Y7rYUi8/mqdefault.jpg
   views: 562
 - id: Va64slVDpI4
   title: Introduction to Git, GitHub, and Version Control
-  description: 'In this workshop train the trainer video, we will discuss the concept
+  description:
+    "In this workshop train the trainer video, we will discuss the concept
     of version control which is the foundation of understanding how Git works. In
     this session we will install Git, work on a local Git repository, work on a remote
-    GitHub repository, and work on another developer''s repository.
+    GitHub repository, and work on another developer's repository.
 
 
-    https://github.com/microsoft/workshop-library/tree/main/full/intro-git-github-version-control#introduction-to-git-github-and-version-control'
-  published: '2023-10-06'
+    https://github.com/microsoft/workshop-library/tree/main/full/intro-git-github-version-control#introduction-to-git-github-and-version-control"
+  published: "2023-10-06"
   thumbnail: https://img.youtube.com/vi/Va64slVDpI4/mqdefault.jpg
   views: 2810
 - id: 4gno4bHrVwM
   title: Automate Business Email Management Using AI Builder and Power Apps
-  description: "\U0001F4FA In this 14 minute developer focused demo, John shows us\
+  description:
+    "\U0001F4FA In this 14 minute developer focused demo, John shows us\
     \ a simple solution to prioritize emails using Power Apps, AI Builder Sentiment\
     \ Analysis Model Connector and the Office 365 Outlook connector. The app consists\
     \ of 3 screens - Browse emails, Detailed View and Create Response and lets users\
@@ -320,12 +340,13 @@
     \ 365 & Power Platform Community in YouTube - https://aka.ms/community/videos\n\
     \u2022 Microsoft 365 & Power Platform - http://aka.ms/community/home\n\nSharing\
     \ is caring! You are awesome! \U0001F9E1"
-  published: '2023-09-25'
+  published: "2023-09-25"
   thumbnail: https://img.youtube.com/vi/4gno4bHrVwM/mqdefault.jpg
   views: 2628
 - id: pdGBJW8xRMM
   title: How to Schedule a Microsoft Fundamentals Online Exam? [Arabic]
-  description: 'Learn how to schedule an online exam on Pearson Vue step by step.
+  description:
+    "Learn how to schedule an online exam on Pearson Vue step by step.
 
 
     https://bit.ly/mtc-fundamental-exams
@@ -342,13 +363,14 @@
 
     #MSFT #Exams #pearsonvue #Azure  #MSFTAmbassadors
 
-    #MSFTStudentAmbassadors #MSFTAdvocate'
-  published: '2023-09-05'
+    #MSFTStudentAmbassadors #MSFTAdvocate"
+  published: "2023-09-05"
   thumbnail: https://img.youtube.com/vi/pdGBJW8xRMM/mqdefault.jpg
   views: 229
 - id: GqxdrfGHHqI
   title: NLP on Azure [Arabic]
-  description: 'Interested in using Azure Language Service? This video walks you through
+  description:
+    "Interested in using Azure Language Service? This video walks you through
     setting up a Language Azure Cognitive service resource in the Azure Portal, using
     this service to analyze the CORD dataset and get valuable insights from it.
 
@@ -403,13 +425,14 @@
 
     #AI #Azure #MachineLearning #NLP #MSFTAmbassadors
 
-    #MSFTStudentAmbassadors #MSFTAdvocate'
-  published: '2023-08-31'
+    #MSFTStudentAmbassadors #MSFTAdvocate"
+  published: "2023-08-31"
   thumbnail: https://img.youtube.com/vi/GqxdrfGHHqI/mqdefault.jpg
   views: 80
 - id: K0pZciUfyPs
   title: Computer Vision on Azure [Arabic]
-  description: 'Interested in using Azure Custom Vision? This video walks you through
+  description:
+    "Interested in using Azure Custom Vision? This video walks you through
     setting up a Custom Vision Azure Cognitive service resource in the Azure Portal,
     creating a project on the custom vision studio, uploading images, training a model
     to predict dog breeds, and deploying it to the internet.
@@ -442,7 +465,7 @@
 
     00:41:07 Exercise - Using a Custom Vision Model
 
-    00:58:13 What''s next?
+    00:58:13 What's next?
 
 
     Azure Portal:
@@ -465,13 +488,14 @@
 
     #AI #Azure #MachineLearning #CustomVision #MSFTAmbassadors
 
-    #MSFTStudentAmbassadors #MSFTAdvocate'
-  published: '2023-08-22'
+    #MSFTStudentAmbassadors #MSFTAdvocate"
+  published: "2023-08-22"
   thumbnail: https://img.youtube.com/vi/K0pZciUfyPs/mqdefault.jpg
   views: 166
 - id: hZ1cIxmo8gk
   title: Visual Tools for Machine Learning on Azure [Arabic]
-  description: 'Interested in using Azure Machine Learning Designer? This video walks
+  description:
+    "Interested in using Azure Machine Learning Designer? This video walks
     you through setting up an Azure Machine Learning service resource in the Azure
     Portal, creating a regression model to predict house prices by just dragging and
     dropping blocks and deploying it to the internet.
@@ -524,13 +548,14 @@
 
     #AI #Azure #MachineLearning #AzureML #Designer #MSFTAmbassadors
 
-    #MSFTStudentAmbassadors #MSFTAdvocate'
-  published: '2023-08-18'
+    #MSFTStudentAmbassadors #MSFTAdvocate"
+  published: "2023-08-18"
   thumbnail: https://img.youtube.com/vi/hZ1cIxmo8gk/mqdefault.jpg
   views: 114
 - id: 5Zdy-klUU2w
   title: Getting Started With Azure OpenAI [Arabic]
-  description: "Interested in using Azure OpenAI to add AI functionality to your apps?\
+  description:
+    "Interested in using Azure OpenAI to add AI functionality to your apps?\
     \ This video walks you through setting up an Azure OpenAI service resource in\
     \ the Azure Portal, creating and deploying a GPT model, using the Completions\
     \ Playground to try it out, deploying it to a Website, and editing permissions\
@@ -544,12 +569,13 @@
     \nAzure Portal:\r\nhttps://portal.azure.com\r\nTwitter:\r\nhttps://twitter.com/john00isaac\r\
     \nLinkedIn:\r\nhttps://linkedin.com/in/john0isaac\n\n#AI #Azure #AzureOpenAI #OpenAI\
     \ #MSFTAmbassadors\n#MSFTStudentAmbassadors #MSFTAdvocate"
-  published: '2023-08-09'
+  published: "2023-08-09"
   thumbnail: https://img.youtube.com/vi/5Zdy-klUU2w/mqdefault.jpg
   views: 333
 - id: IOlAZferbhc
   title: AI on Azure after 2023 [Arabic]
-  description: "Join our first session to learn about AI on Azure \u2728\n\U0001F4CC\
+  description:
+    "Join our first session to learn about AI on Azure \u2728\n\U0001F4CC\
     \ Where we will discuss AI Fundamentals on Azure and the tools you can use in\
     \ this field.\n\U0001F4CC We will also discuss the gigantic progression in the\
     \ field of AI in the last few years.\n\U0001F4CC We will understand a thing that\
@@ -581,13 +607,14 @@
     \u0636\u0631\u0627\u0631\u0647\u0627 \u0648\u0645\u0646\u0627\u0641\u0639\u0647\
     \u0627\n\n#AI #Azure #CloudSkillsChallenge #MSFTAmbassadors #Sweepstakes\n#MSFTStudentAmbassadors\
     \ #MSFTAdvocate #AISkillsChallenge #AzureOpenAI #OpenAI"
-  published: '2023-08-05'
+  published: "2023-08-05"
   thumbnail: https://img.youtube.com/vi/IOlAZferbhc/mqdefault.jpg
   views: 101
 - id: 81QJb-RiuX8
   title: AI on Azure before 2023 [Arabic]
-  description: 'Learn more about different AI services that Azure provides to its
-    users in Machine Learning, Anomoly Detection, Computer Vision, Natural Language
+  description:
+    "Learn more about different AI services that Azure provides to its
+    users in Machine Learning, Anomaly Detection, Computer Vision, Natural Language
     Processing, and Conversational AI.
 
 
@@ -596,13 +623,14 @@
 
     #AI #Azure #CloudSkillsChallenge #MSFTAmbassadors #Sweepstakes
 
-    #MSFTStudentAmbassadors #MSFTAdvocate #AISkillsChallenge'
-  published: '2023-08-04'
+    #MSFTStudentAmbassadors #MSFTAdvocate #AISkillsChallenge"
+  published: "2023-08-04"
   thumbnail: https://img.youtube.com/vi/81QJb-RiuX8/mqdefault.jpg
   views: 139
 - id: T5pgp65vSLU
   title: Egypt AI Challenge - Timeline [Arabic]
-  description: "Program Overview\u200B\nThe main goal is to get you started with AI\
+  description:
+    "Program Overview\u200B\nThe main goal is to get you started with AI\
     \ on Azure.\u200B\nBy the end, you should be able to name all the AI tools on\
     \ Azure and know how to use them.\u200B\n\nImportant Dates:\u200B\n3   August|\
     \ Egypt AI Kickoff\u200B\n4   August| Introduction\u200B\n11 August| Visual Tools\u200B\
@@ -612,12 +640,13 @@
     \ finish, please fill out this form: https://bit.ly/finish-egypt-ai-csc\u200B\n\
     \n#CloudSkillsChallenge #MSFTAmbassadors #Sweepstakes\n#MSFTStudentAmbassadors\
     \ #MSFTAdvocate #AISkillsChallenge"
-  published: '2023-08-04'
+  published: "2023-08-04"
   thumbnail: https://img.youtube.com/vi/T5pgp65vSLU/mqdefault.jpg
   views: 43
 - id: mwMl_mglBMU
   title: Microsoft Learn AI Skills Challenge - Overview [Arabic]
-  description: "Get ahead with immersive and curated AI training content across Microsoft\
+  description:
+    "Get ahead with immersive and curated AI training content across Microsoft\
     \ products and services with four engaging AI-themed challenges\u200B\nAs you\
     \ progress through the challenges, you'll have the chance to explore additional\
     \ experiences tailored to your learning preferences and goals: \u200B\n- Join\
@@ -627,12 +656,13 @@
     \n\nThe challenge begins on July 17th, and you can preview the topics by signing\
     \ up: https://bit.ly/microsoft-learn-student-hub\u200B\n\n#CloudSkillsChallenge\
     \ #MSFTAmbassadors #Sweepstakes\n#MSFTStudentAmbassadors #MSFTAdvocate #AISkillsChallenge"
-  published: '2023-08-01'
+  published: "2023-08-01"
   thumbnail: https://img.youtube.com/vi/mwMl_mglBMU/mqdefault.jpg
   views: 168
 - id: oeckL5zSC4Y
   title: Egypt AI Challenge - Overview [Arabic]
-  description: "Welcome to Egypt AI Skills Challenge!\nThe challenge starts next Thursday\
+  description:
+    "Welcome to Egypt AI Skills Challenge!\nThe challenge starts next Thursday\
     \ the 3rd of August and we will be having 4 sessions every Friday at 8 PM.\n\n\
     In each session, we will discuss a different concept related to AI on Azure which\
     \ includes Azure Open AI, Visual Tools for Machine Learning, Computer Vision,\
@@ -647,12 +677,13 @@
     \nDon\u2019t forget to join our WhatsApp so, you won\u2019t miss anything!\nhttps://bit.ly/join-egypt-ai-challenge-community\n\
     \n#CloudSkillsChallenge #MSFTAmbassadors #Sweepstakes\n#MSFTStudentAmbassadors\
     \ #MSFTAdvocate #AISkillsChallenge"
-  published: '2023-07-31'
+  published: "2023-07-31"
   thumbnail: https://img.youtube.com/vi/oeckL5zSC4Y/mqdefault.jpg
   views: 276
 - id: k6DZ4xq6ZJM
   title: Microsoft Build After Party - AI on Azure 2023 [Arabic]
-  description: "\U0001F9D0 The session will focus on AI and the latest advancements\
+  description:
+    "\U0001F9D0 The session will focus on AI and the latest advancements\
     \ achieved thanks to Microsoft and the services provided by Azure AI. We will\
     \ cover various topics, including:\n\U0001F4CCThe general history of AI and its\
     \ evolution to the current stage.\n\U0001F4CCThe history and development of Large\
@@ -671,22 +702,24 @@
     \ use AI safely and ethically.\n\n#microsoftbuild2023 #MicrosoftBuild #BeAForceForGood\
     \ #MSFTStudentAmbassadors #microsoftlearnstudentcommunity_eelu #MicrosoftLearn\
     \ #Azure #AI"
-  published: '2023-07-07'
+  published: "2023-07-07"
   thumbnail: https://img.youtube.com/vi/k6DZ4xq6ZJM/mqdefault.jpg
   views: 36
 - id: ek9lkn4PL-o
   title: Create a Classification Model with Azure Machine Learning Designer [English]
-  description: Join us for a study session with Carlotta Castelluccio, Microsoft Cloud
+  description:
+    Join us for a study session with Carlotta Castelluccio, Microsoft Cloud
     Advocate and John Aziz, Gold Student Ambassador. Carlotta and John will work through
     Create a classification model with Azure Machine Learning designer, a Learn module
     that is part of the Cloud Skills Challenge ending September 13th. Come with questions
     or just listen in and follow along!
-  published: '2023-07-06'
+  published: "2023-07-06"
   thumbnail: https://img.youtube.com/vi/ek9lkn4PL-o/mqdefault.jpg
   views: 1040
 - id: mgCkmYhV5UU
   title: Career Information Session for Egyptian Students
-  description: "Visit Microsoft Learn: https://aka.ms/MSLearnMay7 \nVisit Microsoft\
+  description:
+    "Visit Microsoft Learn: https://aka.ms/MSLearnMay7 \nVisit Microsoft\
     \ Reactor website to check out our upcoming events: https://aka.ms/ReactorMay7\n\
     \nAre you passionate about technology and want to learn new skills, get certified,\
     \ access cloud resources, join a global community and compete in a world-class\
@@ -734,16 +767,17 @@
     \n[Student Certification](https://learn.microsoft.com/en-gb/training/student-hub/certifications?WT.mc_id=academic-92000-ooyinbooke?wt.mc_id=1reg_19095_webpage_reactor)\n\
     \n[Sign Up for GitHub Student Pack](https://education.github.com/pack?WT.mc_id=academic-92001-ooyinbooke?wt.mc_id=1reg_19095_webpage_reactor)\n\
     \n[eventID:19095]"
-  published: '2023-07-06'
+  published: "2023-07-06"
   thumbnail: https://img.youtube.com/vi/mgCkmYhV5UU/mqdefault.jpg
   views: 2916
 - id: 1ZBFaoxHNvc
   title: Git & GitHub & Version Control
-  description: "Agenda:\n- What is Version Control?\n- It\u2019s time to get Git.\n\
+  description:
+    "Agenda:\n- What is Version Control?\n- It\u2019s time to get Git.\n\
     - Working with Repos Locally.\n- Working with Remotes.\n- Working on Another Developer\u2019\
     s Repo.\n- A Small surprise at the end.\n\nSocial Media:\nhttps://www.facebook.com/MLSACairo\n\
     https://www.facebook.com/GDSCMAE\nhttps://www.linkedin.com/in/john0isaac/\n\n\n\
     #GDSC\n#GoogleDeveloperStudentClubs\n#MLSACairo\n#Microsoft\n#MLSA\n#MSFTStudentAmbassadors"
-  published: '2021-04-12'
+  published: "2021-04-12"
   thumbnail: https://img.youtube.com/vi/1ZBFaoxHNvc/mqdefault.jpg
   views: 115

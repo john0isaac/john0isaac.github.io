@@ -2,8 +2,13 @@
 title: "My Mac Development Setup with Homebrew"
 date: 2026-04-05
 description: A complete Brewfile of the packages, casks, and VS Code extensions I use for development on Mac.
-categories: [Mac]
-tags: [brew, mac, development, setup]
+categories:
+  - Mac
+tags:
+  - Brew
+  - Mac
+  - Development
+  - Setup
 comments: true
 authors:
   - john0isaac
@@ -134,12 +139,10 @@ cask "microsoft-edge"
 ### Media & Streaming
 
 - [OBS](https://obsproject.com/) — Screen recording & streaming
-- [Shotcut](https://shotcut.org/) — Video editor
 - [VLC](https://www.videolan.org/vlc/) — Media player
 
 ```ruby
 cask "obs"
-cask "shotcut"
 cask "vlc"
 ```
 

@@ -2,8 +2,16 @@
 title: Build RAG Chat App using Azure Cosmos DB for MongoDB vCore and Azure OpenAI
 date: 2024-03-13
 description: A guide to building a RAG Chat Application using Azure Cosmos DB for MongoDB vCore and Azure OpenAI.
-categories: [Azure, AI]
-tags: [azure, azure-cosmos-db, mongodb, azure-openai, rag, chat-app]
+categories:
+  - Azure
+  - AI
+tags:
+  - Azure
+  - Azure Cosmos DB
+  - MongoDB
+  - Azure OpenAI
+  - RAG
+  - Chat App
 comments: true
 authors:
   - john0isaac
