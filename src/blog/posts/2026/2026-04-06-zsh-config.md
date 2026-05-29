@@ -197,18 +197,13 @@ alias reload='source ~/.zshrc'   # Reload shell config
 ## Replicate This Setup
 
 1. Install the [prerequisites](#prerequisites).
-2. Download the config files
-   ([.zprofile](./.zprofile), [.zshrc](./.zshrc), [myaliases.zsh](./myaliases.zsh)),
-   place them in your home directory, and you're good to go:
+2. Download the config files ([.zprofile](./.zprofile), [.zshrc](./.zshrc), [myaliases.zsh](./myaliases.zsh)),
+  place them in your home directory, and you're good to go:
 
-   ```bash
-   cp .zprofile ~/.zprofile
-   cp .zshrc ~/.zshrc
-   cp myaliases.zsh ~/myaliases.zsh
-   ```
+        cp .zprofile ~/.zprofile
+        cp .zshrc ~/.zshrc
+        cp myaliases.zsh ~/myaliases.zsh
 
 3. Reload the shell:
 
-   ```bash
-   source ~/.zshrc
-   ```
+        source ~/.zshrc
