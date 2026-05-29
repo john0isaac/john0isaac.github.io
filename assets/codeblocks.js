@@ -38,7 +38,19 @@ function setCopiedState(button, copied) {
 function attachCopyButtons() {
   document.querySelectorAll(".prose pre > code").forEach((code) => {
     const pre = code.parentElement;
-    if (!pre || pre.querySelector(".code-copy-btn")) {
+    if (!pre) {
+      return;
+    }
+
+    let wrapper = pre.parentElement;
+    if (!wrapper || !wrapper.classList.contains("code-block-wrap")) {
+      wrapper = document.createElement("div");
+      wrapper.className = "code-block-wrap";
+      pre.insertAdjacentElement("beforebegin", wrapper);
+      wrapper.appendChild(pre);
+    }
+
+    if (wrapper.querySelector(".code-copy-btn")) {
       return;
     }
 
@@ -60,7 +72,7 @@ function attachCopyButtons() {
       }
     });
 
-    pre.appendChild(button);
+    wrapper.appendChild(button);
   });
 }
 
