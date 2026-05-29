@@ -7,40 +7,63 @@ function initBlogArchive() {
     const toggle = layout.querySelector("[data-blog-archive-toggle]");
     if (!sidebar || !toggle) return;
 
-    const storageKey = `blog-archive-collapsed-${index}`;
+    const storageKey = `blog-archive-open-${index}`;
+
+    // Create floating open button (tab on left edge)
+    const openBtn = document.createElement("button");
+    openBtn.className = "blog-archive__open-btn";
+    openBtn.type = "button";
+    openBtn.setAttribute("aria-label", "Open blog archive");
+    openBtn.setAttribute("title", "Open blog archive");
+    openBtn.innerHTML = '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>';
+    document.body.appendChild(openBtn);
+
     const expandActiveBranch = () => {
       const activeLink = layout.querySelector(".blog-archive__post-link.is-active");
       if (!activeLink) return;
-
       const monthDetails = activeLink.closest("details.blog-archive__month");
       const yearDetails = activeLink.closest("details.blog-archive__year");
       if (monthDetails) monthDetails.open = true;
       if (yearDetails) yearDetails.open = true;
     };
 
-    const setCollapsed = (collapsed) => {
-      layout.classList.toggle("is-archive-collapsed", collapsed);
-      toggle.setAttribute("aria-expanded", String(!collapsed));
-      toggle.setAttribute("aria-label", collapsed ? "Expand blog archive" : "Collapse blog archive");
-      toggle.setAttribute("title", collapsed ? "Expand blog archive" : "Collapse blog archive");
-
+    const setOpen = (open) => {
+      layout.classList.toggle("is-archive-open", open);
+      openBtn.classList.toggle("is-hidden", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close blog archive" : "Open blog archive");
+      toggle.setAttribute("title", open ? "Close blog archive" : "Open blog archive");
       const icon = toggle.querySelector("i");
       if (icon) {
-        icon.className = collapsed ? "fa-solid fa-chevron-right" : "fa-solid fa-chevron-left";
+        icon.className = open ? "fa-solid fa-chevron-left" : "fa-solid fa-chevron-right";
       }
-
-      if (!collapsed) {
-        expandActiveBranch();
-      }
+      if (open) expandActiveBranch();
     };
 
+    // Default: open on desktop, closed on mobile
     const saved = window.localStorage.getItem(storageKey);
-    setCollapsed(saved === "true");
+    const defaultOpen = saved !== null
+      ? saved === "true"
+      : window.matchMedia("(min-width: 992px)").matches;
+
+    setOpen(defaultOpen);
 
     toggle.addEventListener("click", () => {
-      const collapsed = !layout.classList.contains("is-archive-collapsed");
-      setCollapsed(collapsed);
-      window.localStorage.setItem(storageKey, String(collapsed));
+      const open = !layout.classList.contains("is-archive-open");
+      setOpen(open);
+      window.localStorage.setItem(storageKey, String(open));
+    });
+
+    openBtn.addEventListener("click", () => {
+      setOpen(true);
+      window.localStorage.setItem(storageKey, "true");
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && layout.classList.contains("is-archive-open")) {
+        setOpen(false);
+        window.localStorage.setItem(storageKey, "false");
+      }
     });
   });
 }
