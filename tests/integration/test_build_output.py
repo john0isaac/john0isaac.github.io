@@ -121,3 +121,27 @@ def test_blog_pagination_output(built_site: Path) -> None:
     if page_two.is_file():
         soup = BeautifulSoup(_read(page_two), "html.parser")
         assert soup.select_one("header.site-header")
+
+
+def test_social_cards_are_generated(built_site: Path) -> None:
+    social_dir = built_site / "assets" / "social"
+    assert social_dir.is_dir(), "assets/social/ directory should exist after build"
+    pngs = list(social_dir.glob("*.png"))
+    assert pngs, "at least one social card PNG should be generated"
+    post_cards = [p for p in pngs if p.name.startswith("blog-")]
+    assert post_cards, "at least one blog post social card should exist"
+
+
+def test_blog_post_has_og_image_meta(built_site: Path) -> None:
+    post_pages = [
+        path
+        for path in (built_site / "blog").rglob("index.html")
+        if "page" not in path.parts and path.parent.name != "blog"
+    ]
+    assert post_pages, "expected at least one blog post page"
+    soup = BeautifulSoup(_read(post_pages[0]), "html.parser")
+    og_image = soup.find("meta", attrs={"property": "og:image"})
+    assert og_image is not None, "blog post should have og:image meta tag"
+    content = og_image.get("content", "")
+    assert "/assets/social/" in content, f"og:image should point to social card: {content}"
+    assert content.endswith(".png"), f"og:image should be a PNG: {content}"

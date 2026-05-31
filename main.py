@@ -11,7 +11,6 @@ import re
 import shutil
 import socketserver
 import xml.etree.ElementTree as etree
-from dataclasses import dataclass, field
 from email.utils import format_datetime
 from pathlib import Path
 from typing import Any
@@ -21,82 +20,27 @@ import markdown
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+from scripts.constants import (
+    ASSETS_DIR,
+    AUTHOR,
+    BLOG_POSTS_PER_PAGE,
+    DATA_DIR,
+    DATE_PREFIX_RE,
+    EXCERPT_MARKER,
+    FRONT_MATTER_RE,
+    MARKDOWN_EXTENSIONS,
+    ROOT_DIR,
+    SITE_DIR,
+    SITE_NAME,
+    SITE_URL,
+    SRC_DIR,
+    TEMPLATES_DIR,
+    VENDOR_DIR,
+)
 from scripts.minify import minify_site
+from scripts.models import Page, Post
 from scripts.optimize import optimize_site
-
-ROOT_DIR = Path(__file__).resolve().parent
-SRC_DIR = ROOT_DIR / "src"
-DATA_DIR = ROOT_DIR / "data"
-SITE_DIR = ROOT_DIR / "site"
-TEMPLATES_DIR = ROOT_DIR / "templates"
-ASSETS_DIR = ROOT_DIR / "assets"
-VENDOR_DIR = ROOT_DIR / "vendor"
-
-SITE_NAME = "John Aziz"
-SITE_URL = "https://johnaziz.org"
-AUTHOR = "John Aziz"
-FRONT_MATTER_RE = re.compile(r"\A---\s*\n(.*?)\n---\s*\n?", re.DOTALL)
-DATE_PREFIX_RE = re.compile(r"^(\d{4})-(\d{2})-(\d{2})-(.+)$")
-EXCERPT_MARKER = "<!-- more -->"
-MARKDOWN_EXTENSIONS = [
-    "admonition",
-    "attr_list",
-    "fenced_code",
-    "footnotes",
-    "md_in_html",
-    "tables",
-    "toc",
-]
-BLOG_POSTS_PER_PAGE = 10
-
-
-@dataclass(slots=True)
-class Page:
-    title: str
-    description: str
-    url: str
-    template: str
-    output_path: Path
-    content_html: str = ""
-    body_markdown: str = ""
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-    @property
-    def absolute_url(self) -> str:
-        return urljoin(f"{SITE_URL}/", self.url.lstrip("/"))
-
-
-@dataclass(slots=True)
-class Post:
-    title: str
-    description: str
-    date: dt.date
-    slug: str
-    url: str
-    output_path: Path
-    content_html: str
-    excerpt_html: str
-    body_markdown: str
-    categories: list[str] = field(default_factory=list)
-    tags: list[str] = field(default_factory=list)
-    authors: list[str] = field(default_factory=list)
-    author_profiles: list[dict[str, str]] = field(default_factory=list)
-    read_time_minutes: int = 1
-    metadata: dict[str, Any] = field(default_factory=dict)
-    source_path: Path | None = None
-
-    @property
-    def absolute_url(self) -> str:
-        return urljoin(f"{SITE_URL}/", self.url.lstrip("/"))
-
-    @property
-    def rss_date(self) -> str:
-        return format_datetime(dt.datetime.combine(self.date, dt.time.min, tzinfo=dt.UTC))
-
-    @property
-    def read_time_label(self) -> str:
-        minute_label = "minute" if self.read_time_minutes == 1 else "minutes"
-        return f"{self.read_time_minutes} {minute_label} read"
+from scripts.social import generate_social_cards
 
 
 def parse_args() -> argparse.Namespace:
@@ -542,6 +486,13 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
     blog_archive = build_blog_archive(posts)
     page_lookup = {page.url: page for page in pages}
 
+    _page_card_slugs = {"/": "home", "/blog/": "blog", "/projects/": "projects", "/talks/": "talks"}
+    for page in pages:
+        if page.url in _page_card_slugs:
+            page.social_card_url = f"/assets/social/{_page_card_slugs[page.url]}.png"
+    for post in posts:
+        post.social_card_url = f"/assets/social/blog-{post.slug}.png"
+
     render_template(
         environment,
         "home.html",
@@ -652,6 +603,15 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
     )
     write_text(SITE_DIR / "sitemap.xml", build_sitemap(sitemap_urls))
     copy_static_assets()
+    generate_social_cards(
+        posts=posts,
+        pages=pages,
+        site_dir=SITE_DIR,
+        site_name=SITE_NAME,
+        logo_path=SRC_DIR / "images" / "logo" / "android-chrome-512x512.png",
+        fonts_dir=ROOT_DIR / "vendor" / "fonts" / "static",
+        cache_dir=ROOT_DIR / ".cache" / "social",
+    )
     if minify:
         minify_site(SITE_DIR)
     if optimize:
