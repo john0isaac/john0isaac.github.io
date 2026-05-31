@@ -1,0 +1,95 @@
+/* CSS custom properties + light/dark theme tokens.
+ * Edit this file to recolor or rescale the site.
+ *
+ * Naming guide:
+ *   --bg / --surface / --text / --muted / --accent : semantic
+ *   --md-* : legacy MkDocs Material aliases (kept for backwards compatibility,
+ *            prefer the semantic names above for new rules)
+ *   --color-* : single-purpose accent colors
+ */
+
+:root {
+  /* Legacy MkDocs Material aliases */
+  --md-default-fg-color: #111827;
+  --md-default-fg-color--light: #6b7280;
+  --md-default-fg-color--lighter: #9ca3af;
+  --md-default-fg-color--lightest: #d1d5db;
+  --md-primary-fg-color: #3b5bcc;
+  --md-primary-bg-color: #ffffff;
+  --md-accent-fg-color: #3b5bcc;
+  --md-accent-bg-color: #ffffff;
+  --md-code-bg-color: #ffffff;
+
+  /* Semantic tokens */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-strong: #ffffff;
+  --text: var(--md-default-fg-color);
+  --muted: var(--md-default-fg-color--light);
+  --accent: var(--md-primary-fg-color);
+  --accent-strong: var(--md-primary-fg-color);
+  --border: var(--md-default-fg-color--lightest);
+
+  /* Code */
+  --code-inline-bg: rgba(30, 41, 59, 0.08);
+  --code-inline-fg: #1e293b;
+  --code-block-bg: #0f172a;
+  --code-block-fg: #e2e8f0;
+  --code-block-border: rgba(15, 23, 42, 0.14);
+  --code-bg: var(--md-code-bg-color);
+
+  /* Layout & shape */
+  --shadow: none;
+  --radius: 8px;
+  --header-height: 3.5rem;
+  --shell-max-width: 1200px;
+  --archive-width: 290px;
+  --modal-sidebar-width: 280px;
+
+  /* Glass / blurred surfaces */
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-blur: blur(14px);
+
+  /* Type */
+  --font-sans: Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "Roboto Mono", "SFMono-Regular", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* Accent flavors */
+  --color-devcontainer: #16a34a;
+  --color-talk-views: #c62828;
+
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --md-default-fg-color: #e5e7eb;
+  --md-default-fg-color--light: #9ca3af;
+  --md-default-fg-color--lighter: #6b7280;
+  --md-default-fg-color--lightest: rgba(255, 255, 255, 0.14);
+  --md-primary-fg-color: #8ca0ff;
+  --md-primary-bg-color: #0b1220;
+  --md-accent-fg-color: #8ca0ff;
+  --md-accent-bg-color: #0b1220;
+  --md-code-bg-color: #111827;
+
+  --bg: #0b1220;
+  --surface: #111827;
+  --surface-strong: #172036;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #8ca0ff;
+  --accent-strong: #b3c0ff;
+  --border: rgba(255, 255, 255, 0.14);
+
+  --code-inline-bg: rgba(148, 163, 184, 0.18);
+  --code-inline-fg: #e2e8f0;
+  --code-block-bg: #020617;
+  --code-block-fg: #e2e8f0;
+  --code-block-border: rgba(148, 163, 184, 0.2);
+
+  --shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+  --glass-bg: rgba(11, 18, 32, 0.78);
+
+  color-scheme: dark;
+}

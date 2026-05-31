@@ -3,7 +3,6 @@
   const root = document.documentElement;
   const toggle = document.querySelector("[data-theme-toggle]");
   const icon = document.querySelector("[data-theme-icon]");
-  const label = document.querySelector("[data-theme-label]");
 
   if (!toggle) {
     return;
@@ -19,11 +18,7 @@
 
     if (icon) {
       icon.className =
-        nextTheme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon";
-    }
-
-    if (label) {
-      label.textContent = nextTheme === "dark" ? "Light" : "Dark";
+        nextTheme === "dark" ? "fa-regular fa-lightbulb" : "fa-solid fa-lightbulb";
     }
 
     toggle.setAttribute("aria-label", `Switch to ${oppositeTheme} mode`);

@@ -1,19 +1,16 @@
 {% extends "base.html" %} {% block content %}
-<section class="page-header">
-  <p class="eyebrow">Talks</p>
-  <h1>{{ page.title }}</h1>
-  <p class="lede">{{ page.description }}</p>
-</section>
+{% with eyebrow='Talks' %}{% include "partials/page_header.html" %}{% endwith %}
 
 {% for year in videos | map(attribute='published') | list | map('string') |
 map('truncate', 4, true, '') | unique | list %}
 <section class="talks-section">
-  <h2 class="home-section__label">// {{ year }}</h2>
+  <h2 class="section-label home-section__label">// {{ year }}</h2>
   <div class="video-grid d-grid gap-3">
     {% for video in videos if video.published[:4] == year %}
+    {% set video_url = "https://www.youtube.com/watch?v=" ~ video.id %}
     <article class="video-card">
       <a
-        href="https://www.youtube.com/watch?v={{ video.id }}"
+        href="{{ video_url }}"
         target="_blank"
         rel="noopener noreferrer"
         class="video-card__thumb-link"
@@ -40,7 +37,7 @@ map('truncate', 4, true, '') | unique | list %}
         </div>
         <h3>
           <a
-            href="https://www.youtube.com/watch?v={{ video.id }}"
+            href="{{ video_url }}"
             target="_blank"
             rel="noopener noreferrer"
             title="{{ video.title }}"
@@ -52,7 +49,7 @@ map('truncate', 4, true, '') | unique | list %}
         {% endif %}
         <a
           class="video-watch-btn"
-          href="https://www.youtube.com/watch?v={{ video.id }}"
+          href="{{ video_url }}"
           target="_blank"
           rel="noopener noreferrer"
           >Watch</a

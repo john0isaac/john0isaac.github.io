@@ -29,7 +29,7 @@
 
 <section class="home-section" aria-label="Latest blog posts">
   <h2 class="home-section__label">// Latest Blog</h2>
-  <div class="home-cards d-grid gap-3">
+  <div class="home-cards">
     {% for post in posts[:3] %}
     <a class="home-card" href="{{ post.url }}">
       <span class="home-card__meta">{{ post.date.strftime('%b %Y') }}</span>
@@ -43,7 +43,7 @@
 
 <section class="home-section" aria-label="Popular talks">
   <h2 class="home-section__label">// Popular Talks</h2>
-  <div class="home-cards d-grid gap-3">
+  <div class="home-cards">
     {% for video in videos[:3] %}
     <a
       class="home-card"
@@ -66,31 +66,8 @@
 
 <section class="home-section home-section--connect" aria-label="Connect">
   <h2 class="home-section__label">// Connect</h2>
-  <nav class="connect__row d-flex flex-wrap gap-3" aria-label="Social links">
-    <a
-      href="https://github.com/john0isaac"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a
-    >
-    <a
-      href="https://linkedin.com/in/john0isaac"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a
-    >
-    <a
-      href="https://youtube.com/@john0isaac"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><i class="fa-brands fa-youtube" aria-hidden="true"></i> YouTube</a
-    >
-    <a
-      href="https://x.com/john00isaac"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><i class="fa-brands fa-x-twitter" aria-hidden="true"></i> X</a
-    >
+  <nav class="connect__row" aria-label="Social links">
+    {% with variant='connect' %}{% include "partials/social_links.html" %}{% endwith %}
   </nav>
 </section>
 {% endblock %}

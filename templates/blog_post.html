@@ -10,14 +10,7 @@
       <div class="post-meta">
         <span>Published {{ post.date | date_human }}</span>
         <span>{{ post.read_time_label }}</span>
-        {% if post.author_profiles %}
-        <span>
-          By {% for author in post.author_profiles %}
-          {% if author.url %}
-          <a href="{{ author.url }}" target="_blank" rel="noopener noreferrer">{{ author.name }}</a>{% else %}{{ author.name }}{% endif %}{% if not loop.last %}, {% endif %}
-          {% endfor %}
-        </span>
-        {% endif %}
+        {% include "partials/author_list.html" %}
       </div>
       {% if post.tags %}
       <p class="tag-row">

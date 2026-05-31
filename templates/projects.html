@@ -1,13 +1,9 @@
 {% extends "base.html" %} {% block content %}
-<section class="page-header">
-  <p class="eyebrow">Projects</p>
-  <h1>{{ page.title }}</h1>
-  <p class="lede">{{ page.description }}</p>
-</section>
+{% with eyebrow='Projects' %}{% include "partials/page_header.html" %}{% endwith %}
 
 {% for category in projects | map(attribute='category') | unique | list %}
 <section class="projects-section">
-  <h2 class="home-section__label">// {{ category }}</h2>
+  <h2 class="section-label home-section__label">// {{ category }}</h2>
   <div class="projects-filters" aria-hidden="true">
     <span class="filter-pill filter-pill--active">{{ category }}</span>
   </div>
@@ -29,7 +25,7 @@
         <p class="project-description" title="{{ project.description }}">{{ project.description }}</p>
         <div class="project-technologies">
           {% for tech in project.technologies %}
-          <button class="project-tech-tag" type="button">{{ tech }}</button>
+          <span class="project-tech-tag">{{ tech }}</span>
           {% endfor %}
         </div>
         <a

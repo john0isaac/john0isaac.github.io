@@ -1,0 +1,253 @@
+/* Main content wrapper, page-level section padding, base typography,
+ * buttons, prose styles, code blocks, and tables. */
+
+.main-content {
+  padding: 1.5rem 0 4rem;
+}
+
+.hero,
+.home-section,
+.page-header,
+.panel,
+.post-layout,
+.projects-section,
+.talks-section {
+  animation: rise 0.4s ease both;
+}
+
+.hero,
+.post-layout {
+  padding: 2rem 0 2rem;
+}
+
+.page-header {
+  padding: 0 0 2rem;
+}
+
+.home-section,
+.panel,
+.projects-section,
+.talks-section {
+  padding: 2.5rem 0;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.eyebrow,
+.meta {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.84rem;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.05;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-size: clamp(1.45rem, 2vw, 1.85rem);
+}
+h3 {
+  font-size: 1rem;
+}
+
+.lede {
+  max-width: 38rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.button-row {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.2rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font:
+    500 0.92rem/1 Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+.button-secondary {
+  background: var(--surface-strong);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.prose {
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.prose :not(pre) > code {
+  display: inline-block;
+  padding: 0.08rem 0.42rem;
+  border-radius: 6px;
+  background: var(--code-inline-bg);
+  color: var(--code-inline-fg);
+  font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
+  line-height: 1.45;
+}
+
+.prose pre {
+  margin: 1.1rem 0;
+  padding: 0.95rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--code-block-border);
+  background: var(--code-block-bg);
+  color: var(--code-block-fg);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.prose .code-block-wrap {
+  position: relative;
+  margin: 1.1rem 0;
+}
+
+.prose .code-block-wrap > pre {
+  margin: 0;
+}
+
+.prose pre.code-block {
+  position: relative;
+}
+
+.prose pre code {
+  display: block;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  white-space: pre;
+}
+
+.prose pre.code-block code {
+  padding-right: 6rem;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 0.58rem;
+  right: 0.58rem;
+  border: 1px solid color-mix(in srgb, var(--code-block-fg) 25%, transparent);
+  background: color-mix(in srgb, var(--code-block-bg) 72%, white 28%);
+  color: var(--code-block-fg);
+  border-radius: 8px;
+  height: 1.8rem;
+  min-width: 1.8rem;
+  padding: 0 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  opacity: 0.92;
+  z-index: 1;
+}
+
+.code-copy-btn:hover {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--code-block-fg) 45%, transparent);
+}
+
+.code-copy-btn.is-copied {
+  border-color: rgba(56, 189, 248, 0.8);
+  color: #7dd3fc;
+}
+
+.code-copy-btn i {
+  font-size: 0.78rem;
+}
+
+.prose table {
+  width: 100%;
+  margin: 1.1rem 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: table;
+  table-layout: fixed;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--surface) 96%, var(--accent) 4%);
+}
+
+.prose thead {
+  background: color-mix(in srgb, var(--surface) 90%, var(--accent) 10%);
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.prose th {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.prose td {
+  font-size: 0.92rem;
+}
+
+.prose tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--surface) 92%, var(--accent) 8%);
+}

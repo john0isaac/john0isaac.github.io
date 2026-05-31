@@ -13,12 +13,7 @@
       {% for post in posts %}
       <article class="card blog-card">
         <p class="meta">
-          {{ post.date | date_human }} - {{ post.read_time_label }} {% if post.author_profiles %}
-          - By {% for author in post.author_profiles %}
-          {% if author.url %}
-          <a href="{{ author.url }}" target="_blank" rel="noopener noreferrer">{{ author.name }}</a>{% else %}{{ author.name }}{% endif %}{% if not loop.last %}, {% endif %}
-          {% endfor %}
-          {% endif %}
+          {{ post.date | date_human }} - {{ post.read_time_label }}{% if post.author_profiles %} - {% include "partials/author_list.html" %}{% endif %}
         </p>
         <h2 class="blog-card__title">
           <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>

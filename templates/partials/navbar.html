@@ -1,0 +1,40 @@
+<header class="site-header">
+  <nav class="navbar navbar-expand-lg navbar-site">
+    <div class="shell nav-shell d-flex flex-wrap align-items-center gap-3">
+      <a class="navbar-brand brand" href="/">{{ site_name }}</a>
+      <div class="nav-actions ms-auto order-lg-2 d-flex align-items-center gap-3 flex-wrap">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark and light mode" title="Toggle dark and light mode">
+          <i class="fa-solid fa-lightbulb" aria-hidden="true" data-theme-icon></i>
+        </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primary-navigation" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse order-lg-1" id="primary-navigation">
+        <ul class="navbar-nav ms-lg-auto gap-2">
+          {% for item in navigation %}
+          {% set is_active = page.url == item.url or (item.url != '/' and page.url.startswith(item.url)) %}
+          <li class="nav-item">
+            <a class="nav-link{% if is_active %} active{% endif %}" href="{{ item.url }}"{% if is_active %} aria-current="page"{% endif %}>{{ item.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="navbar-search ms-lg-3" data-search-widget>
+          <button
+            class="navbar-search__trigger"
+            type="button"
+            data-search-open
+            aria-haspopup="dialog"
+            aria-controls="site-search-modal"
+          >
+            <span class="navbar-search__icon" aria-hidden="true">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <span class="navbar-search__placeholder">Search the site</span>
+            <span class="navbar-search__shortcut" data-search-shortcut aria-hidden="true">Ctrl K</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,91 @@
+<div
+  class="search-modal"
+  id="site-search-modal"
+  data-search-modal
+  hidden
+  aria-hidden="true"
+>
+  <button
+    class="search-modal__backdrop"
+    type="button"
+    data-search-close
+    aria-label="Close search"
+  ></button>
+  <div
+    class="search-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the site"
+  >
+    <div class="search-modal__header">
+      <div class="search-modal__bar">
+        <span class="search-modal__icon" aria-hidden="true">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+        <label class="visually-hidden" for="site-search-input">Search the site</label>
+        <input
+          id="site-search-input"
+          class="search-modal__input"
+          type="search"
+          placeholder="Search"
+          autocomplete="off"
+          data-search-input
+        />
+        <button
+          class="search-modal__filters-toggle"
+          type="button"
+          data-search-filters-toggle
+          aria-expanded="false"
+          aria-controls="site-search-filters"
+          aria-label="Toggle search filters"
+        >
+          <svg
+            class="search-modal__filters-toggle-icon"
+            viewBox="0 0 20 20"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 5.25H16"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+            />
+            <path
+              d="M8 10H16"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+            />
+            <path
+              d="M11 14.75H16"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span class="search-modal__filters-badge" data-search-filters-badge hidden>0</span>
+        </button>
+      </div>
+      <div class="search-modal__sidebar-head">
+        <p class="search-modal__filters-title">Filters</p>
+      </div>
+    </div>
+    <div class="search-modal__layout">
+      <section class="search-modal__results-pane">
+        <p class="search-modal__count" data-search-count hidden></p>
+        <div class="search-modal__results" data-search-results></div>
+      </section>
+      <aside
+        class="search-modal__filters"
+        id="site-search-filters"
+        data-search-filters
+      >
+        <div class="search-modal__filters-group">
+          <span class="search-modal__filters-label">Tags</span>
+          <div class="search-modal__filter-list" data-search-filter-list></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>

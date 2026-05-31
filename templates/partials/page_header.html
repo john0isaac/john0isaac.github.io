@@ -1,0 +1,20 @@
+{#
+  Standard page header used by simple pages (projects, talks, 404).
+  Optional vars:
+    eyebrow      — small label above title (defaults to page.title)
+    heading      — heading text (defaults to page.title)
+    description  — lede text (defaults to page.description)
+    button_label — if set, renders a button-row with this label
+    button_url   — required when button_label is set
+#}
+<section class="page-header">
+  <p class="eyebrow">{{ eyebrow | default(page.title) }}</p>
+  <h1>{{ heading | default(page.title) }}</h1>
+  {% set lede_text = description | default(page.description) %}
+  {% if lede_text %}
+  <p class="lede">{{ lede_text }}</p>
+  {% endif %}
+  {% if button_label and button_url %}
+  <p class="button-row"><a class="button" href="{{ button_url }}">{{ button_label }}</a></p>
+  {% endif %}
+</section>

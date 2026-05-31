@@ -25,7 +25,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="{{ page.title }}" />
     <meta name="twitter:description" content="{{ page.description }}" />
-    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/images/logo/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/logo/site.webmanifest" />
     <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css" />
     <link rel="stylesheet" href="/assets/styles.css" />
@@ -36,154 +40,11 @@
     <script defer src="/vendor/bootstrap/bootstrap.bundle.min.js"></script>
   </head>
   <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-lg navbar-site">
-        <div class="shell nav-shell d-flex flex-wrap align-items-center gap-3">
-          <a class="navbar-brand brand" href="/">{{ site_name }}</a>
-          <div class="nav-actions ms-auto order-lg-2 d-flex align-items-center gap-3 flex-wrap">
-            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark and light mode" title="Toggle dark and light mode">
-              <i class="fa-solid fa-circle-half-stroke" aria-hidden="true" data-theme-icon></i>
-              <span data-theme-label>Theme</span>
-            </button>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primary-navigation" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          </div>
-          <div class="collapse navbar-collapse order-lg-1" id="primary-navigation">
-            <ul class="navbar-nav ms-lg-auto gap-2">
-              {% for item in navigation %}
-              {% set is_active = page.url == item.url or (item.url != '/' and page.url.startswith(item.url)) %}
-              <li class="nav-item">
-                <a class="nav-link{% if is_active %} active{% endif %}" href="{{ item.url }}"{% if is_active %} aria-current="page"{% endif %}>{{ item.title }}</a>
-              </li>
-              {% endfor %}
-            </ul>
-            <div class="navbar-search ms-lg-3" data-search-widget>
-              <button
-                class="navbar-search__trigger"
-                type="button"
-                data-search-open
-                aria-haspopup="dialog"
-                aria-controls="site-search-modal"
-              >
-                <span class="navbar-search__icon" aria-hidden="true">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-                </span>
-                <span class="navbar-search__placeholder">Search the site</span>
-                <span class="navbar-search__shortcut" data-search-shortcut>Ctrl K</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    <div
-      class="search-modal"
-      id="site-search-modal"
-      data-search-modal
-      hidden
-      aria-hidden="true"
-    >
-      <button
-        class="search-modal__backdrop"
-        type="button"
-        data-search-close
-        aria-label="Close search"
-      ></button>
-      <div
-        class="search-modal__dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Search the site"
-      >
-        <div class="search-modal__header">
-          <div class="search-modal__bar">
-            <span class="search-modal__icon" aria-hidden="true">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </span>
-            <label class="visually-hidden" for="site-search-input">Search the site</label>
-            <input
-              id="site-search-input"
-              class="search-modal__input"
-              type="search"
-              placeholder="Search"
-              autocomplete="off"
-              data-search-input
-            />
-            <button
-              class="search-modal__filters-toggle"
-              type="button"
-              data-search-filters-toggle
-              aria-expanded="false"
-              aria-controls="site-search-filters"
-              aria-label="Toggle search filters"
-            >
-              <svg
-                class="search-modal__filters-toggle-icon"
-                viewBox="0 0 20 20"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M5 5.25H16"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                  stroke-linecap="round"
-                />
-                <path
-                  d="M8 10H16"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                  stroke-linecap="round"
-                />
-                <path
-                  d="M11 14.75H16"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <span class="search-modal__filters-badge" data-search-filters-badge hidden>0</span>
-            </button>
-          </div>
-          <div class="search-modal__sidebar-head">
-            <p class="search-modal__filters-title">Filters</p>
-          </div>
-        </div>
-        <div class="search-modal__layout">
-          <section class="search-modal__results-pane">
-            <p class="search-modal__count" data-search-count hidden></p>
-            <div class="search-modal__results" data-search-results></div>
-          </section>
-          <aside
-            class="search-modal__filters"
-            id="site-search-filters"
-            data-search-filters
-          >
-            <div class="search-modal__filters-group">
-              <span class="search-modal__filters-label">Tags</span>
-              <div class="search-modal__filter-list" data-search-filter-list></div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </div>
+    {% include "partials/navbar.html" %}
+    {% include "partials/search_modal.html" %}
 
     <main class="shell main-content">{% block content %}{% endblock %}</main>
 
-    <footer class="site-footer">
-      <div class="shell footer-row">
-        <p>&copy; {{ current_year }} {{ site_name }}</p>
-        <p class="footer-links">
-          <a href="/rss.xml" title="RSS" aria-label="RSS"><i class="fa-solid fa-square-rss" aria-hidden="true"></i><span class="visually-hidden">RSS</span></a>
-          <a href="/sitemap.xml" title="Sitemap" aria-label="Sitemap"><i class="fa-solid fa-sitemap" aria-hidden="true"></i><span class="visually-hidden">Sitemap</span></a>
-          <a href="https://github.com/john0isaac" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
-          <a href="https://linkedin.com/in/john0isaac" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a>
-          <a href="https://youtube.com/@john0isaac" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a>
-          <a href="https://x.com/john00isaac" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i><span class="visually-hidden">X</span></a>
-        </p>
-      </div>
-    </footer>
+    {% include "partials/footer.html" %}
   </body>
 </html>

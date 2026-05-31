@@ -1,0 +1,132 @@
+/* Post meta, post navigation, comments, tag chips, search box,
+ * site footer text and icon links. */
+
+.post-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+  margin: 1rem 0 0.75rem;
+}
+
+.meta a,
+.post-meta a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--muted) 70%, transparent);
+}
+
+.meta a:hover,
+.post-meta a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.post-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+}
+
+.comments-section {
+  margin: 2.5rem 0 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.comments-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+}
+
+.post-nav__link {
+  display: grid;
+  gap: 0.35rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 1rem 1.15rem;
+  text-decoration: none;
+}
+
+.post-nav__label,
+.search-count {
+  color: var(--muted);
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tag-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: rgba(59, 91, 204, 0.12);
+  color: var(--accent-strong);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.86rem;
+}
+
+.search-box {
+  display: grid;
+  gap: 0.5rem;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.search-box input {
+  padding: 0.95rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font: inherit;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+}
+
+.site-footer p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.footer-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a,
+.connect__row a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: none;
+}
+
+.footer-links a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.footer-links i,
+.connect__row i {
+  font-size: 1.15em;
+}

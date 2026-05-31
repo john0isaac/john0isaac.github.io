@@ -1,0 +1,9 @@
+{#
+  Renders a "By Author, Author2" list of a post's authors.
+  Requires: `post` variable in scope, with `post.author_profiles` iterable.
+#}
+{% if post.author_profiles %}
+<span>
+  By {% for author in post.author_profiles %}{% if author.url %}<a href="{{ author.url }}" target="_blank" rel="noopener noreferrer">{{ author.name }}</a>{% else %}{{ author.name }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}
+</span>
+{% endif %}
