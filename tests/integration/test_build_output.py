@@ -104,7 +104,7 @@ def test_search_json_is_valid_records(built_site: Path) -> None:
 
 
 def test_css_imports_are_all_copied(built_site: Path) -> None:
-    styles = _read(built_site / "assets" / "styles.css")
+    styles = _read(built_site / "assets" / "css" / "styles.css")
     imported = re.findall(r"@import\s+(?:url\()?['\"]([^'\"]+)['\"]", styles)
     assert imported, "styles.css should @import partials"
     for name in imported:
