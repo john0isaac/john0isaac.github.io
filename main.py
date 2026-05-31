@@ -22,6 +22,7 @@ import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from scripts.minify import minify_site
+from scripts.optimize import optimize_site
 
 ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
@@ -102,10 +103,14 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    subparsers.add_parser("build", help="Build the static site")
+    build_parser = subparsers.add_parser("build", help="Build the static site")
+    build_parser.add_argument("--no-minify", action="store_true", help="Skip HTML/CSS/JS minification")
+    build_parser.add_argument("--no-optimize", action="store_true", help="Skip image optimization")
     subparsers.add_parser("clean", help="Delete generated site output")
     serve_parser = subparsers.add_parser("serve", help="Build and serve the site")
     serve_parser.add_argument("--port", type=int, default=8000, help="Local HTTP port")
+    serve_parser.add_argument("--no-minify", action="store_true", help="Skip HTML/CSS/JS minification")
+    serve_parser.add_argument("--no-optimize", action="store_true", help="Skip image optimization")
     return parser.parse_args()
 
 
@@ -497,7 +502,7 @@ def blog_index_output_path(page_number: int) -> Path:
     return SITE_DIR / "blog" / "page" / str(page_number) / "index.html"
 
 
-def build_site(minify: bool = True) -> None:
+def build_site(minify: bool = True, optimize: bool = True) -> None:
     if SITE_DIR.exists():
         shutil.rmtree(SITE_DIR)
     SITE_DIR.mkdir(parents=True, exist_ok=True)
@@ -649,6 +654,8 @@ def build_site(minify: bool = True) -> None:
     copy_static_assets()
     if minify:
         minify_site(SITE_DIR)
+    if optimize:
+        optimize_site(SITE_DIR)
 
 
 def clean_site() -> None:
@@ -656,8 +663,8 @@ def clean_site() -> None:
         shutil.rmtree(SITE_DIR)
 
 
-def serve_site(port: int) -> None:
-    build_site(minify=False)
+def serve_site(port: int, minify: bool = True, optimize: bool = True) -> None:
+    build_site(minify=minify, optimize=optimize)
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(SITE_DIR))
     with bind_server(port, handler) as httpd:
         actual_port = httpd.server_address[1]
@@ -671,13 +678,13 @@ def serve_site(port: int) -> None:
 def main() -> None:
     args = parse_args()
     if args.command == "build":
-        build_site()
+        build_site(minify=not args.no_minify, optimize=not args.no_optimize)
         return
     if args.command == "clean":
         clean_site()
         return
     if args.command == "serve":
-        serve_site(args.port)
+        serve_site(args.port, minify=not args.no_minify, optimize=not args.no_optimize)
         return
     raise ValueError(f"Unknown command: {args.command}")
 

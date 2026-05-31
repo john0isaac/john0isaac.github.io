@@ -20,23 +20,30 @@ uv sync
 
 ### Running Locally
 
-Build the site:
-
-```sh
-python main.py build
-```
-
-Serve the site:
-
-```sh
-python main.py serve
-```
-
-Or use the convenience targets:
+Build the site (with minification and image optimization):
 
 ```sh
 make build
+```
+
+Serve the site locally:
+
+```sh
 make serve
+```
+
+Or run via tox directly:
+
+```sh
+tox run -e docs        # build
+tox run -e docs-auto   # serve
+```
+
+To skip minification or optimization during development:
+
+```sh
+python main.py build --no-minify --no-optimize
+python main.py serve --no-minify --no-optimize
 ```
 
 The generated output is written to `site/`.

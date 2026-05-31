@@ -7,11 +7,13 @@ maintainers = [{ name = "John Aziz", email = "johnaziz269@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "cairosvg>=2.9.0",
     "csscompressor>=0.9.5",
     "htmlmin2>=0.1.13",
     "Jinja2>=3.1.6",
     "jsmin>=3.0.1",
     "Markdown>=3.8.2",
+    "pillow>=12.2.0",
     "python-dotenv>=1.2.2",
     "PyYAML>=6.0.3",
 ]
@@ -26,11 +28,6 @@ dev = [
     "ruff",
     "tox",
     "tox-uv",
-]
-docs = [
-    "Jinja2>=3.1.6",
-    "Markdown>=3.8.2",
-    "PyYAML>=6.0.3",
 ]
 test = [
     "pytest>=8.3",
@@ -56,7 +53,7 @@ typing = [
 ]
 
 [tool.uv]
-default-groups = ["dev", "docs", "pre-commit", "typing", "test", "e2e"]
+default-groups = ["dev", "pre-commit", "typing", "test", "e2e"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -112,7 +109,6 @@ strict = true
 
 [tool.tox]
 env_list = [
-    "docs",
     "style",
     "typing",
     "test",
@@ -124,12 +120,12 @@ skip_install = true
 
 [tool.tox.env.docs]
 description = "build the site"
-dependency_groups = ["docs"]
+dependency_groups = ["dev"]
 commands = [["python", "main.py", "build"]]
 
 [tool.tox.env.docs-auto]
 description = "continuously rebuild and serve the site locally"
-dependency_groups = ["docs"]
+dependency_groups = ["dev"]
 commands = [["python", "main.py", "serve"]]
 
 [tool.tox.env.style]
@@ -147,7 +143,7 @@ commands = [
 
 [tool.tox.env.test]
 description = "run unit and integration tests with coverage"
-dependency_groups = ["docs", "test"]
+dependency_groups = ["test"]
 skip_install = true
 commands = [["pytest", {replace = "posargs", default = ["--cov", "--cov-report=term-missing"], extend = true}]]
 

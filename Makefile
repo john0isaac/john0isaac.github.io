@@ -1,14 +1,14 @@
 # Makefile for the Python static site
 
-.PHONY: all build serve clean format lint test test-unit test-integration test-e2e test-cov
+.PHONY: all build serve clean format lint test test-unit test-integration test-e2e test-cov typing
 
 all: build
 
 build:
-	python main.py build
+	tox run -e docs
 
 serve:
-	python main.py serve
+	tox run -e docs-auto
 
 clean:
 	python main.py clean
@@ -17,19 +17,22 @@ format:
 	prettier --write "**/*.{md,html,css,scss,js,json,yml,yaml}" || echo "Prettier not installed. Skipping format."
 
 lint:
-	markdownlint **/*.md || echo "markdownlint not installed. Skipping lint."
+	tox run -e style
 
 test:
-	pytest
+	tox run -e test
 
 test-unit:
-	pytest -m unit
+	tox run -e test -- -m unit
 
 test-integration:
-	pytest -m integration
+	tox run -e test -- -m integration
 
 test-cov:
-	pytest --cov --cov-report=term-missing
+	tox run -e test -- --cov --cov-report=term-missing
 
 test-e2e:
 	pytest tests/e2e
+
+typing:
+	tox run -e typing
