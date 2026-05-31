@@ -1,5 +1,6 @@
 /* Entry point — keeps the historical import path working.
  * Load order matters: variables must come first; everything else cascades. */
+@import url("/assets/fonts.css");
 @import url("/assets/variables.css");
 @import url("/assets/layout.css");
 @import url("/assets/search.css");
