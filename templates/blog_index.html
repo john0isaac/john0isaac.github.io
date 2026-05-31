@@ -29,37 +29,33 @@
     </section>
 
     {% if pagination and pagination.total_pages > 1 %}
-    <nav aria-label="Blog pagination" class="mt-4">
-      <ul class="pagination justify-content-center mb-0">
-        <li class="page-item{% if not pagination.has_previous %} disabled{% endif %}">
-          <a
-            class="page-link"
-            href="{{ pagination.previous_url if pagination.has_previous else '#' }}"
-            {% if not pagination.has_previous %}aria-disabled="true" tabindex="-1"{% endif %}
-            >Previous</a
-          >
-        </li>
+    <nav aria-label="Blog pagination" class="blog-pagination">
+      <a
+        class="blog-pagination__arrow{% if not pagination.has_previous %} is-disabled{% endif %}"
+        href="{{ pagination.previous_url if pagination.has_previous else '#' }}"
+        {% if not pagination.has_previous %}aria-disabled="true" tabindex="-1"{% endif %}
+        ><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Previous</a
+      >
 
+      <ol class="blog-pagination__pages">
         {% for item in pagination.pages %}
-        <li class="page-item{% if item.is_current %} active{% endif %}">
+        <li>
           <a
-            class="page-link"
+            class="blog-pagination__page{% if item.is_current %} is-current{% endif %}"
             href="{{ item.url }}"
             {% if item.is_current %}aria-current="page"{% endif %}
             >{{ item.number }}</a
           >
         </li>
         {% endfor %}
+      </ol>
 
-        <li class="page-item{% if not pagination.has_next %} disabled{% endif %}">
-          <a
-            class="page-link"
-            href="{{ pagination.next_url if pagination.has_next else '#' }}"
-            {% if not pagination.has_next %}aria-disabled="true" tabindex="-1"{% endif %}
-            >Next</a
-          >
-        </li>
-      </ul>
+      <a
+        class="blog-pagination__arrow{% if not pagination.has_next %} is-disabled{% endif %}"
+        href="{{ pagination.next_url if pagination.has_next else '#' }}"
+        {% if not pagination.has_next %}aria-disabled="true" tabindex="-1"{% endif %}
+        >Next <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a
+      >
     </nav>
     {% endif %}
   </div>
