@@ -1,6 +1,6 @@
 # Makefile for the Python static site
 
-.PHONY: all build serve clean format lint
+.PHONY: all build serve clean format lint test test-unit test-integration test-e2e test-cov
 
 all: build
 
@@ -18,3 +18,18 @@ format:
 
 lint:
 	markdownlint **/*.md || echo "markdownlint not installed. Skipping lint."
+
+test:
+	pytest
+
+test-unit:
+	pytest -m unit
+
+test-integration:
+	pytest -m integration
+
+test-cov:
+	pytest --cov --cov-report=term-missing
+
+test-e2e:
+	pytest tests/e2e

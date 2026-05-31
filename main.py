@@ -1,7 +1,5 @@
 """Static site generator for johnaziz.org."""
 
-from __future__ import annotations
-
 import argparse
 import datetime as dt
 import functools

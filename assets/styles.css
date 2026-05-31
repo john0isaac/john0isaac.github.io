@@ -1,10 +1,10 @@
 /* Entry point — keeps the historical import path working.
  * Load order matters: variables must come first; everything else cascades. */
-@import url("variables.css");
-@import url("layout.css");
-@import url("search.css");
-@import url("prose.css");
-@import url("post.css");
-@import url("home.css");
-@import url("blog.css");
-@import url("projects-talks.css");
+@import url("/assets/variables.css");
+@import url("/assets/layout.css");
+@import url("/assets/search.css");
+@import url("/assets/prose.css");
+@import url("/assets/post.css");
+@import url("/assets/home.css");
+@import url("/assets/blog.css");
+@import url("/assets/projects-talks.css");

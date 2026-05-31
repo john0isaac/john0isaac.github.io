@@ -11,7 +11,7 @@
 :root {
   /* Legacy MkDocs Material aliases */
   --md-default-fg-color: #111827;
-  --md-default-fg-color--light: #6b7280;
+  --md-default-fg-color--light: #5b6472;
   --md-default-fg-color--lighter: #9ca3af;
   --md-default-fg-color--lightest: #d1d5db;
   --md-primary-fg-color: #3b5bcc;
@@ -27,7 +27,7 @@
   --text: var(--md-default-fg-color);
   --muted: var(--md-default-fg-color--light);
   --accent: var(--md-primary-fg-color);
-  --accent-strong: var(--md-primary-fg-color);
+  --accent-strong: #2f49a8;
   --border: var(--md-default-fg-color--lightest);
 
   /* Code */
@@ -56,7 +56,7 @@
     "Liberation Mono", monospace;
 
   /* Accent flavors */
-  --color-devcontainer: #16a34a;
+  --color-devcontainer: #166534;
   --color-talk-views: #c62828;
 
   color-scheme: light;
@@ -90,6 +90,9 @@ html[data-theme="dark"] {
 
   --shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
   --glass-bg: rgba(11, 18, 32, 0.78);
+
+  /* Brighter accent flavor so the badge stays legible on dark surfaces */
+  --color-devcontainer: #4ade80;
 
   color-scheme: dark;
 }

@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+from typing import Any
 from urllib.request import Request, urlopen
 
 import yaml
@@ -13,7 +14,7 @@ VIDEOS_DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "videos.yml
 THUMBNAIL_URL = "https://img.youtube.com/vi/{video_id}/mqdefault.jpg"
 
 
-def _fetch_json(url: str) -> dict:
+def _fetch_json(url: str) -> Any:
     """Fetch a URL and return the parsed JSON response."""
     with urlopen(Request(url)) as resp:  # noqa: S310
         return json.loads(resp.read())
@@ -29,16 +30,16 @@ def fetch_uploads_playlist_id(api_key: str, channel_handle: str) -> str:
         raise SystemExit(f"No channel found for handle @{handle}")
 
     playlists = items[0]["contentDetails"]["relatedPlaylists"]
-    return playlists["uploads"]
+    return str(playlists["uploads"])
 
 
 def fetch_playlist_videos(
     api_key: str,
     playlist_id: str,
     max_results: int = 50,
-) -> list[dict]:
+) -> list[dict[str, Any]]:
     """Fetch videos from a playlist, handling pagination."""
-    videos: list[dict] = []
+    videos: list[dict[str, Any]] = []
     page_token = ""
 
     while len(videos) < max_results:
@@ -76,7 +77,7 @@ def fetch_playlist_videos(
     return videos
 
 
-def fetch_video_statistics(api_key: str, videos: list[dict]) -> None:
+def fetch_video_statistics(api_key: str, videos: list[dict[str, Any]]) -> None:
     """Fetch view counts for videos and add them in-place."""
     # The videos endpoint accepts up to 50 IDs per request
     for i in range(0, len(videos), 50):
@@ -90,7 +91,7 @@ def fetch_video_statistics(api_key: str, videos: list[dict]) -> None:
             video["views"] = int(stats.get("viewCount", 0))
 
 
-def write_videos_data(videos: list[dict], data_path: Path) -> None:
+def write_videos_data(videos: list[dict[str, Any]], data_path: Path) -> None:
     """Write video data as a standalone YAML file."""
     data_path.parent.mkdir(parents=True, exist_ok=True)
     with open(data_path, "w") as f:

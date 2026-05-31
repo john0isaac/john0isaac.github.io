@@ -35,6 +35,27 @@
       "command": "markdownlint **/*.md || echo 'markdownlint not installed. Skipping lint.'",
       "group": "test",
       "problemMatcher": []
+    },
+    {
+      "label": "Run Tests",
+      "type": "shell",
+      "command": "pytest",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Tests with Coverage",
+      "type": "shell",
+      "command": "pytest --cov --cov-report=term-missing",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run E2E Tests",
+      "type": "shell",
+      "command": "pytest tests/e2e",
+      "group": "test",
+      "problemMatcher": []
     }
   ]
 }

@@ -15,6 +15,18 @@
   animation: rise 0.4s ease both;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .home-section,
+  .page-header,
+  .panel,
+  .post-layout,
+  .projects-section,
+  .talks-section {
+    animation: none;
+  }
+}
+
 .hero,
 .post-layout {
   padding: 2rem 0 2rem;
