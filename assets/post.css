@@ -68,7 +68,7 @@
 }
 
 .tag {
-  background: rgba(59, 91, 204, 0.12);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
   color: var(--accent-strong);
   padding: 0.3rem 0.7rem;
   border-radius: 999px;

@@ -11,7 +11,7 @@
   z-index: 2100;
   display: grid;
   place-items: start center;
-  padding: 6rem 1.5rem 2rem;
+  padding: clamp(1rem, 8vh, 6rem) clamp(0.75rem, 3vw, 1.5rem) 2rem;
 }
 
 .search-modal__backdrop {
@@ -21,19 +21,22 @@
   top: 0;
   bottom: 0;
   border: 0;
-  background: rgba(237, 240, 245, 0.78);
+  background: var(--glass-bg);
   backdrop-filter: blur(5px);
 }
 
 .search-modal__dialog {
   position: relative;
   width: min(980px, calc(100vw - 4rem));
+  max-height: calc(100dvh - clamp(2rem, 10vh, 8rem));
   margin-top: 0;
-  background: #f8f9fb;
-  border: 1px solid #e2e5ea;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 24px;
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 24px 70px color-mix(in srgb, var(--text) 12%, transparent);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .search-modal__header {
@@ -51,8 +54,8 @@
   height: 4.25rem;
   min-height: 4.25rem;
   padding: 0 1.25rem;
-  border-bottom: 1px solid #d6dae1;
-  border-right: 1px solid #d6dae1;
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
 }
 
 .search-modal.is-filters-collapsed .search-modal__bar {
@@ -60,7 +63,7 @@
 }
 
 .search-modal__icon {
-  color: #737a87;
+  color: var(--muted);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -76,14 +79,14 @@
   min-width: 0;
   border: 0;
   background: transparent;
-  color: #3e4653;
+  color: var(--text);
   font: inherit;
   font-size: 0.98rem;
   padding: 0;
 }
 
 .search-modal__input::placeholder {
-  color: #8d94a1;
+  color: var(--muted);
 }
 
 .search-modal__input:focus-visible {
@@ -101,7 +104,7 @@
   border: 0;
   border-radius: 12px;
   background: transparent;
-  color: #737a87;
+  color: var(--muted);
 }
 
 .search-modal__filters-toggle-icon {
@@ -112,8 +115,8 @@
 
 .search-modal__filters-toggle:hover,
 .search-modal__filters-toggle[aria-expanded="true"] {
-  color: #3e4653;
-  background: rgba(62, 70, 83, 0.07);
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 7%, transparent);
 }
 
 .search-modal__sidebar-head {
@@ -131,13 +134,15 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
   height: 32rem;
+  max-height: calc(100dvh - clamp(2rem, 10vh, 8rem) - 4.25rem);
+  overflow: hidden;
   transition: grid-template-columns 0.2s ease;
 }
 
 .search-modal__results-pane {
   min-width: 0;
   padding: 0;
-  border-right: 1px solid #d6dae1;
+  border-right: 1px solid var(--border);
 }
 
 .search-modal__filters {
@@ -177,7 +182,7 @@
 
 .search-modal__filters-title {
   margin: 0;
-  color: #323845;
+  color: var(--text);
   font-size: 1.1rem;
   font-weight: 700;
 }
@@ -188,7 +193,7 @@
 }
 
 .search-modal__filters-label {
-  color: #8b929d;
+  color: var(--muted);
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -208,7 +213,7 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: #454d5a;
+  color: var(--text);
   font: inherit;
   font-size: 1rem;
   line-height: 1.2;
@@ -219,12 +224,12 @@
 
 .search-modal__filter:hover,
 .search-modal__filter.is-active {
-  color: #323845;
+  color: var(--text);
   background: transparent;
 }
 
 .search-modal__filter.is-active {
-  color: #4361ee;
+  color: var(--accent);
 }
 
 .search-modal__filter-name,
@@ -237,12 +242,12 @@
 }
 
 .search-modal__filter.is-active .search-modal__filter-count {
-  color: #4361ee;
+  color: var(--accent);
 }
 
 .search-modal__count {
   margin: 0;
-  color: #626b78;
+  color: var(--muted);
   font-size: 0.82rem;
   font-weight: 600;
   padding: 0.85rem 1.25rem 0;
@@ -251,7 +256,7 @@
 .search-modal__results {
   display: grid;
   gap: 0;
-  max-height: 29rem;
+  max-height: calc(100dvh - clamp(2rem, 10vh, 8rem) - 4.25rem - 3rem);
   overflow: auto;
 }
 
@@ -262,16 +267,16 @@
   border-radius: 0;
   text-decoration: none;
   border: 0;
-  border-bottom: 1px solid #e1e4ea;
+  border-bottom: 1px solid var(--border);
   background: transparent;
 }
 
 .navbar-search__item:hover {
-  background: rgba(55, 64, 78, 0.04);
+  background: color-mix(in srgb, var(--text) 4%, transparent);
 }
 
 .navbar-search__item.is-active {
-  background: #e6e8ec;
+  background: var(--code-inline-bg);
   border-radius: 10px;
   margin: 0.25rem 0.55rem;
   border-bottom: 0;
@@ -292,14 +297,14 @@
 }
 
 .navbar-search__item-title {
-  color: #323845;
+  color: var(--text);
   font-weight: 700;
   font-size: 1rem;
   line-height: 1.25;
 }
 
 .navbar-search__item:hover .navbar-search__item-title {
-  color: #323845;
+  color: var(--text);
 }
 
 .navbar-search__item mark {
@@ -312,7 +317,7 @@
 .navbar-search__item-meta,
 .navbar-search__item-desc,
 .navbar-search__empty {
-  color: #66707f;
+  color: var(--muted);
   font-size: 0.85rem;
 }
 
@@ -342,7 +347,7 @@
   justify-content: center;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
   font-size: 0.66rem;
   font-weight: 700;
   line-height: 1;
@@ -370,28 +375,9 @@
 }
 
 @media (max-width: 991.98px) {
-  .nav-shell {
-    flex-wrap: wrap;
-  }
-
-  .navbar-site .navbar-collapse {
-    width: 100%;
-    order: 3;
-    padding-top: 0.75rem;
-  }
-
-  .navbar-site .navbar-nav {
-    gap: 0;
-    padding: 0.75rem 0 0;
-  }
-
-  .navbar-site .nav-link {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   .search-modal__dialog {
-    width: min(100%, calc(100vw - 1.5rem));
+    width: min(100%, calc(100vw - 2rem));
+    border-radius: 16px;
   }
 
   .search-modal__header {
@@ -404,6 +390,7 @@
 
   .search-modal__layout {
     grid-template-columns: 1fr;
+    height: auto;
     min-height: auto;
   }
 
@@ -412,8 +399,12 @@
     border-right: 0;
   }
 
+  .search-modal__results {
+    max-height: calc(100dvh - clamp(2rem, 8vh, 5rem) - 4.25rem - 2rem);
+  }
+
   .search-modal__filters {
-    padding: 1rem 0 0;
+    padding: 1rem 0.55rem 0;
     border-top: 1px solid var(--border);
   }
 
@@ -421,6 +412,21 @@
     padding-left: 0.55rem;
     padding-right: 0.55rem;
   }
+}
 
+@media (max-width: 479px) {
+  .search-modal__dialog {
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 85dvh;
+  }
 
+  .search-modal {
+    place-items: end center;
+    padding: 0;
+  }
 }

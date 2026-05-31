@@ -116,7 +116,7 @@ h3 {
   padding: 0.9rem 1.2rem;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
   text-decoration: none;
   font:
     500 0.92rem/1 Roboto,
@@ -216,8 +216,8 @@ h3 {
 }
 
 .code-copy-btn.is-copied {
-  border-color: rgba(56, 189, 248, 0.8);
-  color: #7dd3fc;
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  color: var(--accent-strong);
 }
 
 .code-copy-btn i {

@@ -13,7 +13,7 @@
 .filter-pill--active {
   background: var(--accent);
   border-color: var(--accent);
-  color: #ffffff;
+  color: var(--bg);
 }
 
 .projects-filters {
@@ -147,7 +147,7 @@
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #000;
+  background: var(--code-block-bg);
 }
 
 .video-card__thumb {
@@ -173,7 +173,7 @@
   justify-content: center;
   opacity: 0;
   transition: opacity 0.22s;
-  color: #fff;
+  color: var(--code-block-fg);
   font-size: 2rem;
 }
 

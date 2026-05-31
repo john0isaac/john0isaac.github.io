@@ -18,7 +18,7 @@
 
     if (icon) {
       icon.className =
-        nextTheme === "dark" ? "fa-regular fa-lightbulb" : "fa-solid fa-lightbulb";
+        nextTheme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon";
     }
 
     toggle.setAttribute("aria-label", `Switch to ${oppositeTheme} mode`);
