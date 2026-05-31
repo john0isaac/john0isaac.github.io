@@ -21,6 +21,8 @@ import markdown
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+from scripts.minify import minify_site
+
 ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
 DATA_DIR = ROOT_DIR / "data"
@@ -495,7 +497,7 @@ def blog_index_output_path(page_number: int) -> Path:
     return SITE_DIR / "blog" / "page" / str(page_number) / "index.html"
 
 
-def build_site() -> None:
+def build_site(minify: bool = True) -> None:
     if SITE_DIR.exists():
         shutil.rmtree(SITE_DIR)
     SITE_DIR.mkdir(parents=True, exist_ok=True)
@@ -645,6 +647,8 @@ def build_site() -> None:
     )
     write_text(SITE_DIR / "sitemap.xml", build_sitemap(sitemap_urls))
     copy_static_assets()
+    if minify:
+        minify_site(SITE_DIR)
 
 
 def clean_site() -> None:
@@ -653,7 +657,7 @@ def clean_site() -> None:
 
 
 def serve_site(port: int) -> None:
-    build_site()
+    build_site(minify=False)
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(SITE_DIR))
     with bind_server(port, handler) as httpd:
         actual_port = httpd.server_address[1]

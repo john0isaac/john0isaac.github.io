@@ -7,7 +7,10 @@ maintainers = [{ name = "John Aziz", email = "johnaziz269@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "csscompressor>=0.9.5",
+    "htmlmin2>=0.1.13",
     "Jinja2>=3.1.6",
+    "jsmin>=3.0.1",
     "Markdown>=3.8.2",
     "python-dotenv>=1.2.2",
     "PyYAML>=6.0.3",
@@ -53,7 +56,7 @@ typing = [
 ]
 
 [tool.uv]
-default-groups = ["dev", "docs", "pre-commit", "typing"]
+default-groups = ["dev", "docs", "pre-commit", "typing", "test", "e2e"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
