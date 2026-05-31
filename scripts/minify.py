@@ -2,31 +2,33 @@
 
 from pathlib import Path
 
-import csscompressor
-import htmlmin
-import jsmin as jsmin_module
+import csscompressor  # type: ignore[import-untyped]
+import htmlmin  # type: ignore[import-untyped]
+import jsmin as jsmin_module  # type: ignore[import-untyped]
 
 
 def minify_html(content: str) -> str:
-    return htmlmin.minify(
-        content,
-        remove_comments=False,
-        remove_empty_space=True,
-        remove_all_empty_space=False,
-        reduce_empty_attributes=True,
-        reduce_boolean_attributes=False,
-        remove_optional_attribute_quotes=True,
-        convert_charrefs=True,
-        keep_pre=True,
+    return str(
+        htmlmin.minify(
+            content,
+            remove_comments=False,
+            remove_empty_space=True,
+            remove_all_empty_space=False,
+            reduce_empty_attributes=True,
+            reduce_boolean_attributes=False,
+            remove_optional_attribute_quotes=True,
+            convert_charrefs=True,
+            keep_pre=True,
+        )
     )
 
 
 def minify_css(content: str) -> str:
-    return csscompressor.compress(content)
+    return str(csscompressor.compress(content))
 
 
 def minify_js(content: str) -> str:
-    return jsmin_module.jsmin(content, quote_chars="'\"`")
+    return str(jsmin_module.jsmin(content, quote_chars="'\"\\`"))
 
 
 def minify_site(site_dir: Path) -> None:
