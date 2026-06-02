@@ -28,6 +28,7 @@ dev = [
     "ruff",
     "tox",
     "tox-uv",
+    "watchfiles",
 ]
 test = [
     "pytest>=8.3",
@@ -124,9 +125,9 @@ dependency_groups = ["dev"]
 commands = [["python", "main.py", "build"]]
 
 [tool.tox.env.docs-auto]
-description = "continuously rebuild and serve the site locally"
+description = "continuously rebuild and serve the site locally with live reload"
 dependency_groups = ["dev"]
-commands = [["python", "main.py", "serve"]]
+commands = [["python", "dev.py"]]
 
 [tool.tox.env.style]
 description = "run all pre-commit hooks on all files"
