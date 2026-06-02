@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin
 
-from .constants import SITE_URL
+from .constants import GITHUB_REPO, ROOT_DIR, SITE_URL
 
 
 @dataclass(slots=True)
@@ -48,6 +48,20 @@ class Post:
     @property
     def absolute_url(self) -> str:
         return urljoin(f"{SITE_URL}/", self.url.lstrip("/"))
+
+    @property
+    def github_view_url(self) -> str:
+        if self.source_path is None:
+            return ""
+        rel = self.source_path.relative_to(ROOT_DIR).as_posix()
+        return f"https://github.com/{GITHUB_REPO}/blob/main/{rel}"
+
+    @property
+    def github_edit_url(self) -> str:
+        if self.source_path is None:
+            return ""
+        rel = self.source_path.relative_to(ROOT_DIR).as_posix()
+        return f"https://github.com/{GITHUB_REPO}/edit/main/{rel}"
 
     @property
     def rss_date(self) -> str:

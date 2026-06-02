@@ -4,7 +4,25 @@
 
   <div class="blog-layout__content">
     <article class="post-layout">
-      <p class="eyebrow">{{ post.date | date_human }}</p>
+      <div class="post-eyebrow">
+        <p class="eyebrow">{{ post.date | date_human }}</p>
+        {% if post.github_view_url %}
+        <div class="post-github-actions">
+          <a href="{{ post.github_view_url }}" target="_blank" rel="noopener noreferrer" class="post-github-link" aria-label="View source on GitHub">
+            {% include "icons/eye.svg" %}
+            <span class="post-github-label">View source</span>
+          </a>
+          <a href="{{ post.github_edit_url }}" target="_blank" rel="noopener noreferrer" class="post-github-link" aria-label="Edit on GitHub">
+            {% include "icons/pencil.svg" %}
+            <span class="post-github-label">Edit on GitHub</span>
+          </a>
+          <button type="button" class="post-github-link post-copy-md" aria-label="Copy as Markdown" id="copy-md-btn">
+            {% include "icons/copy.svg" %}
+            <span class="post-github-label">Copy as Markdown</span>
+          </button>
+        </div>
+        {% endif %}
+      </div>
       <h1>{{ post.title }}</h1>
       <p class="lede">{{ post.description }}</p>
       <div class="post-meta">
@@ -21,6 +39,27 @@
       {% endif %}
       <div class="prose">{{ post.content_html | safe }}</div>
     </article>
+
+    <script type="application/json" id="post-markdown">{{ post.body_markdown | tojson }}</script>
+    <script>
+      document.getElementById('copy-md-btn')?.addEventListener('click', async function () {
+        const md = JSON.parse(document.getElementById('post-markdown').textContent);
+        const icon = this.querySelector('svg');
+        try {
+          await navigator.clipboard.writeText(md);
+        } catch {
+          const ta = Object.assign(document.createElement('textarea'), { value: md, readOnly: true });
+          ta.style.cssText = 'position:absolute;left:-9999px';
+          document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+        }
+        icon.innerHTML = '<path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/>';
+        this.setAttribute('aria-label', 'Copied!');
+        setTimeout(() => {
+          icon.innerHTML = '<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>';
+          this.setAttribute('aria-label', 'Copy as Markdown');
+        }, 2000);
+      });
+    </script>
 
     {% if post.metadata.comments %} {% include "partials/comments.html" %} {% endif
     %} {% if related_posts %}

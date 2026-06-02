@@ -5,6 +5,7 @@
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  align-items: center;
   color: var(--muted);
   font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 0.9rem;
@@ -34,6 +35,72 @@
 .post-meta a:hover {
   color: var(--accent);
   border-bottom-color: var(--accent);
+}
+
+.post-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post-eyebrow .eyebrow {
+  margin: 0;
+}
+
+.post-github-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+}
+
+.post-github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-bottom: none !important;
+}
+
+.post-copy-md {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--accent);
+}
+
+.post-github-actions svg {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.post-github-label {
+  position: absolute;
+  bottom: calc(100% + 0.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  padding: 0.25rem 0.5rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.post-github-link {
+  position: relative;
+}
+
+.post-github-link:hover .post-github-label,
+.post-github-link:focus-visible .post-github-label {
+  opacity: 1;
 }
 
 .post-nav {

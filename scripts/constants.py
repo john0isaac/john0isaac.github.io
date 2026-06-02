@@ -11,6 +11,7 @@ VENDOR_DIR = ROOT_DIR / "vendor"
 
 SITE_NAME = "John Aziz"
 SITE_URL = "https://johnaziz.org"
+GITHUB_REPO = "john0isaac/john0isaac.github.io"
 AUTHOR = "John Aziz"
 FRONT_MATTER_RE = re.compile(r"\A---\s*\n(.*?)\n---\s*\n?", re.DOTALL)
 DATE_PREFIX_RE = re.compile(r"^(\d{4})-(\d{2})-(\d{2})-(.+)$")
