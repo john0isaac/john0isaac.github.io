@@ -29,14 +29,14 @@ function initBlogArchive() {
 
     const setOpen = (open) => {
       layout.classList.toggle("is-archive-open", open);
-      openBtn.classList.toggle("is-hidden", open);
-      toggle.setAttribute("aria-expanded", String(open));
-      toggle.setAttribute("aria-label", open ? "Close blog archive" : "Open blog archive");
-      toggle.setAttribute("title", open ? "Close blog archive" : "Open blog archive");
-      const icon = toggle.querySelector("i");
-      if (icon) {
-        icon.className = open ? "fa-solid fa-chevron-left" : "fa-solid fa-chevron-right";
+      openBtn.classList.toggle("is-open", open);
+      const openBtnIcon = openBtn.querySelector("i");
+      if (openBtnIcon) {
+        openBtnIcon.className = open ? "fa-solid fa-chevron-left" : "fa-solid fa-chevron-right";
       }
+      openBtn.setAttribute("aria-label", open ? "Close blog archive" : "Open blog archive");
+      openBtn.setAttribute("title", open ? "Close blog archive" : "Open blog archive");
+      toggle.setAttribute("aria-expanded", String(open));
       if (open) expandActiveBranch();
     };
 
@@ -55,8 +55,9 @@ function initBlogArchive() {
     });
 
     openBtn.addEventListener("click", () => {
-      setOpen(true);
-      window.localStorage.setItem(storageKey, "true");
+      const open = !layout.classList.contains("is-archive-open");
+      setOpen(open);
+      window.localStorage.setItem(storageKey, String(open));
     });
 
     document.addEventListener("keydown", (e) => {
