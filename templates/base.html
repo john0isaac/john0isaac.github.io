@@ -6,12 +6,29 @@
     <meta name="color-scheme" content="light dark" />
     <script>
       (() => {
+        // Disable browser's built-in scroll restoration (it jitters due to fixed
+        // navbar + font layout shifts). We handle it manually below instead.
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
         const storedTheme = localStorage.getItem('theme');
         const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         const theme = storedTheme || preferredTheme;
 
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
+
+        // Save scroll position per URL before the page unloads.
+        window.addEventListener('pagehide', () => {
+          sessionStorage.setItem('scrollY:' + location.pathname, String(window.scrollY));
+        });
+
+        // Restore after fonts are ready so layout shifts don't throw it off.
+        document.fonts.ready.then(() => {
+          const saved = sessionStorage.getItem('scrollY:' + location.pathname);
+          if (saved !== null) {
+            window.scrollTo({ top: parseInt(saved, 10), behavior: 'instant' });
+          }
+        });
       })();
     </script>
     <title>{% if page.title and page.title != site_name %}{{ page.title }} | {% endif %}{{ site_name }}</title>
