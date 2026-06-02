@@ -15,6 +15,8 @@ import threading
 from pathlib import Path
 from typing import Any
 
+import watchfiles  # type: ignore[import-not-found]
+
 import main as site
 from scripts.constants import ASSETS_DIR, DATA_DIR, SITE_DIR, SRC_DIR, TEMPLATES_DIR
 
@@ -54,7 +56,7 @@ class DevHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, directory=str(SITE_DIR), **kwargs)
 
-    def do_GET(self) -> None:  # type: ignore[override]
+    def do_GET(self) -> None:
         if self.path == "/__livereload__":
             self._sse()
             return
@@ -110,12 +112,11 @@ class DevHandler(http.server.SimpleHTTPRequestHandler):
 
 
 def _watch(minify: bool, optimize: bool) -> None:
-    from watchfiles import watch
 
     def _filter(_change: Any, path: str) -> bool:
         return Path(path).suffix in WATCH_EXTENSIONS
 
-    for _changes in watch(*WATCH_DIRS, watch_filter=_filter):
+    for _changes in watchfiles.watch(*WATCH_DIRS, watch_filter=_filter):
         print("\nChange detected — rebuilding...")
         try:
             site.build_site(minify=minify, optimize=optimize)
