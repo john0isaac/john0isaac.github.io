@@ -1,6 +1,6 @@
 [project]
 name = "john0isaac-github-io"
-description = "John Aziz - Senior AI Software Engineer and Microsoft MVP. Personal website and blog."
+description = "John Aziz - Senior Software Engineer. Personal website and blog."
 version = "0.1.0"
 authors = [{ name = "John Aziz", email = "johnaziz269@gmail.com" }]
 maintainers = [{ name = "John Aziz", email = "johnaziz269@gmail.com" }]
