@@ -203,9 +203,11 @@ def collect_posts() -> list[Post]:
         post_date = date_from_value(metadata["date"])
         updated_meta = metadata.get("updated")
         if updated_meta is not None:
-            updated = date_from_value(updated_meta)
+            updated: dt.date | None = date_from_value(updated_meta)
         else:
             updated = git_last_modified_date(source_path)
+            if not updated:
+                updated = post_date
         url = f"/blog/{slug}/"
         posts.append(
             Post(
