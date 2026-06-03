@@ -102,12 +102,12 @@ class TestGenerateSocialCard:
             fonts_dir=_FONTS_DIR,
             cache_dir=cache_dir,
         )
-        # First call — populates the cache
+        # First call - populates the cache
         dest1 = tmp_path / "out1" / "card.png"
         generate_social_card(dest_path=dest1, **kwargs)
         assert dest1.is_file()
 
-        # Second call with same inputs — should copy from cache, not re-render
+        # Second call with same inputs - should copy from cache, not re-render
         dest2 = tmp_path / "out2" / "card.png"
         with patch("scripts.social._generate_card_image") as mock_render:
             generate_social_card(dest_path=dest2, **kwargs)

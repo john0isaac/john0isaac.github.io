@@ -100,9 +100,9 @@ brew "lsusb"      # List USB devices
 
 ### AI Tools
 
-- [Claude](https://claude.ai/) — Anthropic's AI assistant
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — CLI coding agent
-- [Copilot CLI](https://githubnext.com/projects/copilot-cli) — GitHub Copilot in the terminal
+- [Claude](https://claude.ai/) - Anthropic's AI assistant
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) - CLI coding agent
+- [Copilot CLI](https://githubnext.com/projects/copilot-cli) - GitHub Copilot in the terminal
 
 ```ruby
 cask "claude"
@@ -112,11 +112,11 @@ cask "copilot-cli"
 
 ### Development
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) — Containers
-- [iTerm2](https://iterm2.com/) — Terminal emulator
-- [Postman](https://www.postman.com/) — API testing
-- [Visual Studio Code](https://code.visualstudio.com/) — Code editor
-- [Temurin](https://adoptium.net/) — Open-source Java runtime
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) - Containers
+- [iTerm2](https://iterm2.com/) - Terminal emulator
+- [Postman](https://www.postman.com/) - API testing
+- [Visual Studio Code](https://code.visualstudio.com/) - Code editor
+- [Temurin](https://adoptium.net/) - Open-source Java runtime
 
 ```ruby
 cask "docker-desktop"
@@ -138,8 +138,8 @@ cask "microsoft-edge"
 
 ### Media & Streaming
 
-- [OBS](https://obsproject.com/) — Screen recording & streaming
-- [VLC](https://www.videolan.org/vlc/) — Media player
+- [OBS](https://obsproject.com/) - Screen recording & streaming
+- [VLC](https://www.videolan.org/vlc/) - Media player
 
 ```ruby
 cask "obs"
@@ -148,12 +148,12 @@ cask "vlc"
 
 ### Utilities
 
-- [KeyCastr](https://github.com/keycastr/keycastr) — Keystroke visualizer for screencasts
-- [Maccy](https://maccy.app/) — Clipboard manager
-- [RAR](https://www.win-rar.com/) — Archive tool
-- [The Unarchiver](https://theunarchiver.com/) — Archive extractor
-- [Transmission](https://transmissionbt.com/) — BitTorrent client
-- [wkhtmltopdf](https://wkhtmltopdf.org/) — HTML to PDF converter
+- [KeyCastr](https://github.com/keycastr/keycastr) - Keystroke visualizer for screencasts
+- [Maccy](https://maccy.app/) - Clipboard manager
+- [RAR](https://www.win-rar.com/) - Archive tool
+- [The Unarchiver](https://theunarchiver.com/) - Archive extractor
+- [Transmission](https://transmissionbt.com/) - BitTorrent client
+- [wkhtmltopdf](https://wkhtmltopdf.org/) - HTML to PDF converter
 
 ```ruby
 cask "keycastr"
@@ -167,7 +167,7 @@ cask "wkhtmltopdf"
 ### Communication
 
 - [Discord](https://discord.com/)
-- [TeamViewer](https://www.teamviewer.com/) — Remote desktop
+- [TeamViewer](https://www.teamviewer.com/) - Remote desktop
 
 ```ruby
 cask "discord"

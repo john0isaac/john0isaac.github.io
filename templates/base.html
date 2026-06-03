@@ -31,15 +31,18 @@
         });
       })();
     </script>
-    <title>{% if page.title and page.title != site_name %}{{ page.title }} | {% endif %}{{ site_name }}</title>
+    <title>{% if page.title and page.title != site_name and site_name not in page.title %}{{ page.title }} | {{ site_name }}{% elif page.title %}{{ page.title }}{% else %}{{ site_name }}{% endif %}</title>
     <meta name="description" content="{{ page.description }}" />
+    <meta name="author" content="{{ author_name }}" />
     <link rel="canonical" href="{{ page.absolute_url }}" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:description" content="{{ page.description }}" />
     <meta property="og:url" content="{{ page.absolute_url }}" />
     <meta property="og:site_name" content="{{ site_name }}" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="{{ twitter_handle }}" />
+    <meta name="twitter:creator" content="{{ twitter_handle }}" />
     <meta name="twitter:title" content="{{ page.title }}" />
     <meta name="twitter:description" content="{{ page.description }}" />
     {% if page.social_card_url %}
@@ -49,6 +52,32 @@
     <meta property="og:image:height" content="630" />
     <meta name="twitter:image" content="{{ site_url }}{{ page.social_card_url }}" />
     {% endif %}
+    {% block structured_data %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": {{ (site_url ~ "/#person") | tojson }},
+          "name": {{ author_name | tojson }},
+          "url": {{ (site_url ~ "/") | tojson }},
+          "image": {{ (site_url ~ author_image) | tojson }},
+          "jobTitle": {{ author_job_title | tojson }},
+          "description": {{ author_bio | tojson }},
+          "sameAs": {{ same_as_links | tojson }}
+        },
+        {
+          "@type": "WebSite",
+          "@id": {{ (site_url ~ "/#website") | tojson }},
+          "url": {{ (site_url ~ "/") | tojson }},
+          "name": {{ site_name | tojson }},
+          "publisher": { "@id": {{ (site_url ~ "/#person") | tojson }} }
+        }
+      ]
+    }
+    </script>
+    {% endblock %}
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/favicon-16x16.png" />
     <link rel="shortcut icon" href="/images/logo/favicon.ico" />

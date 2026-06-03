@@ -145,3 +145,66 @@ def test_blog_post_has_og_image_meta(built_site: Path) -> None:
     content = og_image.get("content", "")
     assert "/assets/social/" in content, f"og:image should point to social card: {content}"
     assert content.endswith(".png"), f"og:image should be a PNG: {content}"
+
+
+def _post_pages(built_site: Path) -> list[Path]:
+    return [
+        path
+        for path in (built_site / "blog").rglob("index.html")
+        if "page" not in path.parts and path.parent.name != "blog"
+    ]
+
+
+def _json_ld(soup: BeautifulSoup) -> list[dict]:
+    blocks = soup.find_all("script", attrs={"type": "application/ld+json"})
+    return [json.loads(block.string) for block in blocks]
+
+
+def test_home_has_person_and_website_schema(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "index.html"), "html.parser")
+    graphs = _json_ld(soup)
+    assert graphs, "home page should embed JSON-LD"
+    nodes = graphs[0]["@graph"]
+    types = {node["@type"] for node in nodes}
+    assert {"Person", "WebSite"} <= types
+    person = next(node for node in nodes if node["@type"] == "Person")
+    assert person["name"]
+    assert person["sameAs"], "Person should list sameAs profile links"
+
+
+def test_blog_post_has_article_and_breadcrumb_schema(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(_post_pages(built_site)[0]), "html.parser")
+    nodes = _json_ld(soup)[0]["@graph"]
+    types = {node["@type"] for node in nodes}
+    assert {"BlogPosting", "BreadcrumbList"} <= types
+    article = next(node for node in nodes if node["@type"] == "BlogPosting")
+    assert article["author"]["@type"] == "Person"
+    assert article["datePublished"]
+    assert article["dateModified"]
+
+
+def test_blog_post_og_type_is_article(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(_post_pages(built_site)[0]), "html.parser")
+    og_type = soup.find("meta", attrs={"property": "og:type"})
+    assert og_type is not None
+    assert og_type.get("content") == "article"
+
+
+def test_pages_have_author_and_twitter_creator(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "index.html"), "html.parser")
+    assert soup.find("meta", attrs={"name": "author"}) is not None
+    creator = soup.find("meta", attrs={"name": "twitter:creator"})
+    assert creator is not None
+    assert creator.get("content", "").startswith("@")
+
+
+def test_sitemap_has_lastmod(built_site: Path) -> None:
+    sitemap = _read(built_site / "sitemap.xml")
+    assert "<lastmod>" in sitemap
+    assert "<changefreq>" in sitemap
+
+
+def test_rss_has_creator_and_categories(built_site: Path) -> None:
+    rss = _read(built_site / "rss.xml")
+    assert "<dc:creator>" in rss
+    assert "<category>" in rss

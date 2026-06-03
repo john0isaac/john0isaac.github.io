@@ -1,4 +1,4 @@
-/* Self-hosted Roboto — served from /vendor/fonts/static/.
+/* Self-hosted Roboto - served from /vendor/fonts/static/.
    Using font-display: swap keeps text visible while the font loads.
    The browser only downloads a weight when it is actually needed,
    so declaring all variants here adds no extra network cost. */

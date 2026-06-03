@@ -57,7 +57,7 @@ def _optimize_png_pngquant(path: Path, speed: int) -> None:
     )
     if tmp.exists():
         tmp.replace(path)
-    # If pngquant didn't write the file, the original was already optimal —
+    # If pngquant didn't write the file, the original was already optimal -
     # leave it unchanged.
 
 

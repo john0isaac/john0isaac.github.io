@@ -40,7 +40,7 @@ Install [NVM](https://github.com/nvm-sh/nvm):
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 ```
 
-## Login Shell — .zprofile
+## Login Shell - .zprofile
 
 The [.zprofile](./.zprofile) runs once per login session and sets up Homebrew, NVM, and rbenv.
 
@@ -55,7 +55,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 ```
 
-## Interactive Shell — .zshrc
+## Interactive Shell - .zshrc
 
 The [.zshrc](./.zshrc) runs on every new terminal window.
 
@@ -108,7 +108,7 @@ source ~/myaliases.zsh
 | `zsh-syntax-highlighting` | Highlights commands as you type                       |
 | `zsh-autosuggestions`     | Suggests commands from history as you type            |
 
-### Theme — Pure
+### Theme - Pure
 
 [Pure](https://github.com/sindresorhus/pure) is a minimal and fast Zsh prompt.
 `ZSH_THEME` is set to empty because Pure uses Zsh's built-in `promptinit`
@@ -116,11 +116,11 @@ system instead of Oh My Zsh's theme engine.
 
 ### Version Managers
 
-- **pyenv** — manages Python versions, initialized in `.zshrc`
-- **rbenv** — manages Ruby versions, initialized in `.zprofile`
-- **nvm** — manages Node.js versions, initialized in `.zprofile`
+- **pyenv** - manages Python versions, initialized in `.zshrc`
+- **rbenv** - manages Ruby versions, initialized in `.zprofile`
+- **nvm** - manages Node.js versions, initialized in `.zprofile`
 
-## Custom Aliases — myaliases.zsh
+## Custom Aliases - myaliases.zsh
 
 The [myaliases.zsh](./myaliases.zsh) file is sourced at the end of `.zshrc`.
 

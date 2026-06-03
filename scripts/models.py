@@ -41,6 +41,7 @@ class Post:
     authors: list[str] = field(default_factory=list)
     author_profiles: list[dict[str, str]] = field(default_factory=list)
     read_time_minutes: int = 1
+    updated: dt.date | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
     source_path: Path | None = None
     social_card_url: str = ""
@@ -48,6 +49,14 @@ class Post:
     @property
     def absolute_url(self) -> str:
         return urljoin(f"{SITE_URL}/", self.url.lstrip("/"))
+
+    @property
+    def last_modified(self) -> dt.date:
+        return self.updated or self.date
+
+    @property
+    def is_updated(self) -> bool:
+        return self.last_modified > self.date
 
     @property
     def github_view_url(self) -> str:

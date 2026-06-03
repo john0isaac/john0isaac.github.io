@@ -35,6 +35,7 @@ def _make_post(
     title: str = "Sample",
     slug: str = "sample",
     date: dt.date | None = None,
+    updated: dt.date | None = None,
     tags: list[str] | None = None,
     categories: list[str] | None = None,
     authors: list[str] | None = None,
@@ -54,6 +55,7 @@ def _make_post(
         categories=categories or [],
         tags=tags or [],
         authors=authors or [],
+        updated=updated,
     )
 
 

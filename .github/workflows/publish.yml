@@ -61,6 +61,11 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+          # Full history is required so `git log` can resolve the real
+          # last-modified date of each post (used for sitemap lastmod and
+          # schema.org dateModified). A shallow clone would report the same
+          # date for every file.
+          fetch-depth: 0
       - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
           enable-cache: true

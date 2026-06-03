@@ -34,7 +34,7 @@ def minify_js(content: str) -> str:
 def minify_site(site_dir: Path) -> None:
     """Minify all HTML, CSS, and JS files in the built site directory in-place.
 
-    Files already named *.min.css / *.min.js are skipped — they are
+    Files already named *.min.css / *.min.js are skipped - they are
     pre-minified vendor assets (Bootstrap, FontAwesome, etc.).
     """
     for path in site_dir.rglob("*.html"):

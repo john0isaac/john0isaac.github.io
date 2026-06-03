@@ -48,7 +48,7 @@ def _wrap_text(
 
 def _compute_hash(title: str, description: str, site_name: str) -> str:
     data = f"{title}|{description}|{site_name}"
-    return hashlib.sha1(data.encode()).hexdigest()  # noqa: S324 — not security-sensitive
+    return hashlib.sha1(data.encode()).hexdigest()  # noqa: S324 - not security-sensitive
 
 
 def _generate_card_image(
@@ -64,7 +64,7 @@ def _generate_card_image(
     # Accent bar at the bottom
     draw.rectangle([(0, CARD_HEIGHT - 8), (CARD_WIDTH, CARD_HEIGHT)], fill=_ACCENT_COLOR)
 
-    # Logo — top-right corner
+    # Logo - top-right corner
     image.paste(logo_img, (1072, 48), logo_img if logo_img.mode == "RGBA" else None)
 
     # Fonts
@@ -75,14 +75,14 @@ def _generate_card_image(
     # Site name
     draw.text((48, 60), site_name, font=font_regular_sm, fill=_MUTED_COLOR)
 
-    # Title — up to 3 lines
+    # Title - up to 3 lines
     title_lines = _wrap_text(draw, title, font_bold, max_width=1104)[:3]
     y = 160
     for line in title_lines:
         draw.text((48, y), line, font=font_bold, fill=_TITLE_COLOR)
         y += 70  # ~56pt + leading
 
-    # Description — up to 2 lines
+    # Description - up to 2 lines
     if description:
         desc_lines = _wrap_text(draw, description, font_regular_lg, max_width=960)[:2]
         y = 490

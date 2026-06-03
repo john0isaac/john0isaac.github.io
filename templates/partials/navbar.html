@@ -1,7 +1,7 @@
 <header class="site-header">
   <nav class="site-nav" aria-label="Primary">
     <div class="shell nav-shell">
-      <!-- Hamburger — visible only on mobile -->
+      <!-- Hamburger - visible only on mobile -->
       <button class="nav-toggler" type="button" data-nav-open aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-drawer">
         <span class="nav-toggler__bar"></span>
         <span class="nav-toggler__bar"></span>
@@ -10,7 +10,7 @@
 
       <a class="brand" href="/">{{ site_name }}</a>
 
-      <!-- Desktop nav links — hidden on mobile -->
+      <!-- Desktop nav links - hidden on mobile -->
       <ul class="nav-list" role="list">
         {% for item in navigation %}
         {% set is_active = page.url == item.url or (item.url != '/' and page.url.startswith(item.url)) %}

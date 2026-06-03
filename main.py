@@ -23,6 +23,9 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from scripts.constants import (
     ASSETS_DIR,
     AUTHOR,
+    AUTHOR_BIO,
+    AUTHOR_IMAGE,
+    AUTHOR_JOB_TITLE,
     BLOG_POSTS_PER_PAGE,
     DATA_DIR,
     DATE_PREFIX_RE,
@@ -30,13 +33,16 @@ from scripts.constants import (
     FRONT_MATTER_RE,
     MARKDOWN_EXTENSIONS,
     ROOT_DIR,
+    SAME_AS_LINKS,
     SITE_DIR,
     SITE_NAME,
     SITE_URL,
     SRC_DIR,
     TEMPLATES_DIR,
+    TWITTER_HANDLE,
     VENDOR_DIR,
 )
+from scripts.gitinfo import git_last_modified_date
 from scripts.minify import minify_site
 from scripts.models import Page, Post
 from scripts.optimize import optimize_site
@@ -195,6 +201,11 @@ def collect_posts() -> list[Post]:
         excerpt_markdown, full_markdown = split_excerpt(body)
         slug = post_slug(source_path, metadata)
         post_date = date_from_value(metadata["date"])
+        updated_meta = metadata.get("updated")
+        if updated_meta is not None:
+            updated = date_from_value(updated_meta)
+        else:
+            updated = git_last_modified_date(source_path)
         url = f"/blog/{slug}/"
         posts.append(
             Post(
@@ -211,6 +222,7 @@ def collect_posts() -> list[Post]:
                 tags=list(metadata.get("tags", [])),
                 authors=list(metadata.get("authors", [])),
                 read_time_minutes=estimate_read_time_minutes(full_markdown),
+                updated=updated,
                 metadata=metadata,
                 source_path=source_path,
             )
@@ -246,6 +258,11 @@ def base_context() -> dict[str, Any]:
         "site_name": SITE_NAME,
         "site_url": SITE_URL,
         "author_name": AUTHOR,
+        "author_bio": AUTHOR_BIO,
+        "author_job_title": AUTHOR_JOB_TITLE,
+        "author_image": AUTHOR_IMAGE,
+        "twitter_handle": TWITTER_HANDLE,
+        "same_as_links": SAME_AS_LINKS,
         "navigation": site_navigation(),
         "current_year": dt.date.today().year,
     }
@@ -353,12 +370,22 @@ def build_blog_archive(posts: list[Post], active_url: str | None = None) -> list
     return archive
 
 
-def build_sitemap(urls: list[str]) -> str:
+def build_sitemap(urls: list[Any]) -> str:
     root = etree.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
-    for url in urls:
+    for entry in urls:
+        if isinstance(entry, str):
+            url, lastmod, changefreq = entry, None, None
+        else:
+            url = entry.get("url")
+            lastmod = entry.get("lastmod")
+            changefreq = entry.get("changefreq")
         url_node = etree.SubElement(root, "url")
         loc_node = etree.SubElement(url_node, "loc")
         loc_node.text = urljoin(f"{SITE_URL}/", url.lstrip("/"))
+        if lastmod:
+            etree.SubElement(url_node, "lastmod").text = lastmod
+        if changefreq:
+            etree.SubElement(url_node, "changefreq").text = changefreq
     return etree.tostring(root, encoding="unicode", xml_declaration=True)
 
 
@@ -366,29 +393,31 @@ def render_rss(posts: list[Post]) -> str:
     items: list[str] = []
     for post in posts[:20]:
         description = html.escape(post.description or plain_text_from_markdown(post.body_markdown)[:180])
-        items.append(
-            "\n".join(
-                [
-                    "    <item>",
-                    f"      <title>{html.escape(post.title)}</title>",
-                    f"      <link>{post.absolute_url}</link>",
-                    f"      <guid>{post.absolute_url}</guid>",
-                    f"      <pubDate>{post.rss_date}</pubDate>",
-                    f"      <description>{description}</description>",
-                    "    </item>",
-                ]
-            )
-        )
+        item_lines = [
+            "    <item>",
+            f"      <title>{html.escape(post.title)}</title>",
+            f"      <link>{post.absolute_url}</link>",
+            f"      <guid>{post.absolute_url}</guid>",
+            f"      <pubDate>{post.rss_date}</pubDate>",
+            f"      <dc:creator>{html.escape(AUTHOR)}</dc:creator>",
+        ]
+        for category in post.categories + post.tags:
+            item_lines.append(f"      <category>{html.escape(str(category))}</category>")
+        item_lines.append(f"      <description>{description}</description>")
+        item_lines.append("    </item>")
+        items.append("\n".join(item_lines))
 
     last_build = posts[0].rss_date if posts else format_datetime(dt.datetime.now(dt.UTC))
     return "\n".join(
         [
             '<?xml version="1.0" encoding="UTF-8"?>',
-            '<rss version="2.0">',
+            '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">',
             "  <channel>",
             f"    <title>{html.escape(SITE_NAME)}</title>",
             f"    <link>{SITE_URL}</link>",
+            f'    <atom:link href="{SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />',
             "    <description>Posts by John Aziz on AI engineering, cloud, and software.</description>",
+            "    <language>en-us</language>",
             f"    <lastBuildDate>{last_build}</lastBuildDate>",
             *items,
             "  </channel>",
@@ -596,12 +625,18 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
     write_text(SITE_DIR / "rss.xml", render_rss(posts))
 
     paginated_blog_urls = [blog_index_url(number) for number in range(1, total_blog_pages + 1)]
-    sitemap_urls = (
-        [page.url for page in pages if page.url not in {"/404.html", "/blog/"}]
-        + paginated_blog_urls
-        + [post.url for post in posts]
-    )
-    write_text(SITE_DIR / "sitemap.xml", build_sitemap(sitemap_urls))
+    latest_modified = max((post.last_modified for post in posts), default=None)
+    latest_modified_iso = latest_modified.isoformat() if latest_modified else None
+    sitemap_entries: list[Any] = [
+        {"url": page.url, "changefreq": "monthly"} for page in pages if page.url not in {"/404.html", "/blog/"}
+    ]
+    sitemap_entries += [
+        {"url": url, "lastmod": latest_modified_iso, "changefreq": "weekly"} for url in paginated_blog_urls
+    ]
+    sitemap_entries += [
+        {"url": post.url, "lastmod": post.last_modified.isoformat(), "changefreq": "yearly"} for post in posts
+    ]
+    write_text(SITE_DIR / "sitemap.xml", build_sitemap(sitemap_entries))
     copy_static_assets()
     generate_social_cards(
         posts=posts,

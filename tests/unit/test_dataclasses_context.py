@@ -55,6 +55,23 @@ def test_post_rss_date_is_rfc822(post_factory) -> None:
     assert post.rss_date.endswith("+0000")
 
 
+def test_post_last_modified_defaults_to_publish_date(post_factory) -> None:
+    post = post_factory(slug="x", date=dt.date(2024, 5, 1))
+    assert post.last_modified == dt.date(2024, 5, 1)
+    assert post.is_updated is False
+
+
+def test_post_last_modified_uses_updated_when_later(post_factory) -> None:
+    post = post_factory(slug="x", date=dt.date(2024, 5, 1), updated=dt.date(2024, 6, 10))
+    assert post.last_modified == dt.date(2024, 6, 10)
+    assert post.is_updated is True
+
+
+def test_post_is_updated_false_when_updated_equals_date(post_factory) -> None:
+    post = post_factory(slug="x", date=dt.date(2024, 5, 1), updated=dt.date(2024, 5, 1))
+    assert post.is_updated is False
+
+
 def test_site_navigation_structure() -> None:
     nav = main.site_navigation()
     urls = [item["url"] for item in nav]
@@ -68,3 +85,12 @@ def test_base_context_keys() -> None:
     assert context["site_url"] == main.SITE_URL
     assert context["current_year"] == dt.date.today().year
     assert isinstance(context["navigation"], list)
+
+
+def test_base_context_seo_keys() -> None:
+    context = main.base_context()
+    assert context["author_name"] == main.AUTHOR
+    assert context["twitter_handle"].startswith("@")
+    assert isinstance(context["same_as_links"], list)
+    assert context["same_as_links"], "expected sameAs profile links"
+    assert all(link.startswith("https://") for link in context["same_as_links"])

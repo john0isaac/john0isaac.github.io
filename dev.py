@@ -117,7 +117,7 @@ def _watch(minify: bool, optimize: bool) -> None:
         return Path(path).suffix in WATCH_EXTENSIONS
 
     for _changes in watchfiles.watch(*WATCH_DIRS, watch_filter=_filter):
-        print("\nChange detected — rebuilding...")
+        print("\nChange detected - rebuilding...")
         try:
             site.build_site(minify=minify, optimize=optimize)
             print("Rebuild done.")

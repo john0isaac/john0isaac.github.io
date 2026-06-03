@@ -1,4 +1,41 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block og_type %}article{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": {{ (post.absolute_url ~ "#article") | tojson }},
+      "headline": {{ post.title | tojson }},
+      "description": {{ post.description | tojson }},
+      "datePublished": {{ post.date.isoformat() | tojson }},
+      "dateModified": {{ post.last_modified.isoformat() | tojson }},
+      "url": {{ post.absolute_url | tojson }},
+      "mainEntityOfPage": {{ post.absolute_url | tojson }},
+      {% if post.social_card_url %}"image": {{ (site_url ~ post.social_card_url) | tojson }},{% endif %}
+      {% if post.tags %}"keywords": {{ post.tags | tojson }},{% endif %}
+      "author": {
+        "@type": "Person",
+        "@id": {{ (site_url ~ "/#person") | tojson }},
+        "name": {{ author_name | tojson }},
+        "url": {{ (site_url ~ "/") | tojson }}
+      },
+      "publisher": { "@id": {{ (site_url ~ "/#person") | tojson }} }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ (site_url ~ "/") | tojson }} },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": {{ (site_url ~ "/blog/") | tojson }} },
+        { "@type": "ListItem", "position": 3, "name": {{ post.title | tojson }}, "item": {{ post.absolute_url | tojson }} }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
+{% block content %}
 <section class="blog-layout blog-layout--post">
   {% include "partials/blog_archive.html" %}
 
@@ -27,6 +64,9 @@
       <p class="lede">{{ post.description }}</p>
       <div class="post-meta">
         <span>Published {{ post.date | date_human }}</span>
+        {% if post.is_updated %}
+        <span>Updated {{ post.last_modified | date_human }}</span>
+        {% endif %}
         <span>{{ post.read_time_label }}</span>
         {% include "partials/author_list.html" %}
       </div>
