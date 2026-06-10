@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "layouts/base.html" %} {% block content %}
 {% with eyebrow='Talks' %}{% include "partials/page_header.html" %}{% endwith %}
 
 {% for year in videos | map(attribute='published') | list | map('string') |

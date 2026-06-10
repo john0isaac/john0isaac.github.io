@@ -438,6 +438,9 @@ def copy_static_assets() -> None:
     robots_path = SRC_DIR / "robots.txt"
     if robots_path.exists():
         shutil.copy2(robots_path, SITE_DIR / "robots.txt")
+    resume_path = SRC_DIR / "resume.pdf"
+    if resume_path.exists():
+        shutil.copy2(resume_path, SITE_DIR / "resume.pdf")
 
 
 def bind_server(port: int, handler: Any) -> socketserver.TCPServer:
@@ -502,6 +505,7 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
             SITE_DIR / "projects" / "index.html",
         ),
         load_page(SRC_DIR / "talks.md", "/talks/", "talks.html", SITE_DIR / "talks" / "index.html"),
+        load_page(SRC_DIR / "resume.md", "/resume/", "resume.html", SITE_DIR / "resume" / "index.html"),
         Page(
             title="Page Not Found",
             description="The page you requested was not found.",
@@ -600,6 +604,13 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
         "404.html",
         page_lookup["/404.html"].output_path,
         page=page_lookup["/404.html"],
+        **common_context,
+    )
+    render_template(
+        environment,
+        "resume.html",
+        page_lookup["/resume/"].output_path,
+        page=page_lookup["/resume/"],
         **common_context,
     )
 

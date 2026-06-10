@@ -1,0 +1,323 @@
+/* Standalone resume page styles - no dependency on site CSS or variables. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --r-bg: #ffffff;
+  --r-text: #111827;
+  --r-muted: #4b5563;
+  --r-border: #d1d5db;
+  --r-accent: #1d4ed8;
+  --r-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --r-radius: 4px;
+}
+
+html {
+  font-size: 16px;
+  background: var(--r-bg);
+  color: var(--r-text);
+  font-family: var(--r-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--r-bg);
+}
+
+a {
+  color: var(--r-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ── Top action bar (screen only) ───────────────────────────────────── */
+
+.resume-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1.5rem;
+  background: var(--r-bg);
+  border-bottom: 1px solid var(--r-border);
+}
+
+.resume-top-bar__back {
+  font-size: 0.875rem;
+  color: var(--r-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.resume-top-bar__back:hover {
+  color: var(--r-text);
+  text-decoration: none;
+}
+
+.resume-top-bar__actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--r-radius);
+  font-size: 0.85rem;
+  font-family: var(--r-font);
+  cursor: pointer;
+  border: 1px solid var(--r-border);
+  background: var(--r-bg);
+  color: var(--r-text);
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.resume-btn:hover {
+  background: #f3f4f6;
+  text-decoration: none;
+}
+
+.resume-btn--primary {
+  background: var(--r-bg);
+  border-color: var(--r-muted);
+  color: var(--r-muted);
+}
+
+.resume-btn--primary:hover {
+  background: #f3f4f6;
+  border-color: var(--r-text);
+  color: var(--r-text);
+}
+
+/* ── Main wrapper ───────────────────────────────────────────────────── */
+
+.resume-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 3rem;
+}
+
+/* ── Header: name + contact ─────────────────────────────────────────── */
+
+.resume-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--r-text);
+}
+
+.resume-header__name {
+  margin: 0 0 0.25rem;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.resume-header__title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--r-muted);
+}
+
+.resume-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-size: 0.875rem;
+  color: var(--r-muted);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resume-contact a {
+  color: var(--r-muted);
+}
+
+.resume-contact a:hover {
+  color: var(--r-accent);
+}
+
+/* ── Section ────────────────────────────────────────────────────────── */
+
+.resume-section {
+  margin-top: 1.5rem;
+}
+
+.resume-section__heading {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--r-muted);
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--r-border);
+}
+
+/* ── Entry row (job / cert / pub / volunteer) ───────────────────────── */
+
+.resume-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.resume-entry:last-child {
+  margin-bottom: 0;
+}
+
+.entry-left {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.entry-right {
+  flex: 0 0 auto;
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--r-muted);
+  white-space: nowrap;
+  padding-top: 0.1rem;
+}
+
+.entry-org {
+  font-weight: 600;
+  font-size: 0.975rem;
+  margin: 0;
+}
+
+.entry-role {
+  font-size: 0.9rem;
+  color: var(--r-muted);
+  margin: 0.1rem 0 0;
+  font-style: italic;
+}
+
+.entry-bullets {
+  margin: 0.4rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.entry-bullets li {
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+  color: var(--r-text);
+}
+
+/* Tighter variant for certs/awards/pubs (no bullets, just a row) */
+.resume-entry--slim {
+  margin-bottom: 0.5rem;
+}
+
+.resume-entry--slim .entry-left {
+  font-size: 0.9rem;
+}
+
+/* Summary is a plain paragraph */
+.resume-summary {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0;
+  color: var(--r-text);
+}
+
+/* Cert sub-groups */
+.resume-cert-group {
+  margin-bottom: 0.8rem;
+}
+
+.resume-cert-group__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--r-muted);
+  margin: 0 0 0.3rem;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .resume-wrap {
+    margin: 0.5rem auto;
+    padding: 0 1rem 2rem;
+  }
+
+  .resume-top-bar {
+    padding: 0.5rem 1rem;
+  }
+
+  .resume-header__name {
+    font-size: 1.5rem;
+  }
+
+  .resume-entry {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .entry-right {
+    text-align: left;
+    font-size: 0.8rem;
+  }
+}
+
+/* ── Print ───────────────────────────────────────────────────────────── */
+
+@media print {
+  .resume-top-bar {
+    display: none !important;
+  }
+
+  html,
+  body {
+    font-size: 10.5pt;
+    background: #fff;
+    color: #000;
+  }
+
+  .resume-wrap {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resume-header {
+    border-bottom-color: #000;
+  }
+
+  .resume-section__heading {
+    border-bottom-color: #999;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .resume-section {
+    page-break-inside: avoid;
+  }
+
+  .resume-entry {
+    page-break-inside: avoid;
+  }
+}

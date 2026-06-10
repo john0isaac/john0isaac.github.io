@@ -49,7 +49,11 @@ def test_no_unrendered_template_syntax(built_site: Path) -> None:
 
 
 def test_every_page_has_shared_partials(built_site: Path) -> None:
+    standalone_pages = {"resume/index.html"}
     for path in _all_html(built_site):
+        relative = path.relative_to(built_site).as_posix()
+        if relative in standalone_pages:
+            continue
         if path.name == "404.html":
             # 404 still has header/footer; check anyway.
             pass

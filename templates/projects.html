@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "layouts/base.html" %} {% block content %}
 {% with eyebrow='Projects' %}{% include "partials/page_header.html" %}{% endwith %}
 
 {% for category in projects | map(attribute='category') | unique | list %}

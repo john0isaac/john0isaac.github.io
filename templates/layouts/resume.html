@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}{{ page.title }}{% endblock %}</title>
+    <meta name="description" content="{{ page.description }}" />
+    <meta name="author" content="{{ author_name }}" />
+    <link rel="canonical" href="{{ page.absolute_url }}" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:description" content="{{ page.description }}" />
+    <meta property="og:url" content="{{ page.absolute_url }}" />
+    <meta property="og:site_name" content="{{ site_name }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="{{ twitter_handle }}" />
+    <meta name="twitter:creator" content="{{ twitter_handle }}" />
+    <meta name="twitter:title" content="{{ page.title }}" />
+    <meta name="twitter:description" content="{{ page.description }}" />
+    {% block structured_data %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": {{ (site_url ~ "/#person") | tojson }},
+          "name": {{ author_name | tojson }},
+          "url": {{ (site_url ~ "/") | tojson }},
+          "image": {{ (site_url ~ author_image) | tojson }},
+          "jobTitle": {{ author_job_title | tojson }},
+          "description": {{ author_bio | tojson }},
+          "sameAs": {{ same_as_links | tojson }}
+        },
+        {
+          "@type": "WebPage",
+          "@id": {{ page.absolute_url | tojson }},
+          "url": {{ page.absolute_url | tojson }},
+          "name": {{ page.title | tojson }},
+          "description": {{ page.description | tojson }},
+          "about": { "@id": {{ (site_url ~ "/#person") | tojson }} },
+          "isPartOf": { "@id": {{ (site_url ~ "/#website") | tojson }} }
+        },
+        {
+          "@type": "WebSite",
+          "@id": {{ (site_url ~ "/#website") | tojson }},
+          "url": {{ (site_url ~ "/") | tojson }},
+          "name": {{ site_name | tojson }},
+          "publisher": { "@id": {{ (site_url ~ "/#person") | tojson }} }
+        }
+      ]
+    }
+    </script>
+    {% endblock %}
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/images/logo/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/logo/site.webmanifest" />
+    <link rel="stylesheet" href="/assets/css/resume.css" />
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    <!-- Top action bar (hidden in print) -->
+    <div class="resume-top-bar">
+      <a class="resume-top-bar__back" href="/">&#8592; johnaziz.org</a>
+      <div class="resume-top-bar__actions">
+        {% block top_bar_actions %}
+        <a class="resume-btn resume-btn--primary" href="/resume.pdf" download="CV_John_Isaac_Aziz.pdf">
+          &#8595; Download PDF
+        </a>
+        {% endblock %}
+      </div>
+    </div>
+
+    <div class="resume-wrap">
+      {% block content %}{% endblock %}
+    </div><!-- /.resume-wrap -->
+  </body>
+</html>
