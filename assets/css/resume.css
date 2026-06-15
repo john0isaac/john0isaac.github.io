@@ -173,15 +173,23 @@ a:hover {
 /* ── Entry row (job / cert / pub / volunteer) ───────────────────────── */
 
 .resume-entry {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
   margin-bottom: 1rem;
 }
 
 .resume-entry:last-child {
   margin-bottom: 0;
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.entry-title {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .entry-left {
@@ -269,8 +277,8 @@ a:hover {
     font-size: 1.5rem;
   }
 
-  .resume-entry {
-    flex-direction: column;
+  .entry-header {
+    flex-wrap: wrap;
     gap: 0.15rem;
   }
 
