@@ -5,10 +5,10 @@
 all: build
 
 build:
-	tox run -e docs
+	tox run -e build
 
 serve:
-	tox run -e docs-auto
+	tox run -e serve
 
 clean:
 	python main.py clean

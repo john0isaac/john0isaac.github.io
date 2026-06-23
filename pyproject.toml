@@ -119,12 +119,12 @@ env_list = [
 runner = "uv-venv-lock-runner"
 skip_install = true
 
-[tool.tox.env.docs]
+[tool.tox.env.build]
 description = "build the site"
 dependency_groups = ["dev"]
 commands = [["python", "main.py", "build"]]
 
-[tool.tox.env.docs-auto]
+[tool.tox.env.serve]
 description = "continuously rebuild and serve the site locally with live reload"
 dependency_groups = ["dev"]
 commands = [["python", "dev.py"]]

@@ -35,8 +35,8 @@ make serve
 Or run via tox directly:
 
 ```sh
-tox run -e docs        # build
-tox run -e docs-auto   # serve
+tox run -e build   # build
+tox run -e serve   # serve
 ```
 
 To skip minification or optimization during development:
