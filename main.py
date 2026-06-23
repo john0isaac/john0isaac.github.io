@@ -521,7 +521,13 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
     blog_archive = build_blog_archive(posts)
     page_lookup = {page.url: page for page in pages}
 
-    _page_card_slugs = {"/": "home", "/blog/": "blog", "/projects/": "projects", "/talks/": "talks"}
+    _page_card_slugs = {
+        "/": "home",
+        "/blog/": "blog",
+        "/projects/": "projects",
+        "/talks/": "talks",
+        "/resume/": "resume",
+    }
     for page in pages:
         if page.url in _page_card_slugs:
             page.social_card_url = f"/assets/social/{_page_card_slugs[page.url]}.png"
