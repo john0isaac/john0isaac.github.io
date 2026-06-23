@@ -40,8 +40,12 @@
             <div class="entry-right">Dec 2025 - Present</div>
           </div>
           <ul class="entry-bullets">
-            <li>Design and implement core features from scratch.</li>
-            <li>Participate in architectural decisions and system design.</li>
+            <li>Architected and built from scratch the multi-agent framework powering all of Lyah's AI features: a modular, node-based LangGraph system in Python (replacing legacy n8n) with workflow logging, Google Chat notifications, Celery orchestration, a provider-agnostic multi-LLM layer with automatic fallback (OpenAI/Anthropic/Google), and Opik observability.</li>
+            <li>Built Lyah's core course and lecture generation experience end to end: AI agents that draft courses/lectures from a prompt, a YouTube video, or documents, plus the Session Studio and Course Builder authoring UI in Vue 3 with an AI proposal-review flow and client-side diffing.</li>
+            <li>Built a full-stack AI tutor/copilot assistant: a conversational agent with intent classification and document-grounded retrieval (RAG), surfaced through a real-time WebSocket chat with persistence, inline editing/feedback, and export-to-Word.</li>
+            <li>Developed an LLM evaluation and automated prompt-optimization pipeline (LiteLLM + Opik MetaPrompt), reaching 96.3% decision accuracy with precision/recall/F1 metrics and production drift monitoring.</li>
+            <li>Delivered full-stack instructor analytics combining computed metrics with LLM-generated narrative commentary into viewable, downloadable reports.</li>
+            <li>Integrated external LMS platforms (Moodle, Canvas) via the LTI standard, and established the testing/CI/CD foundation (pytest coverage gating, <code>uv</code>, AI-assisted PR workflows).</li>
           </ul>
         </div>
 
