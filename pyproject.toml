@@ -136,7 +136,7 @@ commands = [["pre-commit", "run", "--all-files"]]
 
 [tool.tox.env.typing]
 description = "run static type checkers"
-dependency_groups = ["typing"]
+dependency_groups = ["typing", "dev"]
 skip_install = true
 commands = [
     ["mypy", "."],
