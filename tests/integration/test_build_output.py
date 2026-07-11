@@ -7,6 +7,8 @@ from pathlib import Path
 import pytest
 from bs4 import BeautifulSoup
 
+import main
+
 pytestmark = pytest.mark.integration
 
 
@@ -50,9 +52,10 @@ def test_no_unrendered_template_syntax(built_site: Path) -> None:
 
 def test_every_page_has_shared_partials(built_site: Path) -> None:
     standalone_pages = {"resume/index.html"}
+    redirect_pages = {f"{slug}/index.html" for slug in main.REDIRECTS}
     for path in _all_html(built_site):
         relative = path.relative_to(built_site).as_posix()
-        if relative in standalone_pages:
+        if relative in standalone_pages or relative in redirect_pages:
             continue
         if path.name == "404.html":
             # 404 still has header/footer; check anyway.
@@ -212,3 +215,29 @@ def test_rss_has_creator_and_categories(built_site: Path) -> None:
     rss = _read(built_site / "rss.xml")
     assert "<dc:creator>" in rss
     assert "<category>" in rss
+
+
+def test_redirect_pages_are_generated(built_site: Path) -> None:
+    for slug in main.REDIRECTS:
+        assert (built_site / slug / "index.html").is_file(), slug
+
+
+def test_redirect_pages_point_to_target_and_are_noindex(built_site: Path) -> None:
+    for slug, target_url in main.REDIRECTS.items():
+        soup = BeautifulSoup(_read(built_site / slug / "index.html"), "html.parser")
+        refresh = soup.find("meta", attrs={"http-equiv": "refresh"})
+        assert refresh is not None, slug
+        assert refresh["content"] == f"0; url={target_url}"
+        robots = soup.find("meta", attrs={"name": "robots"})
+        assert robots is not None, slug
+        assert robots["content"] == "noindex, nofollow"
+        canonical = soup.find("link", attrs={"rel": "canonical"})
+        assert canonical is not None, slug
+        assert canonical["href"] == target_url
+
+
+def test_redirect_pages_excluded_from_sitemap(built_site: Path) -> None:
+    sitemap = _read(built_site / "sitemap.xml")
+    for slug in main.REDIRECTS:
+        assert f"johnaziz.org/{slug}/" not in sitemap
+        assert f"johnaziz.org/{slug}<" not in sitemap

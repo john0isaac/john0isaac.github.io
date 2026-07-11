@@ -32,6 +32,7 @@ from scripts.constants import (
     EXCERPT_MARKER,
     FRONT_MATTER_RE,
     MARKDOWN_EXTENSIONS,
+    REDIRECTS,
     ROOT_DIR,
     SAME_AS_LINKS,
     SITE_DIR,
@@ -428,6 +429,12 @@ def render_rss(posts: list[Post]) -> str:
     )
 
 
+def build_redirects(environment: Environment, redirects: dict[str, str]) -> None:
+    for slug, target_url in redirects.items():
+        output_path = SITE_DIR / slug / "index.html"
+        render_template(environment, "redirect.html", output_path, target_url=target_url, site_name=SITE_NAME)
+
+
 def copy_static_assets() -> None:
     if (SRC_DIR / "images").exists():
         shutil.copytree(SRC_DIR / "images", SITE_DIR / "images", dirs_exist_ok=True)
@@ -656,6 +663,7 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
         {"url": post.url, "lastmod": post.last_modified.isoformat(), "changefreq": "yearly"} for post in posts
     ]
     write_text(SITE_DIR / "sitemap.xml", build_sitemap(sitemap_entries))
+    build_redirects(environment, REDIRECTS)
     copy_static_assets()
     generate_social_cards(
         posts=posts,

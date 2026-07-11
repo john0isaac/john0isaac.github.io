@@ -26,6 +26,15 @@ SAME_AS_LINKS = [
     "https://youtube.com/@john0isaac",
     "https://x.com/john00isaac",
 ]
+# Short vanity redirect pages (e.g. https://johnaziz.org/linkedin) for easy sharing.
+# These are intentionally excluded from the sitemap.
+REDIRECTS = {
+    "github": "https://github.com/john0isaac",
+    "linkedin": "https://linkedin.com/in/john0isaac",
+    "youtube": "https://youtube.com/@john0isaac",
+    "twitter": "https://x.com/john00isaac",
+    "markdown-checker": "https://markdown-checker.readthedocs.io/en/latest/",
+}
 FRONT_MATTER_RE = re.compile(r"\A---\s*\n(.*?)\n---\s*\n?", re.DOTALL)
 DATE_PREFIX_RE = re.compile(r"^(\d{4})-(\d{2})-(\d{2})-(.+)$")
 EXCERPT_MARKER = "<!-- more -->"

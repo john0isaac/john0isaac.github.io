@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      window.location.replace("{{ target_url }}");
+    </script>
+    <meta http-equiv="refresh" content="0; url={{ target_url }}" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{{ site_name }}</title>
+    <link rel="canonical" href="{{ target_url }}" />
+  </head>
+  <body>
+    <noscript><a href="{{ target_url }}">Continue to {{ target_url }}</a></noscript>
+  </body>
+</html>

@@ -15,7 +15,7 @@ import threading
 from pathlib import Path
 from typing import Any
 
-import watchfiles  # type: ignore[import-not-found]
+import watchfiles
 
 import main as site
 from scripts.constants import ASSETS_DIR, DATA_DIR, SITE_DIR, SRC_DIR, TEMPLATES_DIR
