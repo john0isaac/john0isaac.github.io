@@ -13,7 +13,7 @@ dependencies = [
     "Jinja2>=3.1.6",
     "jsmin>=3.0.1",
     "Markdown>=3.8.2",
-    "pillow>=12.2.0",
+    "pillow>=12.3.0",
     "python-dotenv>=1.2.2",
     "PyYAML>=6.0.3",
 ]
