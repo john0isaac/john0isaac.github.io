@@ -55,6 +55,7 @@ typing = [
 
 [tool.uv]
 default-groups = ["dev", "pre-commit", "typing", "test", "e2e"]
+exclude-newer = "1 week"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
