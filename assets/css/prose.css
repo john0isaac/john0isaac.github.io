@@ -147,6 +147,20 @@ h3 {
   line-height: 1.45;
 }
 
+/* Inline code inside a link must keep the link colour/underline, otherwise the
+   code token colour above wins and the link looks like plain code. */
+.prose a > code {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.prose a:hover > code,
+.prose a:focus-visible > code {
+  color: var(--accent-strong);
+  background: color-mix(in srgb, var(--accent) 16%, var(--code-inline-bg));
+}
+
 .prose pre {
   margin: 1.1rem 0;
   padding: 0.95rem 1rem;
