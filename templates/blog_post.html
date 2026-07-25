@@ -34,6 +34,13 @@
   ]
 }
 </script>
+{% if '<pre><code' in post.content_html %}
+<script type="module" src="/assets/js/codeview.js"></script>
+{% endif %}
+{% if 'language-py' in post.content_html %}
+<script defer src="https://cdn.jsdelivr.net/pyodide/v314.0.3/full/pyodide.js"></script>
+<script defer src="/assets/js/pyrun.js"></script>
+{% endif %}
 {% endblock %}
 {% block content %}
 <section class="blog-layout blog-layout--post">

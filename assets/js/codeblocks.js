@@ -35,6 +35,97 @@ function setCopiedState(button, copied) {
   label.textContent = "Copy";
 }
 
+function ensureToolbar(wrapper) {
+  let toolbar = wrapper.querySelector(".code-toolbar");
+  if (!toolbar) {
+    toolbar = document.createElement("div");
+    toolbar.className = "code-toolbar";
+    wrapper.appendChild(toolbar);
+  }
+  return toolbar;
+}
+
+// Pretty names for the languages used across the blog; anything else falls back
+// to the capitalized fence token (e.g. "elixir" -> "Elixir").
+const LANGUAGE_NAMES = {
+  bash: "Shell",
+  bicep: "Bicep",
+  c: "C",
+  console: "Terminal",
+  cpp: "C++",
+  cs: "C#",
+  csharp: "C#",
+  css: "CSS",
+  diff: "Diff",
+  dockerfile: "Dockerfile",
+  go: "Go",
+  html: "HTML",
+  ini: "INI",
+  java: "Java",
+  js: "JavaScript",
+  javascript: "JavaScript",
+  json: "JSON",
+  jsx: "JSX",
+  kotlin: "Kotlin",
+  md: "Markdown",
+  markdown: "Markdown",
+  php: "PHP",
+  powershell: "PowerShell",
+  ps1: "PowerShell",
+  py: "Python",
+  python: "Python",
+  rb: "Ruby",
+  ruby: "Ruby",
+  rs: "Rust",
+  rust: "Rust",
+  scss: "SCSS",
+  sh: "Shell",
+  shell: "Shell",
+  sql: "SQL",
+  swift: "Swift",
+  text: "Text",
+  toml: "TOML",
+  ts: "TypeScript",
+  typescript: "TypeScript",
+  tsx: "TSX",
+  xml: "XML",
+  yaml: "YAML",
+  yml: "YAML",
+  zsh: "Shell",
+};
+
+function codeTitle(code) {
+  const explicit = code.getAttribute("title");
+  if (explicit) {
+    return explicit;
+  }
+
+  const langClass = [...code.classList].find((c) => c.startsWith("language-"));
+  if (!langClass) {
+    return "";
+  }
+
+  const lang = langClass.slice("language-".length).toLowerCase();
+  return LANGUAGE_NAMES[lang] || lang.charAt(0).toUpperCase() + lang.slice(1);
+}
+
+function addTitle(wrapper, code) {
+  if (wrapper.querySelector(".code-title")) {
+    return;
+  }
+
+  const text = codeTitle(code);
+  if (!text) {
+    return;
+  }
+
+  const title = document.createElement("span");
+  title.className = "code-title";
+  title.textContent = text;
+  title.title = text;
+  wrapper.insertBefore(title, wrapper.firstChild);
+}
+
 function attachCopyButtons() {
   document.querySelectorAll(".prose pre > code").forEach((code) => {
     const pre = code.parentElement;
@@ -55,6 +146,8 @@ function attachCopyButtons() {
     }
 
     pre.classList.add("code-block");
+    addTitle(wrapper, code);
+
     const button = document.createElement("button");
     button.type = "button";
     button.className = "code-copy-btn";
@@ -72,7 +165,7 @@ function attachCopyButtons() {
       }
     });
 
-    wrapper.appendChild(button);
+    ensureToolbar(wrapper).appendChild(button);
   });
 }
 

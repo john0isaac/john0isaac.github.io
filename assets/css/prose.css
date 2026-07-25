@@ -162,10 +162,29 @@ h3 {
 .prose .code-block-wrap {
   position: relative;
   margin: 1.1rem 0;
+  padding-top: 2.95rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.prose .code-block-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.95rem;
+  border-bottom: 1px solid var(--border);
+  pointer-events: none;
 }
 
 .prose .code-block-wrap > pre {
   margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .prose pre.code-block {
@@ -184,20 +203,41 @@ h3 {
   white-space: pre;
 }
 
-.prose pre.code-block code {
-  padding-right: 6rem;
+.code-title {
+  position: absolute;
+  top: 0;
+  left: 0.9rem;
+  height: 2.95rem;
+  max-width: calc(100% - 14rem);
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.code-copy-btn {
+.code-toolbar {
   position: absolute;
-  top: 0.58rem;
+  top: 0;
   right: 0.58rem;
-  border: 1px solid color-mix(in srgb, var(--code-block-fg) 25%, transparent);
-  background: color-mix(in srgb, var(--code-block-bg) 72%, white 28%);
-  color: var(--code-block-fg);
+  height: 2.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 1;
+}
+
+.code-copy-btn,
+.code-run-btn,
+.code-clear-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
   border-radius: 8px;
   height: 1.8rem;
-  min-width: 1.8rem;
   padding: 0 0.5rem;
   display: inline-flex;
   align-items: center;
@@ -206,22 +246,75 @@ h3 {
   font-size: 0.78rem;
   font-family: Roboto, Helvetica, Arial, sans-serif;
   cursor: pointer;
-  opacity: 0.92;
-  z-index: 1;
 }
 
-.code-copy-btn:hover {
-  opacity: 1;
-  border-color: color-mix(in srgb, var(--code-block-fg) 45%, transparent);
+.code-copy-btn {
+  min-width: 5.4rem;
 }
 
-.code-copy-btn.is-copied {
-  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+.code-copy-btn:hover,
+.code-run-btn:hover,
+.code-clear-btn:hover {
+  border-color: var(--accent);
   color: var(--accent-strong);
 }
 
-.code-copy-btn i {
+.code-copy-btn.is-copied {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.code-copy-btn i,
+.code-run-btn i,
+.code-clear-btn i {
   font-size: 0.78rem;
+}
+
+.code-run-btn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.code-view.cm-editor {
+  font-size: 0.9rem;
+}
+
+.code-run-results {
+  margin: 0;
+  padding: 0 0.9rem 0.9rem;
+  border-top: 1px solid var(--border);
+}
+
+.code-run-section {
+  margin-top: 0.75rem;
+}
+
+.code-run-section__title {
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.code-run-section__panel {
+  margin: 0;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 94%, var(--accent) 6%);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.code-run-section.is-error .code-run-section__title,
+.code-run-section.is-error .code-run-section__panel {
+  color: #e5534b;
+}
+
+.code-run-section.is-error .code-run-section__panel {
+  border-color: color-mix(in srgb, #e5534b 45%, transparent);
 }
 
 .prose table {
