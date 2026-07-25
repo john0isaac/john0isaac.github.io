@@ -1,4 +1,4 @@
-// Enhances static code blocks with a read-only CodeMirror view:
+// Enhances static code blocks with an editable CodeMirror view:
 // line numbers, code folding, syntax highlighting (all languages,
 // lazy-loaded), and light/dark theme that follows the site theme.
 import {
@@ -61,8 +61,11 @@ async function enhanceCodeBlock(code) {
       extensions: [
         lineNumbers(),
         foldGutter(),
-        EditorView.editable.of(false),
-        EditorState.readOnly.of(true),
+        EditorView.updateListener.of((update) => {
+          if (update.docChanged) {
+            code.textContent = update.state.doc.toString();
+          }
+        }),
         themeCompartment.of(themeExtension()),
         ...(await languageExtension(code)),
       ],
