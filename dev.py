@@ -111,7 +111,7 @@ class DevHandler(http.server.SimpleHTTPRequestHandler):
         super().log_message(fmt, *args)
 
 
-def _watch(minify: bool, optimize: bool) -> None:
+def _watch(minify: bool, optimize: bool, port: int) -> None:
 
     def _filter(_change: Any, path: str) -> bool:
         return Path(path).suffix in WATCH_EXTENSIONS
@@ -121,6 +121,7 @@ def _watch(minify: bool, optimize: bool) -> None:
         try:
             site.build_site(minify=minify, optimize=optimize)
             print("Rebuild done.")
+            print(f"Serving at http://127.0.0.1:{port}  (live reload enabled)")
         except Exception as exc:
             print(f"Build error: {exc}")
         _notify()
@@ -139,13 +140,12 @@ def main() -> None:
     print("Building site...")
     site.build_site(minify=minify, optimize=optimize)
 
-    threading.Thread(target=_watch, args=(minify, optimize), daemon=True).start()
-
     for port in range(args.port, args.port + 10):
         try:
             with _ThreadingServer(("127.0.0.1", port), DevHandler) as httpd:
                 print(f"Serving at http://127.0.0.1:{port}  (live reload enabled)")
                 print(f"Watching: {', '.join(str(d.relative_to(d.parent.parent)) for d in WATCH_DIRS)}")
+                threading.Thread(target=_watch, args=(minify, optimize, port), daemon=True).start()
                 try:
                     httpd.serve_forever()
                 except KeyboardInterrupt:
