@@ -172,8 +172,7 @@ Notice that we use `partial` to initialize fresh instances from the
 context manager and not the result of `pool.reserve(block=True)` directly.
 A function decorated with
 [`@contextmanager`](https://docs.python.org/3/library/contextlib.html#contextlib.contextmanager)
-is single-use, so using it with `partial` means every call
-builds a new context manager.
+returns an object that can only be entered once.
 
 All of this relies on `reserve` being a context manager, but not every memcached library ships one,
 so how would this be generalized to work with them?
@@ -216,5 +215,5 @@ Put together, [`ClientPool`](https://sendapatch.se/projects/pylibmc/pooling.html
 pins the blocking mode so callers never repeat it, and
 [`nullcontext`](https://docs.python.org/3/library/contextlib.html#contextlib.nullcontext)
 lets libraries without a pool expose the same interface.<br>
-The tradeoff is changing a single call site to use
-`with self._client_context() as client:` that works for every supported memcached library.
+The result is changing every call site to use
+`with self._client_context() as client:`.
