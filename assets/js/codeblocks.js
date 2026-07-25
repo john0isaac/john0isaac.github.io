@@ -36,13 +36,24 @@ function setCopiedState(button, copied) {
 }
 
 function ensureToolbar(wrapper) {
+  const header = ensureHeader(wrapper);
   let toolbar = wrapper.querySelector(".code-toolbar");
   if (!toolbar) {
     toolbar = document.createElement("div");
     toolbar.className = "code-toolbar";
-    wrapper.appendChild(toolbar);
+    header.appendChild(toolbar);
   }
   return toolbar;
+}
+
+function ensureHeader(wrapper) {
+  let header = wrapper.querySelector(".code-header");
+  if (!header) {
+    header = document.createElement("div");
+    header.className = "code-header";
+    wrapper.insertBefore(header, wrapper.firstChild);
+  }
+  return header;
 }
 
 // Pretty names for the languages used across the blog; anything else falls back
@@ -123,7 +134,7 @@ function addTitle(wrapper, code) {
   title.className = "code-title";
   title.textContent = text;
   title.title = text;
-  wrapper.insertBefore(title, wrapper.firstChild);
+  ensureHeader(wrapper).prepend(title);
 }
 
 function attachCopyButtons() {

@@ -41,13 +41,24 @@
   }
 
   function ensureToolbar(wrapper) {
+    const header = ensureHeader(wrapper);
     let toolbar = wrapper.querySelector(".code-toolbar");
     if (!toolbar) {
       toolbar = document.createElement("div");
       toolbar.className = "code-toolbar";
-      wrapper.appendChild(toolbar);
+      header.appendChild(toolbar);
     }
     return toolbar;
+  }
+
+  function ensureHeader(wrapper) {
+    let header = wrapper.querySelector(".code-header");
+    if (!header) {
+      header = document.createElement("div");
+      header.className = "code-header";
+      wrapper.insertBefore(header, wrapper.firstChild);
+    }
+    return header;
   }
 
   function renderResults(results, { output, stdout, error }) {

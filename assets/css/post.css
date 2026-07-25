@@ -80,8 +80,7 @@
 .post-github-label {
   position: absolute;
   bottom: calc(100% + 0.4rem);
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
