@@ -13,9 +13,9 @@ SITE_NAME = "John Aziz"
 SITE_URL = "https://johnaziz.org"
 GITHUB_REPO = "john0isaac/john0isaac.github.io"
 AUTHOR = "John Aziz"
-AUTHOR_JOB_TITLE = "Senior AI Software Engineer"
+AUTHOR_JOB_TITLE = "Senior Software Engineer"
 AUTHOR_BIO = (
-    "John Aziz is a Senior AI Software Engineer and former Microsoft MVP building "
+    "John Aziz is a Senior Software Engineer and former Microsoft MVP building "
     "production-grade AI systems, open-source projects, and cloud-native architectures on Azure."
 )
 AUTHOR_IMAGE = "/images/John-Headshot.jpg"
