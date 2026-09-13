@@ -244,6 +244,7 @@ def load_page(source_path: Path, url: str, template: str, output_path: Path) -> 
         content_html=render_markdown(body),
         body_markdown=body,
         metadata=metadata,
+        source_path=source_path,
     )
 
 
@@ -342,7 +343,8 @@ def related_reason(post: Post, candidate: Post) -> str:
     """Explain why ``candidate`` was picked as related to ``post`` (mirrors post_similarity's weighting)."""
     shared_categories = sorted(set(post.categories) & set(candidate.categories))
     category_names = {name.lower() for name in shared_categories}
-    shared_tags = sorted(tag for tag in set(post.tags) & set(candidate.tags) if tag.lower() not in category_names)
+    overlapping_tags = set(post.tags) & set(candidate.tags)
+    shared_tags = sorted(tag for tag in overlapping_tags if tag.lower() not in category_names)
     if shared_tags:
         label = "tag" if len(shared_tags) == 1 else "tags"
         return f"Shared {label}: {', '.join(shared_tags[:2])}"
@@ -391,9 +393,9 @@ def render_taxonomy_pages(
     blog_archive: list[dict[str, Any]],
     all_categories: list[dict[str, Any]],
     common_context: dict[str, Any],
-) -> list[str]:
-    """Render one archive page per tag/category and return the list of generated URLs."""
-    urls: list[str] = []
+) -> list[dict[str, str]]:
+    """Render one archive page per tag/category; return sitemap entries with per-taxonomy lastmod."""
+    entries: list[dict[str, str]] = []
     label = "Category" if kind == "category" else "Tag"
     for slug, entry in index.items():
         url = f"/blog/{kind}/{slug}/"
@@ -420,8 +422,9 @@ def render_taxonomy_pages(
             taxonomy_slug=slug,
             **common_context,
         )
-        urls.append(url)
-    return urls
+        latest = max(post.last_modified for post in entry["posts"])
+        entries.append({"url": url, "lastmod": latest.isoformat()})
+    return entries
 
 
 def build_blog_archive(posts: list[Post], active_url: str | None = None) -> list[dict[str, Any]]:
@@ -462,14 +465,21 @@ def build_blog_archive(posts: list[Post], active_url: str | None = None) -> list
 
 
 def build_sitemap(urls: list[Any]) -> str:
-    root = etree.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
+    root = etree.Element(
+        "urlset",
+        {
+            "xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
+            "xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1",
+        },
+    )
     for entry in urls:
         if isinstance(entry, str):
-            url, lastmod, changefreq = entry, None, None
+            url, lastmod, changefreq, image = entry, None, None, None
         else:
             url = entry.get("url")
             lastmod = entry.get("lastmod")
             changefreq = entry.get("changefreq")
+            image = entry.get("image")
         url_node = etree.SubElement(root, "url")
         loc_node = etree.SubElement(url_node, "loc")
         loc_node.text = urljoin(f"{SITE_URL}/", url.lstrip("/"))
@@ -477,6 +487,9 @@ def build_sitemap(urls: list[Any]) -> str:
             etree.SubElement(url_node, "lastmod").text = lastmod
         if changefreq:
             etree.SubElement(url_node, "changefreq").text = changefreq
+        if image:
+            image_node = etree.SubElement(url_node, "image:image")
+            etree.SubElement(image_node, "image:loc").text = urljoin(f"{SITE_URL}/", image.lstrip("/"))
     return etree.tostring(root, encoding="unicode", xml_declaration=True)
 
 
@@ -484,17 +497,32 @@ def render_rss(posts: list[Post]) -> str:
     items: list[str] = []
     for post in posts[:20]:
         description = html.escape(post.description or plain_text_from_markdown(post.body_markdown)[:180])
+        creators = [profile["name"] for profile in post.author_profiles if profile.get("name")] or [AUTHOR]
         item_lines = [
             "    <item>",
             f"      <title>{html.escape(post.title)}</title>",
             f"      <link>{post.absolute_url}</link>",
             f"      <guid>{post.absolute_url}</guid>",
             f"      <pubDate>{post.rss_date}</pubDate>",
-            f"      <dc:creator>{html.escape(AUTHOR)}</dc:creator>",
         ]
-        for category in post.categories + post.display_tags:
-            item_lines.append(f"      <category>{html.escape(str(category))}</category>")
+        for creator in creators:
+            item_lines.append(f"      <dc:creator>{html.escape(creator)}</dc:creator>")
+        if post.is_updated:
+            updated_stamp = dt.datetime.combine(post.last_modified, dt.time.min, tzinfo=dt.UTC).isoformat()
+            item_lines.append(f"      <atom:updated>{updated_stamp}</atom:updated>")
+        for category in post.categories:
+            domain = f"{SITE_URL}/blog/category/{slugify(str(category))}/"
+            item_lines.append(f'      <category domain="{domain}">{html.escape(str(category))}</category>')
+        for tag in post.display_tags:
+            domain = f"{SITE_URL}/blog/tag/{slugify(str(tag))}/"
+            item_lines.append(f'      <category domain="{domain}">{html.escape(str(tag))}</category>')
+        if post.social_card_url:
+            card_url = f"{SITE_URL}{post.social_card_url}"
+            item_lines.append(f'      <media:content url="{card_url}" medium="image" type="image/png" />')
         item_lines.append(f"      <description>{description}</description>")
+        # CDATA cannot contain "]]>"; split the sequence if it ever appears in content.
+        content_html = post.content_html.replace("]]>", "]]&gt;")
+        item_lines.append(f"      <content:encoded><![CDATA[{content_html}]]></content:encoded>")
         item_lines.append("    </item>")
         items.append("\n".join(item_lines))
 
@@ -502,13 +530,25 @@ def render_rss(posts: list[Post]) -> str:
     return "\n".join(
         [
             '<?xml version="1.0" encoding="UTF-8"?>',
-            '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">',
+            '<rss version="2.0"'
+            ' xmlns:dc="http://purl.org/dc/elements/1.1/"'
+            ' xmlns:atom="http://www.w3.org/2005/Atom"'
+            ' xmlns:content="http://purl.org/rss/1.0/modules/content/"'
+            ' xmlns:media="http://search.yahoo.com/mrss/">',
             "  <channel>",
             f"    <title>{html.escape(SITE_NAME)}</title>",
             f"    <link>{SITE_URL}</link>",
             f'    <atom:link href="{SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />',
             "    <description>Posts by John Aziz on AI engineering, cloud, and software.</description>",
             "    <language>en-us</language>",
+            f"    <copyright>© {dt.date.today().year} {html.escape(AUTHOR)}</copyright>",
+            "    <ttl>1440</ttl>",
+            "    <image>",
+            f"      <url>{SITE_URL}/images/logo/android-chrome-512x512.png</url>",
+            f"      <title>{html.escape(SITE_NAME)}</title>",
+            f"      <link>{SITE_URL}</link>",
+            "    </image>",
+            f"    <pubDate>{last_build}</pubDate>",
             f"    <lastBuildDate>{last_build}</lastBuildDate>",
             *items,
             "  </channel>",
@@ -764,16 +804,34 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
     paginated_blog_urls = [blog_index_url(number) for number in range(1, total_blog_pages + 1)]
     latest_modified = max((post.last_modified for post in posts), default=None)
     latest_modified_iso = latest_modified.isoformat() if latest_modified else None
-    sitemap_entries: list[Any] = [
-        {"url": page.url, "changefreq": "monthly"} for page in pages if page.url not in {"/404.html", "/blog/"}
-    ]
+    sitemap_entries: list[Any] = []
+    for page in pages:
+        if page.url in {"/404.html", "/blog/"}:
+            continue
+        page_lastmod = git_last_modified_date(page.source_path) if page.source_path else None
+        sitemap_entries.append(
+            {
+                "url": page.url,
+                "lastmod": page_lastmod.isoformat() if page_lastmod else None,
+                "changefreq": "monthly",
+                "image": page.social_card_url or None,
+            }
+        )
     sitemap_entries += [
         {"url": url, "lastmod": latest_modified_iso, "changefreq": "weekly"} for url in paginated_blog_urls
     ]
     sitemap_entries += [
-        {"url": post.url, "lastmod": post.last_modified.isoformat(), "changefreq": "yearly"} for post in posts
+        {
+            "url": post.url,
+            "lastmod": post.last_modified.isoformat(),
+            "changefreq": "yearly",
+            "image": post.social_card_url or None,
+        }
+        for post in posts
     ]
-    sitemap_entries += [{"url": url, "lastmod": latest_modified_iso, "changefreq": "weekly"} for url in taxonomy_urls]
+    sitemap_entries += [
+        {"url": entry["url"], "lastmod": entry["lastmod"], "changefreq": "weekly"} for entry in taxonomy_urls
+    ]
     write_text(SITE_DIR / "sitemap.xml", build_sitemap(sitemap_entries))
     build_redirects(environment, REDIRECTS)
     copy_static_assets()

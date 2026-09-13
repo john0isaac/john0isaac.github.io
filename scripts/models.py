@@ -18,6 +18,7 @@ class Page:
     content_html: str = ""
     body_markdown: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
+    source_path: Path | None = None
     social_card_url: str = ""
 
     @property

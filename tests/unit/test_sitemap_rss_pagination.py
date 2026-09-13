@@ -1,6 +1,7 @@
 """Unit tests for sitemap/RSS generation and pagination URL helpers."""
 
 import datetime as dt
+import re
 import xml.etree.ElementTree as etree
 from pathlib import Path
 
@@ -72,8 +73,9 @@ def test_render_rss_is_valid_xml(post_factory) -> None:
 def test_render_rss_escapes_html(post_factory) -> None:
     post = post_factory(slug="x", title="A & B <script>", description="1 < 2 & 3")
     rss = main.render_rss([post])
-    # Raw, unescaped markup must not appear in the feed.
-    assert "<script>" not in rss
+    # Raw markup may only appear inside content:encoded CDATA blocks.
+    outside_cdata = re.sub(r"<!\[CDATA\[.*?\]\]>", "", rss, flags=re.DOTALL)
+    assert "<script>" not in outside_cdata
     assert "A &amp; B" in rss
 
 
@@ -103,6 +105,56 @@ def test_render_rss_includes_categories(post_factory) -> None:
     root = etree.fromstring(rss)
     categories = [node.text for node in root.iter("category")]
     assert categories == ["AI", "RAG", "Azure"]
+
+
+def test_render_rss_category_domains_link_to_taxonomy_pages(post_factory) -> None:
+    post = post_factory(slug="x", categories=["AI"], tags=["Azure ML"])
+    rss = main.render_rss([post])
+    root = etree.fromstring(rss)
+    domains = [node.get("domain") for node in root.iter("category")]
+    assert f"{main.SITE_URL}/blog/category/ai/" in domains
+    assert f"{main.SITE_URL}/blog/tag/azure-ml/" in domains
+
+
+def test_render_rss_includes_content_encoded(post_factory) -> None:
+    post = post_factory(slug="x", title="Hello")
+    rss = main.render_rss([post])
+    assert "<content:encoded><![CDATA[<p>Hello</p>]]></content:encoded>" in rss
+
+
+def test_render_rss_includes_media_image_when_social_card_set(post_factory) -> None:
+    post = post_factory(slug="x")
+    post.social_card_url = "/assets/social/blog-x.png"
+    rss = main.render_rss([post])
+    assert f'<media:content url="{main.SITE_URL}/assets/social/blog-x.png"' in rss
+    rss_without_card = main.render_rss([post_factory(slug="y")])
+    assert "<media:content" not in rss_without_card
+
+
+def test_render_rss_channel_metadata(post_factory) -> None:
+    rss = main.render_rss([post_factory(slug="x")])
+    root = etree.fromstring(rss)
+    assert root.find("./channel/copyright") is not None
+    assert root.find("./channel/ttl") is not None
+    assert root.find("./channel/pubDate") is not None
+    image = root.find("./channel/image")
+    assert image is not None
+    assert image.findtext("url", "").endswith(".png")
+
+
+def test_render_rss_atom_updated_only_for_updated_posts(post_factory) -> None:
+    updated = post_factory(slug="u", date=dt.date(2024, 1, 1), updated=dt.date(2024, 6, 1))
+    fresh = post_factory(slug="f", date=dt.date(2024, 1, 1))
+    rss = main.render_rss([updated, fresh])
+    assert rss.count("<atom:updated>") == 1
+
+
+def test_build_sitemap_emits_image_extension() -> None:
+    xml_text = main.build_sitemap([{"url": "/blog/x/", "image": "/assets/social/blog-x.png"}])
+    root = etree.fromstring(xml_text)
+    image_ns = "{http://www.google.com/schemas/sitemap-image/1.1}"
+    locs = [node.text for node in root.iter(f"{image_ns}loc")]
+    assert locs == [f"{main.SITE_URL}/assets/social/blog-x.png"]
 
 
 def test_render_rss_self_link_and_namespaces(post_factory) -> None:

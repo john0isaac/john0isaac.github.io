@@ -214,7 +214,8 @@ def test_sitemap_has_lastmod(built_site: Path) -> None:
 def test_rss_has_creator_and_categories(built_site: Path) -> None:
     rss = _read(built_site / "rss.xml")
     assert "<dc:creator>" in rss
-    assert "<category>" in rss
+    assert "<category" in rss
+    assert 'domain="' in rss
 
 
 def test_redirect_pages_are_generated(built_site: Path) -> None:
