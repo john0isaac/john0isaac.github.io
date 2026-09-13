@@ -7,7 +7,6 @@ categories:
 tags:
   - Zsh
   - Oh My Zsh
-  - Mac
   - Development
   - Setup
 comments: true

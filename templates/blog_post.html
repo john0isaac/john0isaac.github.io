@@ -77,10 +77,17 @@
         <span>{{ post.read_time_label }}</span>
         {% include "partials/author_list.html" %}
       </div>
-      {% if post.tags %}
+      {% if post.categories %}
+      <p class="category-row">
+        {% for category in post.categories %}
+        <a class="category-badge" href="{{ category | category_url }}">{{ category }}</a>
+        {% endfor %}
+      </p>
+      {% endif %}
+      {% if post.display_tags %}
       <p class="tag-row">
-        {% for tag in post.tags %}
-        <span class="tag">{{ tag }}</span>
+        {% for tag in post.display_tags %}
+        <a class="tag" href="{{ tag | tag_url }}">{{ tag }}</a>
         {% endfor %}
       </p>
       {% endif %}
@@ -120,6 +127,9 @@
           <p class="meta">{{ item.date | date_human }} - {{ item.read_time_label }}</p>
           <h3><a href="{{ item.url }}" title="{{ item.title }}">{{ item.title }}</a></h3>
           <p title="{{ item.description }}">{{ item.description }}</p>
+          {% if related_reasons and related_reasons[item.slug] %}
+          <p class="related-card__reason">{{ related_reasons[item.slug] }}</p>
+          {% endif %}
         </article>
         {% endfor %}
       </div>

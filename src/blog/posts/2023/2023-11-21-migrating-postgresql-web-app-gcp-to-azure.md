@@ -6,7 +6,6 @@ categories:
   - Azure
   - Cloud Migration
 tags:
-  - Azure
   - Google Cloud
   - PostgreSQL
   - Migration

@@ -8,7 +8,6 @@ categories:
 tags:
   - AI Builder
   - Power Apps
-  - Power Platform
   - Outlook
   - Sentiment Analysis
 comments: true

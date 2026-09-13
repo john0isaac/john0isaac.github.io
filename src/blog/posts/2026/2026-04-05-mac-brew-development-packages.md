@@ -6,7 +6,6 @@ categories:
   - Mac
 tags:
   - Brew
-  - Mac
   - Development
   - Setup
 comments: true

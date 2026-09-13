@@ -296,7 +296,7 @@ def build_search_index(pages: list[Page], posts: list[Post]) -> list[dict[str, A
                 "url": post.url,
                 "description": post.description,
                 "text": body_text,
-                "tags": post.tags,
+                "tags": post.display_tags,
                 "categories": post.categories,
                 "date": post.date.isoformat(),
             }
@@ -306,8 +306,10 @@ def build_search_index(pages: list[Page], posts: list[Post]) -> list[dict[str, A
 
 def post_similarity(left: Post, right: Post) -> int:
     score = 0
-    shared_tags = set(left.tags) & set(right.tags)
     shared_categories = set(left.categories) & set(right.categories)
+    category_names = {name.lower() for name in shared_categories}
+    # Exclude tags that duplicate a shared category so overlap isn't scored twice.
+    shared_tags = {tag for tag in set(left.tags) & set(right.tags) if tag.lower() not in category_names}
     if shared_tags:
         score += 20 * len(shared_tags)
     if shared_categories:
@@ -334,6 +336,92 @@ def related_posts_for(post: Post, all_posts: list[Post], limit: int = 3) -> list
     return [candidate for candidate, score in scored_posts if score > 0][:limit] or [
         candidate for candidate in all_posts if candidate.slug != post.slug
     ][:limit]
+
+
+def related_reason(post: Post, candidate: Post) -> str:
+    """Explain why ``candidate`` was picked as related to ``post`` (mirrors post_similarity's weighting)."""
+    shared_categories = sorted(set(post.categories) & set(candidate.categories))
+    category_names = {name.lower() for name in shared_categories}
+    shared_tags = sorted(tag for tag in set(post.tags) & set(candidate.tags) if tag.lower() not in category_names)
+    if shared_tags:
+        label = "tag" if len(shared_tags) == 1 else "tags"
+        return f"Shared {label}: {', '.join(shared_tags[:2])}"
+    if shared_categories:
+        return f"Same category: {shared_categories[0]}"
+    if post.authors and candidate.authors and set(post.authors) & set(candidate.authors):
+        return "Same author"
+    return "Recently published"
+
+
+def build_taxonomy_index(posts: list[Post], attr: str) -> dict[str, dict[str, Any]]:
+    """Group posts by a taxonomy field (``categories`` or ``tags``), keyed by slug."""
+    index: dict[str, dict[str, Any]] = {}
+    for post in posts:
+        for name in getattr(post, attr):
+            slug = slugify(str(name))
+            if not slug:
+                continue
+            entry = index.setdefault(slug, {"name": str(name), "slug": slug, "posts": []})
+            entry["posts"].append(post)
+    for entry in index.values():
+        entry["posts"].sort(key=lambda item: item.date, reverse=True)
+    return index
+
+
+def build_category_summary(category_index: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    return sorted(
+        (
+            {
+                "name": entry["name"],
+                "slug": entry["slug"],
+                "url": f"/blog/category/{entry['slug']}/",
+                "count": len(entry["posts"]),
+            }
+            for entry in category_index.values()
+        ),
+        key=lambda item: item["name"].lower(),
+    )
+
+
+def render_taxonomy_pages(
+    environment: Environment,
+    index: dict[str, dict[str, Any]],
+    kind: str,
+    *,
+    blog_archive: list[dict[str, Any]],
+    all_categories: list[dict[str, Any]],
+    common_context: dict[str, Any],
+) -> list[str]:
+    """Render one archive page per tag/category and return the list of generated URLs."""
+    urls: list[str] = []
+    label = "Category" if kind == "category" else "Tag"
+    for slug, entry in index.items():
+        url = f"/blog/{kind}/{slug}/"
+        output_path = SITE_DIR / "blog" / kind / slug / "index.html"
+        taxonomy_page = Page(
+            title=f"{label}: {entry['name']}",
+            description=f"Posts about {entry['name']} on {SITE_NAME}'s blog.",
+            url=url,
+            template="blog_taxonomy.html",
+            output_path=output_path,
+        )
+        render_template(
+            environment,
+            "blog_taxonomy.html",
+            output_path,
+            page=taxonomy_page,
+            posts=entry["posts"],
+            blog_archive=blog_archive,
+            current_blog_url=url,
+            all_categories=all_categories,
+            taxonomy_kind=kind,
+            taxonomy_label=label,
+            taxonomy_name=entry["name"],
+            taxonomy_slug=slug,
+            **common_context,
+        )
+        urls.append(url)
+    return urls
 
 
 def build_blog_archive(posts: list[Post], active_url: str | None = None) -> list[dict[str, Any]]:
@@ -404,7 +492,7 @@ def render_rss(posts: list[Post]) -> str:
             f"      <pubDate>{post.rss_date}</pubDate>",
             f"      <dc:creator>{html.escape(AUTHOR)}</dc:creator>",
         ]
-        for category in post.categories + post.tags:
+        for category in post.categories + post.display_tags:
             item_lines.append(f"      <category>{html.escape(str(category))}</category>")
         item_lines.append(f"      <description>{description}</description>")
         item_lines.append("    </item>")
@@ -472,6 +560,8 @@ def build_environment() -> Environment:
         lstrip_blocks=True,
     )
     environment.filters["date_human"] = lambda value: date_from_value(value).strftime("%b %d, %Y")
+    environment.filters["tag_url"] = lambda value: f"/blog/tag/{slugify(str(value))}/"
+    environment.filters["category_url"] = lambda value: f"/blog/category/{slugify(str(value))}/"
     return environment
 
 
@@ -527,6 +617,9 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
     common_context = base_context()
     blog_archive = build_blog_archive(posts)
     page_lookup = {page.url: page for page in pages}
+    category_index = build_taxonomy_index(posts, "categories")
+    tag_index = build_taxonomy_index(posts, "tags")
+    all_categories = build_category_summary(category_index)
 
     _page_card_slugs = {
         "/": "home",
@@ -594,8 +687,24 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
             blog_archive=blog_archive,
             current_blog_url=blog_page.url,
             pagination=pagination,
+            all_categories=all_categories,
             **common_context,
         )
+    taxonomy_urls = render_taxonomy_pages(
+        environment,
+        category_index,
+        "category",
+        blog_archive=blog_archive,
+        all_categories=all_categories,
+        common_context=common_context,
+    ) + render_taxonomy_pages(
+        environment,
+        tag_index,
+        "tag",
+        blog_archive=blog_archive,
+        all_categories=all_categories,
+        common_context=common_context,
+    )
     render_template(
         environment,
         "projects.html",
@@ -629,6 +738,7 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
 
     for index, post in enumerate(posts):
         related_posts = related_posts_for(post, posts)
+        related_reasons = {candidate.slug: related_reason(post, candidate) for candidate in related_posts}
         render_template(
             environment,
             "blog_post.html",
@@ -640,6 +750,7 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
             previous_post=posts[index + 1] if index + 1 < len(posts) else None,
             next_post=posts[index - 1] if index > 0 else None,
             related_posts=related_posts,
+            related_reasons=related_reasons,
             **common_context,
         )
 
@@ -662,6 +773,7 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
     sitemap_entries += [
         {"url": post.url, "lastmod": post.last_modified.isoformat(), "changefreq": "yearly"} for post in posts
     ]
+    sitemap_entries += [{"url": url, "lastmod": latest_modified_iso, "changefreq": "weekly"} for url in taxonomy_urls]
     write_text(SITE_DIR / "sitemap.xml", build_sitemap(sitemap_entries))
     build_redirects(environment, REDIRECTS)
     copy_static_assets()

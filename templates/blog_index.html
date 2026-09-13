@@ -9,22 +9,11 @@
       <div class="prose">{{ page.content_html | safe }}</div>
     </section>
 
+    {% include "partials/category_switcher.html" %}
+
     <section class="stack d-grid gap-3">
       {% for post in posts %}
-      <article class="card blog-card">
-        <p class="meta">
-          {{ post.date | date_human }} - {{ post.read_time_label }}{% if post.author_profiles %} - {% include "partials/author_list.html" %}{% endif %}
-        </p>
-        <h2 class="blog-card__title">
-          <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </h2>
-        <p class="blog-card__desc" title="{{ post.description }}">{{ post.description }}</p>
-        <div class="tag-row">
-          {% for tag in post.tags %}
-          <span class="tag">{{ tag }}</span>
-          {% endfor %}
-        </div>
-      </article>
+      {% include "partials/post_card.html" %}
       {% endfor %}
     </section>
 

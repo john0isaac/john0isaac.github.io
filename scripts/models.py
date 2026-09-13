@@ -51,6 +51,12 @@ class Post:
         return urljoin(f"{SITE_URL}/", self.url.lstrip("/"))
 
     @property
+    def display_tags(self) -> list[str]:
+        """Tags to render, excluding any that duplicate a category (already shown as a category badge)."""
+        category_names = {category.lower() for category in self.categories}
+        return [tag for tag in self.tags if tag.lower() not in category_names]
+
+    @property
     def last_modified(self) -> dt.date:
         return self.updated or self.date
 

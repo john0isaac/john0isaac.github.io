@@ -1,0 +1,16 @@
+{% if all_categories %}
+<div class="category-switcher" aria-label="Filter blog posts by category">
+  <a
+    class="category-pill{% if taxonomy_kind != 'category' %} is-active{% endif %}"
+    href="/blog/"
+    >All</a
+  >
+  {% for category in all_categories %}
+  <a
+    class="category-pill{% if taxonomy_kind == 'category' and taxonomy_slug == category.slug %} is-active{% endif %}"
+    href="{{ category.url }}"
+    >{{ category.name }} <span class="category-pill__count">{{ category.count }}</span></a
+  >
+  {% endfor %}
+</div>
+{% endif %}

@@ -7,12 +7,10 @@ categories:
   - Machine Learning
   - Power Platform
 tags:
-  - Azure
   - Azure ML
   - ONNX
   - Power Apps
   - Power Automate
-  - Machine Learning
 comments: true
 authors:
   - john0isaac

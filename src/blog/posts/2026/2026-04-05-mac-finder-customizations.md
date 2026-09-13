@@ -6,7 +6,6 @@ categories:
   - Mac
 tags:
   - Finder
-  - Mac
   - Terminal
   - Defaults
   - Development

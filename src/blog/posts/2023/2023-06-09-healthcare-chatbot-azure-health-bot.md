@@ -6,9 +6,7 @@ categories:
   - Azure
   - Chatbot
 tags:
-  - Azure
   - Azure Health Bot
-  - Chatbot
   - Deploy
   - Healthcare
 comments: true

@@ -1,0 +1,27 @@
+{% extends "layouts/base.html" %} {% block content %}
+<section class="blog-layout">
+  {% include "partials/blog_archive.html" %}
+
+  <div class="blog-layout__content">
+    <section class="page-header blog-layout__intro">
+      <a class="back-link" href="/blog/">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> All posts
+      </a>
+      <p class="eyebrow">{{ taxonomy_label }}</p>
+      <h1>{{ taxonomy_name }}</h1>
+      <p class="lede">
+        {{ posts | length }} post{% if posts | length != 1 %}s{% endif %}
+        {% if taxonomy_kind == "category" %} in this category{% else %} tagged “{{ taxonomy_name }}”{% endif %}.
+      </p>
+    </section>
+
+    {% include "partials/category_switcher.html" %}
+
+    <section class="stack d-grid gap-3">
+      {% for post in posts %}
+      {% include "partials/post_card.html" %}
+      {% endfor %}
+    </section>
+  </div>
+</section>
+{% endblock %}

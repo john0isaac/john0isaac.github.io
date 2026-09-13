@@ -53,33 +53,46 @@ function highlightText(value, query) {
   return `${before}<mark>${match}</mark>${after}`;
 }
 
-function buildTagStats(records, query) {
+function buildFacetStats(records, query, field) {
   const needle = normalize(query);
-  const tagCounts = new Map();
+  const counts = new Map();
 
   records
     .filter((record) => record.kind === "post")
     .filter((record) => !needle || scoreRecord(record, needle) > 0)
     .forEach((record) => {
-      (record.tags || []).forEach((tag) => {
-        const name = String(tag || "").trim();
+      (record[field] || []).forEach((value) => {
+        const name = String(value || "").trim();
         if (!name) return;
-        tagCounts.set(name, (tagCounts.get(name) || 0) + 1);
+        counts.set(name, (counts.get(name) || 0) + 1);
       });
     });
 
-  return [...tagCounts.entries()]
+  return [...counts.entries()]
     .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
     .slice(0, 12)
     .map(([tag, count]) => ({ tag, count }));
 }
 
-function matchesSelectedTags(record, selectedTags) {
-  if (!selectedTags.size) return true;
+function buildTagStats(records, query) {
+  return buildFacetStats(records, query, "tags");
+}
+
+function buildCategoryStats(records, query) {
+  return buildFacetStats(records, query, "categories");
+}
+
+function matchesSelectedFilters(record, selectedTags, selectedCategories) {
+  if (!selectedTags.size && !selectedCategories.size) return true;
   if (record.kind !== "post") return false;
 
   const recordTags = new Set((record.tags || []).map((tag) => normalize(tag)));
-  return [...selectedTags].every((tag) => recordTags.has(tag));
+  const tagsMatch = [...selectedTags].every((tag) => recordTags.has(tag));
+
+  const recordCategories = new Set((record.categories || []).map((category) => normalize(category)));
+  const categoriesMatch = [...selectedCategories].every((category) => recordCategories.has(category));
+
+  return tagsMatch && categoriesMatch;
 }
 
 function renderFilterList(container, tags, selectedTags) {
@@ -153,6 +166,7 @@ function initSearchWidget(widget, index) {
   const countNode = document.querySelector("[data-search-count]");
   const filtersNode = document.querySelector("[data-search-filters]");
   const filterList = document.querySelector("[data-search-filter-list]");
+  const categoryFilterList = document.querySelector("[data-search-category-filter-list]");
   const filtersToggle = document.querySelector("[data-search-filters-toggle]");
   const filtersBadge = document.querySelector("[data-search-filters-badge]");
   const openButtons = widget.querySelectorAll("[data-search-open]");
@@ -166,6 +180,7 @@ function initSearchWidget(widget, index) {
   let lastActiveElement = null;
   let filtersCollapsed = false;
   const selectedTags = new Set();
+  const selectedCategories = new Set();
 
   const setFiltersCollapsed = (collapsed) => {
     filtersCollapsed = collapsed;
@@ -181,8 +196,9 @@ function initSearchWidget(widget, index) {
       filtersToggle.setAttribute("aria-expanded", String(!filtersCollapsed));
     }
     if (filtersBadge) {
-      filtersBadge.hidden = selectedTags.size === 0;
-      filtersBadge.textContent = String(selectedTags.size);
+      const totalSelected = selectedTags.size + selectedCategories.size;
+      filtersBadge.hidden = totalSelected === 0;
+      filtersBadge.textContent = String(totalSelected);
     }
   };
 
@@ -196,18 +212,22 @@ function initSearchWidget(widget, index) {
     const query = input.value.trim();
     const tagStats = buildTagStats(index, query);
     renderFilterList(filterList, tagStats, selectedTags);
+    const categoryStats = buildCategoryStats(index, query);
+    renderFilterList(categoryFilterList, categoryStats, selectedCategories);
     syncFiltersToggle();
+
+    const hasSelectedFilters = selectedTags.size > 0 || selectedCategories.size > 0;
 
     currentResults = index
       .map((record) => ({ record, score: scoreRecord(record, query) }))
-      .filter((entry) => matchesSelectedTags(entry.record, selectedTags))
-      .filter((entry) => query || selectedTags.size > 0)
+      .filter((entry) => matchesSelectedFilters(entry.record, selectedTags, selectedCategories))
+      .filter((entry) => query || hasSelectedFilters)
       .filter((entry) => (query ? entry.score > 0 : true))
       .sort((left, right) => right.score - left.score)
       .map((entry, resultIndex) => ({ ...entry.record, __index: resultIndex }))
       .slice(0, 6);
 
-    if (!query && selectedTags.size === 0) {
+    if (!query && !hasSelectedFilters) {
       if (countNode) {
         countNode.hidden = true;
         countNode.textContent = "";
@@ -229,7 +249,7 @@ function initSearchWidget(widget, index) {
       if (query) {
         countNode.textContent = `${currentResults.length} result${currentResults.length === 1 ? "" : "s"}`;
       } else {
-        countNode.textContent = `${currentResults.length} result${currentResults.length === 1 ? "" : "s"} for selected tag${selectedTags.size === 1 ? "" : "s"}`;
+        countNode.textContent = `${currentResults.length} result${currentResults.length === 1 ? "" : "s"} for selected filter${selectedTags.size + selectedCategories.size === 1 ? "" : "s"}`;
       }
     }
 
@@ -262,6 +282,7 @@ function initSearchWidget(widget, index) {
     activeIndex = -1;
     currentResults = [];
     selectedTags.clear();
+    selectedCategories.clear();
     syncFiltersToggle();
     if (countNode) {
       countNode.hidden = true;
@@ -328,6 +349,25 @@ function initSearchWidget(widget, index) {
         selectedTags.delete(normalizedTag);
       } else if (normalizedTag) {
         selectedTags.add(normalizedTag);
+      }
+
+      update();
+      input.focus();
+    });
+  }
+
+  if (categoryFilterList) {
+    categoryFilterList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-search-filter]");
+      if (!button) return;
+
+      const rawCategory = button.getAttribute("data-search-filter") || "";
+      const normalizedCategory = normalize(rawCategory);
+
+      if (selectedCategories.has(normalizedCategory)) {
+        selectedCategories.delete(normalizedCategory);
+      } else if (normalizedCategory) {
+        selectedCategories.add(normalizedCategory);
       }
 
       update();

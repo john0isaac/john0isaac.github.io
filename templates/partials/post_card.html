@@ -1,0 +1,21 @@
+<article class="card blog-card">
+  <p class="meta">
+    {{ post.date | date_human }} - {{ post.read_time_label }}{% if post.author_profiles %} - {% include "partials/author_list.html" %}{% endif %}
+  </p>
+  <h2 class="blog-card__title">
+    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+  </h2>
+  <p class="blog-card__desc" title="{{ post.description }}">{{ post.description }}</p>
+  {% if post.categories %}
+  <p class="category-row">
+    {% for category in post.categories %}
+    <a class="category-badge" href="{{ category | category_url }}">{{ category }}</a>
+    {% endfor %}
+  </p>
+  {% endif %}
+  <div class="tag-row">
+    {% for tag in post.display_tags %}
+    <a class="tag" href="{{ tag | tag_url }}">{{ tag }}</a>
+    {% endfor %}
+  </div>
+</article>

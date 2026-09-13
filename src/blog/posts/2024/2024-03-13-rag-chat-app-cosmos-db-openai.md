@@ -6,7 +6,6 @@ categories:
   - Azure
   - AI
 tags:
-  - Azure
   - Azure Cosmos DB
   - MongoDB
   - Azure OpenAI

@@ -7,7 +7,6 @@ categories:
   - AI
   - Power Platform
 tags:
-  - Azure
   - Azure ML
   - Large Language Models
   - Power Apps
