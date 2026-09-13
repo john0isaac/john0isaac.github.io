@@ -288,10 +288,4 @@
   .video-grid {
     grid-template-columns: 1fr;
   }
-
-  .hero,
-  .page-header,
-  .post-layout {
-    padding-top: 3rem;
-  }
 }

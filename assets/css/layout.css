@@ -14,13 +14,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
-  background:
-    radial-gradient(
-      circle at top left,
-      color-mix(in srgb, var(--accent) 12%, transparent),
-      transparent 30%
-    ),
-    var(--bg);
+  background: var(--bg);
 }
 
 a {
@@ -39,31 +33,12 @@ a {
   height: var(--header-height);
 }
 
-.site-header,
-.site-footer {
-  border-color: var(--border);
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-}
-
 .footer-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 0;
-}
-
-/* ── Site nav (MkDocs-style) ─────────────────────────────── */
-
-.site-nav {
-  /* nothing extra - layout handled by nav-shell */
 }
 
 /* Brand */
@@ -97,7 +72,6 @@ a {
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.01em;
-  border-bottom: 2px solid transparent;
   transition: color 0.15s, border-color 0.15s;
   white-space: nowrap;
 }
@@ -105,14 +79,15 @@ a {
 .nav-link:hover,
 .nav-link:focus-visible {
   color: var(--text);
-  border-bottom-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 .nav-link.active,
 .nav-link[aria-current="page"] {
   color: var(--accent);
-  border-bottom-color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
   font-weight: 500;
 }
 
@@ -235,16 +210,15 @@ a {
 .nav-drawer__link:hover,
 .nav-drawer__link:focus-visible {
   color: var(--text);
-  background: var(--code-inline-bg);
-  border-left-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 .nav-drawer__link.active,
 .nav-drawer__link[aria-current="page"] {
   color: var(--accent);
-  border-left-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 /* ── Overlay backdrop ──────────────────────────────────────── */
