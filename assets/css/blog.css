@@ -143,6 +143,11 @@
 
 /* .blog-archive__open-btn is always visible; is-hidden class no longer used */
 
+.blog-layout.is-initializing .blog-archive,
+.blog-archive__open-btn.is-initializing {
+  transition: none;
+}
+
 @media (max-width: 991.98px) {
   .blog-archive,
   .blog-archive__open-btn {

@@ -34,11 +34,15 @@
               <i class="fa-solid fa-magnifying-glass"></i>
             </span>
             <span class="navbar-search__placeholder">Search</span>
-            <span class="navbar-search__shortcut" data-search-shortcut aria-hidden="true">Ctrl K</span>
+            <span class="navbar-search__shortcut" aria-hidden="true">
+              <span class="navbar-search__shortcut-mac">⌘ K</span>
+              <span class="navbar-search__shortcut-other">Ctrl K</span>
+            </span>
           </button>
         </div>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark and light mode" title="Toggle dark and light mode">
-          <i class="fa-solid fa-moon" aria-hidden="true" data-theme-icon></i>
+          <i class="fa-solid fa-moon theme-toggle__moon" aria-hidden="true"></i>
+          <i class="fa-solid fa-sun theme-toggle__sun" aria-hidden="true"></i>
         </button>
       </div>
     </div>

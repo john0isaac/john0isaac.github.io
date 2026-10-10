@@ -171,7 +171,6 @@ function initSearchWidget(widget, index) {
   const filtersBadge = document.querySelector("[data-search-filters-badge]");
   const openButtons = widget.querySelectorAll("[data-search-open]");
   const closeButtons = document.querySelectorAll("[data-search-close]");
-  const shortcutLabels = document.querySelectorAll("[data-search-shortcut]");
 
   if (!input || !modal || !resultsContainer) return;
 
@@ -201,12 +200,6 @@ function initSearchWidget(widget, index) {
       filtersBadge.textContent = String(totalSelected);
     }
   };
-
-  const isMac = navigator.platform.includes("Mac");
-  const shortcutLabel = isMac ? "⌘ K" : "Ctrl K";
-  shortcutLabels.forEach((node) => {
-    node.textContent = shortcutLabel;
-  });
 
   const update = () => {
     const query = input.value.trim();

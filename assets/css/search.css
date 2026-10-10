@@ -374,6 +374,16 @@
   color: inherit;
 }
 
+/* Icon follows the theme set in <head>, so there is no moon-to-sun flash. */
+.theme-toggle__sun,
+html[data-theme="dark"] .theme-toggle__moon {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle__sun {
+  display: inline-block;
+}
+
 @media (max-width: 991.98px) {
   .search-modal__dialog {
     width: min(100%, calc(100vw - 2rem));

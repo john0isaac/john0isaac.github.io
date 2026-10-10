@@ -2,7 +2,6 @@
   const storageKey = "theme";
   const root = document.documentElement;
   const toggle = document.querySelector("[data-theme-toggle]");
-  const icon = document.querySelector("[data-theme-icon]");
 
   if (!toggle) {
     return;
@@ -15,11 +14,6 @@
     root.dataset.theme = nextTheme;
     root.style.colorScheme = nextTheme;
     localStorage.setItem(storageKey, nextTheme);
-
-    if (icon) {
-      icon.className =
-        nextTheme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon";
-    }
 
     toggle.setAttribute("aria-label", `Switch to ${oppositeTheme} mode`);
     toggle.setAttribute("title", `Switch to ${oppositeTheme} mode`);

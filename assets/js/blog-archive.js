@@ -48,6 +48,15 @@ function initBlogArchive() {
 
     setOpen(defaultOpen);
 
+    // Skip the slide animation for the initial state so it doesn't visibly "glitch" in.
+    layout.classList.add("is-initializing");
+    openBtn.classList.add("is-initializing");
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        layout.classList.remove("is-initializing");
+        openBtn.classList.remove("is-initializing");
+      });
+    });
     toggle.addEventListener("click", () => {
       const open = !layout.classList.contains("is-archive-open");
       setOpen(open);

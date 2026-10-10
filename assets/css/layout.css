@@ -350,3 +350,14 @@ body.nav-drawer-open {
   background: color-mix(in srgb, var(--surface) 92%, var(--accent) 8%);
   flex: 0 0 auto;
 }
+
+/* Hidden until the head script has resolved the platform, then show the matching hint. */
+.navbar-search__shortcut-mac,
+.navbar-search__shortcut-other {
+  display: none;
+}
+
+html[data-platform="mac"] .navbar-search__shortcut-mac,
+html[data-platform="other"] .navbar-search__shortcut-other {
+  display: inline;
+}

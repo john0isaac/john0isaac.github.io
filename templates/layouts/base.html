@@ -17,6 +17,10 @@
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
 
+        // Resolve the platform before first paint so CSS can show the right shortcut hint.
+        const platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent || '';
+        document.documentElement.dataset.platform = /mac|iphone|ipad/i.test(platform) ? 'mac' : 'other';
+
         // Save scroll position per URL before the page unloads.
         window.addEventListener('pagehide', () => {
           sessionStorage.setItem('scrollY:' + location.pathname, String(window.scrollY));
