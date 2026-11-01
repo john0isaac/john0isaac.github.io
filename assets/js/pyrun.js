@@ -2,6 +2,13 @@
 // Wrapped in an IIFE: other classic scripts on the page (e.g. search.js) also
 // declare a global `renderResults`, which would otherwise clobber ours.
 (function () {
+  // Octicons (MIT) - github.com/primer/octicons
+  const ICONS = {
+    "play": '<svg class="icon icon--play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"/></svg>',
+    "sync": '<svg class="icon icon--sync is-spinning" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z"/></svg>',
+    "x": '<svg class="icon icon--x" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg>',
+  };
+
   let pyodidePromise = null;
 
   function getPyodide() {
@@ -78,19 +85,19 @@
   }
 
   function setRunState(button, state) {
-    const icon = button.querySelector("i");
+    const icon = button.querySelector(".icon");
     const label = button.querySelector("span");
     if (!icon || !label) return;
 
     if (state === "running") {
       button.disabled = true;
-      icon.className = "fa-solid fa-spinner fa-spin";
+      icon.outerHTML = ICONS.sync;
       label.textContent = "Running";
       return;
     }
 
     button.disabled = false;
-    icon.className = "fa-solid fa-play";
+    icon.outerHTML = ICONS.play;
     label.textContent = "Run";
   }
 
@@ -139,14 +146,14 @@
       button.type = "button";
       button.className = "code-run-btn";
       button.setAttribute("aria-label", "Run Python code");
-      button.innerHTML = '<i class="fa-solid fa-play" aria-hidden="true"></i><span>Run</span>';
+      button.innerHTML = `${ICONS.play}<span>Run</span>`;
 
       const clearButton = document.createElement("button");
       clearButton.type = "button";
       clearButton.className = "code-clear-btn";
       clearButton.hidden = true;
       clearButton.setAttribute("aria-label", "Clear output");
-      clearButton.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i><span>Clear</span>';
+      clearButton.innerHTML = `${ICONS.x}<span>Clear</span>`;
 
       clearButton.addEventListener("click", () => {
         const results = wrapper.querySelector(".code-run-results");

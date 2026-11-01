@@ -6,11 +6,18 @@
 
   if (!drawer) return;
 
+  // While the drawer is open, everything behind the overlay is inert so focus stays in the drawer.
+  const background = () =>
+    [...document.body.children, ...document.querySelectorAll(".site-nav")].filter(
+      (el) => !el.contains(drawer) && !el.matches("script")
+    );
+
   function openDrawer() {
     drawer.classList.add("is-open");
     overlay.classList.add("is-visible");
     document.body.classList.add("nav-drawer-open");
-    drawer.setAttribute("aria-hidden", "false");
+    drawer.inert = false;
+    background().forEach((el) => (el.inert = true));
     openBtn?.setAttribute("aria-expanded", "true");
     closeBtn?.focus();
   }
@@ -19,7 +26,8 @@
     drawer.classList.remove("is-open");
     overlay.classList.remove("is-visible");
     document.body.classList.remove("nav-drawer-open");
-    drawer.setAttribute("aria-hidden", "true");
+    drawer.inert = true;
+    background().forEach((el) => (el.inert = false));
     openBtn?.setAttribute("aria-expanded", "false");
     openBtn?.focus();
   }

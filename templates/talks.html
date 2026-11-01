@@ -19,8 +19,15 @@ map('truncate', 4, true, '') | unique | list %}
         <div class="video-card__thumb-wrap">
           <img
             src="{{ video.thumbnail }}"
+            {% if video.thumbnail.endswith(".webp") %}
+            srcset="{{ video.thumbnail | replace('.webp', '-400.webp') }} 400w, {{ video.thumbnail | replace('.webp', '-800.webp') }} 800w, {{ video.thumbnail }} 1280w"
+            sizes="(max-width: 640px) calc(100vw - 2.5rem), (max-width: 1024px) 45vw, 360px"
+            {% endif %}
             alt="{{ video.title }}"
+            width="1280"
+            height="720"
             loading="lazy"
+            decoding="async"
             class="video-card__thumb"
           />
           <div class="video-card__play" aria-hidden="true">▶</div>

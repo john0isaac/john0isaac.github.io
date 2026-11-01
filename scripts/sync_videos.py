@@ -1,17 +1,28 @@
 """Fetch YouTube channel videos and write them into data/videos.yml."""
 
 import argparse
+import io
 import json
 import os
 from pathlib import Path
 from typing import Any
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 import yaml
+from PIL import Image
 
 YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3"
-VIDEOS_DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "videos.yml"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+VIDEOS_DATA_PATH = REPO_ROOT / "data" / "videos.yml"
+THUMBNAILS_DIR = REPO_ROOT / "assets" / "img" / "talks"
+THUMBNAILS_URL_PREFIX = "/assets/img/talks"
 THUMBNAIL_URL = "https://img.youtube.com/vi/{video_id}/mqdefault.jpg"
+# Best quality first; maxresdefault (1280x720) is missing for some videos.
+THUMBNAIL_SIZES = ("maxresdefault", "sddefault", "hqdefault", "mqdefault")
+THUMBNAIL_WEBP_QUALITY = 82
+# Pre-resized widths for srcset; browsers downscaling 1280px into a small card make text jagged.
+THUMBNAIL_WIDTHS = (400, 800)
 
 
 def _fetch_json(url: str) -> Any:
@@ -91,6 +102,62 @@ def fetch_video_statistics(api_key: str, videos: list[dict[str, Any]]) -> None:
             video["views"] = int(stats.get("viewCount", 0))
 
 
+def download_best_thumbnail(video_id: str) -> bytes:
+    """Return the highest-resolution thumbnail YouTube has for a video."""
+    for size in THUMBNAIL_SIZES:
+        url = f"https://img.youtube.com/vi/{video_id}/{size}.jpg"
+        try:
+            with urlopen(Request(url)) as resp:  # noqa: S310
+                return bytes(resp.read())
+        except HTTPError as error:
+            if error.code != 404:
+                raise
+    raise RuntimeError(f"No thumbnail available for video {video_id}")
+
+
+def thumbnail_variants(data: bytes) -> dict[str, bytes]:
+    """Crop to 16:9 (the 4:3 fallbacks are letterboxed) and encode WebP variants.
+
+    Returns filename suffixes ("" for full size, "-400" etc.) mapped to WebP bytes.
+    """
+    with Image.open(io.BytesIO(data)) as image:
+        rgb = image.convert("RGB")
+    width, height = rgb.size
+    target_height = round(width * 9 / 16)
+    if target_height < height:
+        top = (height - target_height) // 2
+        rgb = rgb.crop((0, top, width, top + target_height))
+
+    variants: dict[str, bytes] = {}
+    sizes = [(f"-{w}", w) for w in THUMBNAIL_WIDTHS] + [("", rgb.width)]
+    for suffix, target_width in sizes:
+        target_width = min(target_width, rgb.width)
+        resized = rgb.resize((target_width, round(target_width * 9 / 16)), Image.Resampling.LANCZOS)
+        out = io.BytesIO()
+        resized.save(out, "WEBP", quality=THUMBNAIL_WEBP_QUALITY, method=6)
+        variants[suffix] = out.getvalue()
+    return variants
+
+
+def localize_thumbnails(videos: list[dict[str, Any]], thumbnails_dir: Path) -> None:
+    """Download thumbnails so the site serves them itself instead of loading from YouTube.
+
+    Thumbnails already on disk are reused, and images for videos that are gone are removed.
+    """
+    thumbnails_dir.mkdir(parents=True, exist_ok=True)
+    wanted: set[str] = set()
+    for video in videos:
+        names = {suffix: f"{video['id']}{suffix}.webp" for suffix in ["", *(f"-{w}" for w in THUMBNAIL_WIDTHS)]}
+        wanted.update(names.values())
+        if not all((thumbnails_dir / name).exists() for name in names.values()):
+            for suffix, payload in thumbnail_variants(download_best_thumbnail(video["id"])).items():
+                (thumbnails_dir / names[suffix]).write_bytes(payload)
+        video["thumbnail"] = f"{THUMBNAILS_URL_PREFIX}/{names['']}"
+    for stale in thumbnails_dir.iterdir():
+        if stale.is_file() and stale.name not in wanted:
+            stale.unlink()
+
+
 def write_videos_data(videos: list[dict[str, Any]], data_path: Path) -> None:
     """Write video data as a standalone YAML file."""
     data_path.parent.mkdir(parents=True, exist_ok=True)
@@ -149,6 +216,9 @@ def main() -> None:
 
     print("Fetching video statistics...")
     fetch_video_statistics(api_key, videos)
+
+    print("Downloading thumbnails...")
+    localize_thumbnails(videos, THUMBNAILS_DIR)
 
     write_videos_data(videos, args.output)
 

@@ -539,6 +539,33 @@ html[data-theme="dark"] .button:hover {
   box-shadow: 4px 4px 0 rgba(236, 235, 226, 0.35);
 }
 
+.home-card--static:hover,
+.home-card--static:focus-within {
+  transform: none !important;
+  box-shadow: var(--sk-shadow) !important;
+}
+
+.home-card--static .home-card__desc {
+  display: block;
+  overflow: visible;
+}
+
+.connect__lede {
+  max-width: 60ch;
+  margin: 0 0 1.25rem;
+  color: var(--sk-ink-soft);
+  font-size: 1.06rem;
+  line-height: 1.7;
+}
+
+.connect__actions {
+  margin: 0 0 1.5rem;
+}
+
+.button--ghost {
+  background: var(--sk-card);
+}
+
 .connect__row {
   gap: 0.9rem;
 }
@@ -1537,8 +1564,64 @@ html[data-theme="dark"] .footer-links a:hover {
   }
 }
 
+/* ── Reading comfort: line length + progress ─────────────────────────── */
+
+.post-layout > h1,
+.post-layout > .lede,
+.prose > :is(p, ul, ol, dl, blockquote, h2, h3, h4, h5, h6) {
+  max-width: 72ch;
+}
+
+.reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1001;
+  height: 4px;
+  pointer-events: none;
+}
+
+.reading-progress__bar {
+  display: block;
+  height: 100%;
+  background: var(--sk-link);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+html[data-theme="dark"] .reading-progress__bar {
+  background: #f2e38f;
+}
+
+/* ── Skip link ─────────────────────────────────────────────────────── */
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  padding: 0.55rem 1rem;
+  border: 2px solid var(--sk-ink);
+  border-radius: var(--sk-wobble-sm);
+  background: var(--sk-hl);
+  color: #22252b;
+  font: 700 1rem/1.2 var(--font-display);
+  text-decoration: none;
+  box-shadow: var(--sk-shadow-sm);
+  transform: translateY(calc(-100% - 1.5rem));
+}
+
+.skip-link:focus {
+  transform: none;
+  outline: none;
+}
+
+main:focus {
+  outline: none;
+}
+
 /* ── Chalkboard: solid pastel-chalk fills with dark lettering ─────────── */
 
+html[data-theme="dark"] .skip-link,
 html[data-theme="dark"] .home-section__more,
 html[data-theme="dark"] .button,
 html[data-theme="dark"] .category-pill.is-active,

@@ -28,7 +28,7 @@
   transition: color 0.15s ease;
 }
 
-.back-link i {
+.back-link .icon {
   font-size: 0.8rem;
   transition: transform 0.15s ease;
 }
@@ -37,7 +37,7 @@
   color: var(--accent);
 }
 
-.back-link:hover i {
+.back-link:hover .icon {
   transform: translateX(-2px);
 }
 

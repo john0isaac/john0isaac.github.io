@@ -257,3 +257,40 @@ def test_redirect_pages_excluded_from_sitemap(built_site: Path) -> None:
     for slug in main.REDIRECTS:
         assert f"johnaziz.org/{slug}/" not in sitemap
         assert f"johnaziz.org/{slug}<" not in sitemap
+
+
+def test_pages_ship_no_third_party_css_frameworks(built_site: Path) -> None:
+    for page in _all_html(built_site):
+        html = _read(page)
+        assert "fontawesome" not in html.lower(), page
+        assert "bootstrap" not in html.lower(), page
+        assert 'class="fa-' not in html, page
+    assert not (built_site / "vendor" / "fonts").exists()
+
+
+def test_pages_have_skip_link_to_main(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "index.html"), "html.parser")
+    skip = soup.body.find("a")
+    assert skip is not None and skip["href"] == "#main"
+    assert soup.find("main", id="main") is not None
+
+
+def test_nav_drawer_starts_inert(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "index.html"), "html.parser")
+    drawer = soup.find(id="nav-drawer")
+    assert drawer is not None and drawer.has_attr("inert")
+
+
+def test_home_blog_cards_show_read_time(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "index.html"), "html.parser")
+    metas = [m.get_text() for m in soup.select('a.home-card[href^="/blog/"] .home-card__meta')]
+    assert metas and all("read" in m.lower() for m in metas)
+
+
+def test_talk_thumbnails_are_self_hosted(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "talks" / "index.html"), "html.parser")
+    thumbs = soup.select("img.video-card__thumb")
+    assert thumbs
+    for img in thumbs:
+        assert img["src"].startswith("/assets/img/talks/"), img["src"]
+        assert (built_site / img["src"].lstrip("/")).is_file()

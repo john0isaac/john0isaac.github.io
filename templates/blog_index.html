@@ -23,7 +23,7 @@
         class="blog-pagination__arrow{% if not pagination.has_previous %} is-disabled{% endif %}"
         href="{{ pagination.previous_url if pagination.has_previous else '#' }}"
         {% if not pagination.has_previous %}aria-disabled="true" tabindex="-1"{% endif %}
-        ><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Previous</a
+        >{{ icon("arrow-left") }} Previous</a
       >
 
       <ol class="blog-pagination__pages">
@@ -43,7 +43,7 @@
         class="blog-pagination__arrow{% if not pagination.has_next %} is-disabled{% endif %}"
         href="{{ pagination.next_url if pagination.has_next else '#' }}"
         {% if not pagination.has_next %}aria-disabled="true" tabindex="-1"{% endif %}
-        >Next <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a
+        >Next {{ icon("arrow-right") }}</a
       >
     </nav>
     {% endif %}

@@ -70,7 +70,7 @@
   flex: 0 0 auto;
 }
 
-.search-modal__icon i {
+.search-modal__icon .icon {
   font-size: 1rem;
 }
 
@@ -370,7 +370,7 @@
   color: var(--accent);
 }
 
-.theme-toggle i {
+.theme-toggle .icon {
   color: inherit;
 }
 

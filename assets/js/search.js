@@ -1,6 +1,19 @@
-async function loadSearchIndex() {
-  const response = await fetch("/search.json", { cache: "no-store" });
-  return response.json();
+// The index is fetched once, on first use, instead of on every page load.
+let searchIndexPromise = null;
+
+function loadSearchIndex() {
+  if (!searchIndexPromise) {
+    searchIndexPromise = fetch("/search.json")
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .catch((error) => {
+        searchIndexPromise = null;
+        throw error;
+      });
+  }
+  return searchIndexPromise;
 }
 
 function normalize(value) {
@@ -159,7 +172,7 @@ function renderResults(container, results, query, activeIndex) {
     .join("");
 }
 
-function initSearchWidget(widget, index) {
+function initSearchWidget(widget) {
   const input = document.querySelector("[data-search-input]");
   const modal = document.querySelector("[data-search-modal]");
   const resultsContainer = document.querySelector("[data-search-results]");
@@ -174,6 +187,7 @@ function initSearchWidget(widget, index) {
 
   if (!input || !modal || !resultsContainer) return;
 
+  let index = [];
   let currentResults = [];
   let activeIndex = -1;
   let lastActiveElement = null;
@@ -265,6 +279,12 @@ function initSearchWidget(widget, index) {
       input.select();
       update();
     });
+    loadSearchIndex()
+      .then((records) => {
+        index = records;
+        if (!modal.hidden) update();
+      })
+      .catch((error) => console.error("Search index failed to load", error));
   };
 
   const hideModal = () => {
@@ -322,8 +342,11 @@ function initSearchWidget(widget, index) {
     }
   });
 
+  const prefetchIndex = () => loadSearchIndex().catch(() => {});
   openButtons.forEach((button) => {
     button.addEventListener("click", showModal);
+    button.addEventListener("pointerenter", prefetchIndex, { once: true });
+    button.addEventListener("focus", prefetchIndex, { once: true });
   });
 
   closeButtons.forEach((button) => {
@@ -399,14 +422,4 @@ function initSearchWidget(widget, index) {
   hideModal();
 }
 
-async function initSearch() {
-  const widgets = document.querySelectorAll("[data-search-widget]");
-  if (!widgets.length) return;
-
-  const index = await loadSearchIndex();
-  widgets.forEach((widget) => initSearchWidget(widget, index));
-}
-
-initSearch().catch((error) => {
-  console.error("Search failed to initialize", error);
-});
+document.querySelectorAll("[data-search-widget]").forEach((widget) => initSearchWidget(widget));

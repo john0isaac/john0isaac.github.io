@@ -19,6 +19,7 @@ from urllib.parse import urljoin
 import markdown
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from markupsafe import Markup
 
 from scripts.constants import (
     ASSETS_DIR,
@@ -578,7 +579,8 @@ def copy_static_assets() -> None:
     if ASSETS_DIR.exists():
         shutil.copytree(ASSETS_DIR, SITE_DIR / "assets", dirs_exist_ok=True)
     if VENDOR_DIR.exists():
-        shutil.copytree(VENDOR_DIR, SITE_DIR / "vendor", dirs_exist_ok=True)
+        # vendor/fonts only feeds the social-card generator; browsers never need it.
+        shutil.copytree(VENDOR_DIR, SITE_DIR / "vendor", dirs_exist_ok=True, ignore=shutil.ignore_patterns("fonts"))
     robots_path = SRC_DIR / "robots.txt"
     if robots_path.exists():
         shutil.copy2(robots_path, SITE_DIR / "robots.txt")
@@ -601,6 +603,18 @@ def render_template(environment: Environment, template_name: str, output_path: P
     write_text(output_path, rendered)
 
 
+@functools.cache
+def _icon_svg(name: str) -> str:
+    source = (TEMPLATES_DIR / "icons" / f"{name}.svg").read_text(encoding="utf-8")
+    return re.sub(r"\{#.*?#\}\s*", "", source, flags=re.S).strip()
+
+
+def icon(name: str, class_name: str = "") -> Markup:
+    """Inline an SVG from templates/icons with an ``icon`` class for sizing."""
+    classes = html.escape(f"icon icon--{name} {class_name}".strip(), quote=True)
+    return Markup(_icon_svg(name).replace("<svg ", f'<svg class="{classes}" ', 1))
+
+
 def build_environment() -> Environment:
     environment = Environment(
         loader=FileSystemLoader(TEMPLATES_DIR),
@@ -608,6 +622,7 @@ def build_environment() -> Environment:
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    environment.globals["icon"] = icon
     environment.filters["date_human"] = lambda value: date_from_value(value).strftime("%b %d, %Y")
     environment.filters["tag_url"] = lambda value: f"/blog/tag/{slugify(str(value))}/"
     environment.filters["category_url"] = lambda value: f"/blog/category/{slugify(str(value))}/"

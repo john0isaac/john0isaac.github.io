@@ -345,7 +345,7 @@ body.nav-drawer-open {
   justify-content: center;
 }
 
-.navbar-search__icon i {
+.navbar-search__icon .icon {
   font-size: 0.95rem;
 }
 

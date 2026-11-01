@@ -5,19 +5,19 @@
 #}
 {% set variant = variant | default('icon') %}
 {% set social_links = [
-  {'url': 'https://github.com/john0isaac',    'label': 'GitHub',   'icon': 'fa-brands fa-github'},
-  {'url': 'https://linkedin.com/in/john0isaac', 'label': 'LinkedIn', 'icon': 'fa-brands fa-linkedin'},
-  {'url': 'https://youtube.com/@john0isaac',  'label': 'YouTube',  'icon': 'fa-brands fa-youtube'},
-  {'url': 'https://x.com/john00isaac',        'label': 'X',        'icon': 'fa-brands fa-x-twitter'},
+  {'url': 'https://github.com/john0isaac',    'label': 'GitHub',   'icon': 'github'},
+  {'url': 'https://linkedin.com/in/john0isaac', 'label': 'LinkedIn', 'icon': 'linkedin'},
+  {'url': 'https://youtube.com/@john0isaac',  'label': 'YouTube',  'icon': 'youtube'},
+  {'url': 'https://x.com/john00isaac',        'label': 'X',        'icon': 'x-logo'},
 ] %}
 {% for link in social_links %}
 {% if variant == 'connect' %}
 <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"
-  ><i class="{{ link.icon }}" aria-hidden="true"></i> {{ link.label }}</a
+  >{{ icon(link.icon) }} {{ link.label }}</a
 >
 {% else %}
 <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ link.label }}"
-  ><i class="{{ link.icon }}" aria-hidden="true"></i
-></a>
+  >{{ icon(link.icon) }}</a
+>
 {% endif %}
 {% endfor %}

@@ -1,3 +1,9 @@
+// Octicons (MIT) - github.com/primer/octicons
+const ARCHIVE_ICONS = {
+  "chevron-left": '<svg class="icon icon--chevron-left" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06Z"/></svg>',
+  "chevron-right": '<svg class="icon icon--chevron-right" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"/></svg>',
+};
+
 function initBlogArchive() {
   const layouts = document.querySelectorAll(".blog-layout");
   if (!layouts.length) return;
@@ -15,7 +21,7 @@ function initBlogArchive() {
     openBtn.type = "button";
     openBtn.setAttribute("aria-label", "Open blog archive");
     openBtn.setAttribute("title", "Open blog archive");
-    openBtn.innerHTML = '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>';
+    openBtn.innerHTML = ARCHIVE_ICONS["chevron-right"];
     document.body.appendChild(openBtn);
 
     const expandActiveBranch = () => {
@@ -30,10 +36,7 @@ function initBlogArchive() {
     const setOpen = (open) => {
       layout.classList.toggle("is-archive-open", open);
       openBtn.classList.toggle("is-open", open);
-      const openBtnIcon = openBtn.querySelector("i");
-      if (openBtnIcon) {
-        openBtnIcon.className = open ? "fa-solid fa-chevron-left" : "fa-solid fa-chevron-right";
-      }
+      openBtn.innerHTML = ARCHIVE_ICONS[open ? "chevron-left" : "chevron-right"];
       openBtn.setAttribute("aria-label", open ? "Close blog archive" : "Open blog archive");
       openBtn.setAttribute("title", open ? "Close blog archive" : "Open blog archive");
       toggle.setAttribute("aria-expanded", String(open));

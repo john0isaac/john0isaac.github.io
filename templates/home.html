@@ -28,12 +28,42 @@
   </div>
 </section>
 
+<section class="home-section" aria-labelledby="what-i-do">
+  <h2 class="home-section__label" id="what-i-do"><span class="label-prefix" aria-hidden="true">// </span>What I Do</h2>
+  <div class="home-cards">
+    <article class="home-card home-card--static">
+      <span class="home-card__meta">AI engineering</span>
+      <h3 class="home-card__title">Multi-agent &amp; RAG systems</h3>
+      <p class="home-card__desc">
+        LangGraph agent frameworks, retrieval pipelines and LLM evaluation, taken
+        from prototype to production with real observability.
+      </p>
+    </article>
+    <article class="home-card home-card--static">
+      <span class="home-card__meta">Backend &amp; cloud</span>
+      <h3 class="home-card__title">Python services that scale</h3>
+      <p class="home-card__desc">
+        FastAPI, Celery and Kubernetes on Azure and Google Cloud. Certified Azure
+        AI Engineer and Google Cloud Professional Cloud Architect.
+      </p>
+    </article>
+    <article class="home-card home-card--static">
+      <span class="home-card__meta">Open source &amp; community</span>
+      <h3 class="home-card__title">Tools, writing and talks</h3>
+      <p class="home-card__desc">
+        Maintainer of Pallets' cachelib, author of markdown-checker (24k+ monthly
+        downloads) and Microsoft Learn modules, and a former Microsoft MVP.
+      </p>
+    </article>
+  </div>
+</section>
+
 <section class="home-section" aria-label="Latest blog posts">
   <h2 class="home-section__label"><span class="label-prefix" aria-hidden="true">// </span>Latest Blog</h2>
   <div class="home-cards">
     {% for post in posts[:3] %}
     <a class="home-card" href="{{ post.url }}">
-      <span class="home-card__meta">{{ post.date.strftime('%b %Y') }}</span>
+      <span class="home-card__meta">{{ post.date.strftime('%b %Y') }} · {{ post.read_time_label }}</span>
       <h3 class="home-card__title" title="{{ post.title }}">{{ post.title }}</h3>
       <p class="home-card__desc" title="{{ post.description }}">{{ post.description }}</p>
     </a>
@@ -65,8 +95,16 @@
   <a href="/talks/" class="home-section__more">All Talks &rarr;</a>
 </section>
 
-<section class="home-section home-section--connect" aria-label="Connect">
-  <h2 class="home-section__label"><span class="label-prefix" aria-hidden="true">// </span>Connect</h2>
+<section class="home-section home-section--connect" aria-labelledby="get-in-touch">
+  <h2 class="home-section__label" id="get-in-touch"><span class="label-prefix" aria-hidden="true">// </span>Get in Touch</h2>
+  <p class="connect__lede">
+    Happy to talk about AI engineering, open source, speaking or working
+    together. Email is the fastest way to reach me.
+  </p>
+  <p class="button-row connect__actions">
+    <a class="button" href="mailto:johnaziz269@gmail.com">{{ icon("mail") }} Email me</a>
+    <a class="button button--ghost" href="/resume/">{{ icon("download") }} Résumé</a>
+  </p>
   <nav class="connect__row" aria-label="Social links">
     {% with variant='connect' %}{% include "partials/social_links.html" %}{% endwith %}
   </nav>

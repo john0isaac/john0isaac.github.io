@@ -272,9 +272,9 @@ h3 {
   color: var(--accent-strong);
 }
 
-.code-copy-btn i,
-.code-run-btn i,
-.code-clear-btn i {
+.code-copy-btn .icon,
+.code-run-btn .icon,
+.code-clear-btn .icon {
   font-size: 0.78rem;
 }
 

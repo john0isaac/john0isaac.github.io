@@ -37,12 +37,14 @@
 {% if '<pre><code' in post.content_html %}
 <script type="module" src="/assets/js/codeview.js"></script>
 {% endif %}
+<script defer src="/assets/js/reading-progress.js"></script>
 {% if 'language-py' in post.content_html %}
 <script defer src="https://cdn.jsdelivr.net/pyodide/v314.0.3/full/pyodide.js"></script>
 <script defer src="/assets/js/pyrun.js"></script>
 {% endif %}
 {% endblock %}
 {% block content %}
+<div class="reading-progress" aria-hidden="true"><span class="reading-progress__bar" data-reading-progress></span></div>
 <section class="blog-layout blog-layout--post">
   {% include "partials/blog_archive.html" %}
 

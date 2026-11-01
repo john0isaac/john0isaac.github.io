@@ -226,7 +226,7 @@
   outline-offset: 2px;
 }
 
-.footer-links i,
-.connect__row i {
+.footer-links .icon,
+.connect__row .icon {
   font-size: 1.15em;
 }
