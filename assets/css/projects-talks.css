@@ -293,3 +293,8 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* About page */
+.about__body {
+  max-width: 72ch;
+}

@@ -16,6 +16,7 @@ axe = Axe()
         "/blog/",
         "/projects/",
         "/talks/",
+        "/about/",
         "/blog/zsh-config/",
     ],
 )

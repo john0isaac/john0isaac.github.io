@@ -24,6 +24,7 @@ from markupsafe import Markup
 from scripts.constants import (
     ASSETS_DIR,
     AUTHOR,
+    AUTHOR_ALTERNATE_NAMES,
     AUTHOR_BIO,
     AUTHOR_IMAGE,
     AUTHOR_JOB_TITLE,
@@ -255,6 +256,7 @@ def site_navigation() -> list[dict[str, str]]:
         {"title": "Blog", "url": "/blog/"},
         {"title": "Projects", "url": "/projects/"},
         {"title": "Talks", "url": "/talks/"},
+        {"title": "About", "url": "/about/"},
     ]
 
 
@@ -263,6 +265,7 @@ def base_context() -> dict[str, Any]:
         "site_name": SITE_NAME,
         "site_url": SITE_URL,
         "author_name": AUTHOR,
+        "author_alternate_names": AUTHOR_ALTERNATE_NAMES,
         "author_bio": AUTHOR_BIO,
         "author_job_title": AUTHOR_JOB_TITLE,
         "author_image": AUTHOR_IMAGE,
@@ -666,6 +669,7 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
             SITE_DIR / "projects" / "index.html",
         ),
         load_page(SRC_DIR / "talks.md", "/talks/", "talks.html", SITE_DIR / "talks" / "index.html"),
+        load_page(SRC_DIR / "about.md", "/about/", "about.html", SITE_DIR / "about" / "index.html"),
         load_page(SRC_DIR / "resume.md", "/resume/", "resume.html", SITE_DIR / "resume" / "index.html"),
         Page(
             title="Page Not Found",
@@ -690,6 +694,7 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
         "/blog/": "blog",
         "/projects/": "projects",
         "/talks/": "talks",
+        "/about/": "about",
         "/resume/": "resume",
     }
     for page in pages:
@@ -788,6 +793,13 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
     )
     render_template(
         environment,
+        "about.html",
+        page_lookup["/about/"].output_path,
+        page=page_lookup["/about/"],
+        **common_context,
+    )
+    render_template(
+        environment,
         "404.html",
         page_lookup["/404.html"].output_path,
         page=page_lookup["/404.html"],
@@ -820,7 +832,13 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
         )
 
     search_records = build_search_index(
-        [page_lookup["/"], page_lookup["/blog/"], page_lookup["/projects/"], page_lookup["/talks/"]],
+        [
+            page_lookup["/"],
+            page_lookup["/blog/"],
+            page_lookup["/projects/"],
+            page_lookup["/talks/"],
+            page_lookup["/about/"],
+        ],
         posts,
     )
     write_text(SITE_DIR / "search.json", json.dumps(search_records, indent=2))

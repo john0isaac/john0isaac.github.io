@@ -19,12 +19,16 @@ AUTHOR_BIO = (
     "production-grade AI systems, open-source projects, and cloud-native architectures on Azure."
 )
 AUTHOR_IMAGE = "/images/John-Headshot.jpg"
+AUTHOR_ALTERNATE_NAMES = ["John Isaac Aziz", "John Isaac", "john0isaac"]
 TWITTER_HANDLE = "@john00isaac"
 SAME_AS_LINKS = [
     "https://github.com/john0isaac",
     "https://linkedin.com/in/john0isaac",
     "https://youtube.com/@john0isaac",
     "https://x.com/john00isaac",
+    "https://sessionize.com/john-aziz/",
+    "https://dev.to/john0isaac",
+    "https://pypi.org/user/john0isaac/",
 ]
 # Short vanity redirect pages (e.g. https://johnaziz.org/linkedin) for easy sharing.
 # These are intentionally excluded from the sitemap.

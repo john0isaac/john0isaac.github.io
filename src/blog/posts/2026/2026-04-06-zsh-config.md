@@ -1,7 +1,7 @@
 ---
-title: "My Terminal Setup with Zsh and Oh My Zsh"
+title: "How to Install and Configure Zsh with Oh My Zsh on Mac (Homebrew)"
 date: 2026-04-06
-description: "An overview of my terminal configuration using Zsh and Oh My Zsh, including plugins and aliases that enhance my development workflow on macOS."
+description: "Step-by-step guide to installing Zsh and Oh My Zsh on macOS with Homebrew, plus my full .zshrc and .zprofile config: Pure prompt, autosuggestions, syntax highlighting, NVM, and aliases."
 categories:
   - Mac
 tags:

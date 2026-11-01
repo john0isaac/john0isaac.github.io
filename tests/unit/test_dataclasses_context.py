@@ -75,7 +75,7 @@ def test_post_is_updated_false_when_updated_equals_date(post_factory) -> None:
 def test_site_navigation_structure() -> None:
     nav = main.site_navigation()
     urls = [item["url"] for item in nav]
-    assert urls == ["/", "/blog/", "/projects/", "/talks/"]
+    assert urls == ["/", "/blog/", "/projects/", "/talks/", "/about/"]
     assert all({"title", "url"} <= item.keys() for item in nav)
 
 

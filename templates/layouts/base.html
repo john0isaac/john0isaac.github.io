@@ -66,6 +66,7 @@
           "@type": "Person",
           "@id": {{ (site_url ~ "/#person") | tojson }},
           "name": {{ author_name | tojson }},
+          "alternateName": {{ author_alternate_names | tojson }},
           "url": {{ (site_url ~ "/") | tojson }},
           "image": {{ (site_url ~ author_image) | tojson }},
           "jobTitle": {{ author_job_title | tojson }},

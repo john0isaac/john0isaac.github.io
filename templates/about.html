@@ -1,0 +1,27 @@
+{% extends "layouts/base.html" %} {% block og_type %}profile{% endblock %}
+{% block structured_data %}
+{{ super() }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": {{ (page.absolute_url ~ "#profile") | tojson }},
+  "url": {{ page.absolute_url | tojson }},
+  "name": {{ page.title | tojson }},
+  "description": {{ page.description | tojson }},
+  "mainEntity": { "@id": {{ (site_url ~ "/#person") | tojson }} },
+  "isPartOf": { "@id": {{ (site_url ~ "/#website") | tojson }} }
+}
+</script>
+{% endblock %}
+{% block content %}
+<section class="about">
+  <header class="page-header">
+    <p class="eyebrow">About</p>
+    <h1>{{ page.metadata.heading | default(page.title) }}</h1>
+    <p class="lede">{{ page.description }}</p>
+    <p class="button-row"><a class="button" href="/resume/">View resume</a></p>
+  </header>
+  <div class="prose about__body">{{ page.content_html | safe }}</div>
+</section>
+{% endblock %}
