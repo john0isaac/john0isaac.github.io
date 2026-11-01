@@ -4,7 +4,7 @@
 {% for year in videos | map(attribute='published') | list | map('string') |
 map('truncate', 4, true, '') | unique | list %}
 <section class="talks-section">
-  <h2 class="section-label home-section__label">// {{ year }}</h2>
+  <h2 class="section-label home-section__label"><span class="label-prefix" aria-hidden="true">// </span>{{ year }}</h2>
   <div class="video-grid d-grid gap-3">
     {% for video in videos if video.published[:4] == year %}
     {% set video_url = "https://www.youtube.com/watch?v=" ~ video.id %}

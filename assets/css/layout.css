@@ -7,7 +7,7 @@
 html {
   background: var(--bg);
   color: var(--text);
-  font-family: Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
 }
 
 body {
@@ -45,11 +45,22 @@ a {
 .brand {
   color: var(--text);
   text-decoration: none;
-  font: 700 1rem/1.2 var(--font-sans);
+  font: 700 1rem/1.2 var(--font-display);
   white-space: nowrap;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
+  gap: 0.55em;
+}
+
+/* JA logo: tile = --logo-bg, letters = --logo-fg (set per design) */
+.brand__logo {
+  flex: 0 0 auto;
+  width: var(--logo-size, 1.75em);
+  height: var(--logo-size, 1.75em);
+  background: var(--logo-bg);
+  color: var(--logo-fg);
+  border-radius: var(--logo-radius, 0.3em);
 }
 
 /* Desktop nav list */

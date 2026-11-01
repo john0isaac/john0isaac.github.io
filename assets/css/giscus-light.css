@@ -1,0 +1,63 @@
+/* giscus theme for the light Sketch design. giscus.app loads this file
+ * cross-origin, so it must stay self-contained (no site variables). */
+@import url("https://giscus.app/themes/light.css");
+
+main {
+  --color-fg-default: #22252b;
+  --color-fg-muted: #4f525a;
+  --color-fg-subtle: #4f525a;
+  --color-canvas-default: #fffdf9;
+  --color-canvas-overlay: #fffdf9;
+  --color-canvas-inset: #f7f5f0;
+  --color-canvas-subtle: #f7f5f0;
+  --color-border-default: #22252b;
+  --color-border-muted: rgba(34, 37, 43, 0.25);
+  --color-neutral-muted: rgba(34, 37, 43, 0.08);
+  --color-accent-fg: #1d4fb8;
+  --color-accent-emphasis: #1d4fb8;
+  --color-accent-muted: rgba(29, 79, 184, 0.35);
+  --color-accent-subtle: #b9dcff;
+  --color-attention-subtle: #fde767;
+  --color-danger-fg: #b3261e;
+  --color-btn-text: #22252b;
+  --color-btn-bg: #fffdf9;
+  --color-btn-border: #22252b;
+  --color-btn-shadow: 2px 2px 0 #22252b;
+  --color-btn-hover-bg: #b9dcff;
+  --color-btn-hover-border: #22252b;
+  --color-btn-active-bg: #b9dcff;
+  --color-btn-active-border: #22252b;
+  --color-btn-selected-bg: #fde767;
+  --color-btn-primary-text: #22252b;
+  --color-btn-primary-bg: #fde767;
+  --color-btn-primary-border: #22252b;
+  --color-btn-primary-shadow: 2px 2px 0 #22252b;
+  --color-btn-primary-hover-bg: #a8e6c4;
+  --color-btn-primary-hover-border: #22252b;
+  --color-btn-primary-selected-bg: #a8e6c4;
+  --color-btn-primary-disabled-text: rgba(34, 37, 43, 0.6);
+  --color-btn-primary-disabled-bg: #fdf1b0;
+  --color-btn-primary-disabled-border: rgba(34, 37, 43, 0.4);
+  --color-segmented-control-bg: #f7f5f0;
+  --color-segmented-control-button-bg: #fffdf9;
+  --color-segmented-control-button-selected-border: #22252b;
+  --color-social-reaction-bg-hover: #f7f5f0;
+  --color-social-reaction-bg-reacted-hover: #b9dcff;
+}
+
+body,
+main {
+  color: var(--color-fg-default);
+  font-family: ui-rounded, "SF Pro Rounded", "Nunito", "Varela Round", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+main .gsc-comment-box,
+main .gsc-comment > div {
+  border-width: 2px;
+  border-radius: 18px 6px 16px 5px / 5px 16px 6px 18px;
+}
+
+main .btn {
+  border-width: 1.5px;
+  font-weight: 700;
+}

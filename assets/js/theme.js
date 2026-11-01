@@ -17,6 +17,16 @@
 
     toggle.setAttribute("aria-label", `Switch to ${oppositeTheme} mode`);
     toggle.setAttribute("title", `Switch to ${oppositeTheme} mode`);
+    syncGiscusTheme(nextTheme);
+  };
+
+  // giscus lives in a cross-origin iframe, so its theme is switched via postMessage.
+  const syncGiscusTheme = (theme) => {
+    const loader = document.querySelector("[data-giscus-loader]");
+    const frame = document.querySelector("iframe.giscus-frame");
+    if (!loader || !frame) return;
+    const url = theme === "dark" ? loader.dataset.themeDark : loader.dataset.themeLight;
+    frame.contentWindow.postMessage({ giscus: { setConfig: { theme: url } } }, "https://giscus.app");
   };
 
   setTheme(root.dataset.theme || "light");

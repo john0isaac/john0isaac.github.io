@@ -84,3 +84,17 @@ def test_search_index_truncates_body(post_factory) -> None:
     long_post.body_markdown = "word " * 500
     records = main.build_search_index([], [long_post])
     assert len(records[0]["text"]) <= 500
+
+
+def test_count_project_technologies_dedupes_and_orders_by_usage():
+    projects = [
+        {"technologies": ["Python", "Azure", "Python"]},
+        {"technologies": ["azure-lowercase", "Python"]},
+        {"technologies": ["Azure"]},
+        {"technologies": None},
+    ]
+    assert main.count_project_technologies(projects) == [
+        ("Azure", 2),
+        ("Python", 2),
+        ("azure-lowercase", 1),
+    ]

@@ -1,0 +1,63 @@
+/* giscus theme for the dark Sketch design. giscus.app loads this file
+ * cross-origin, so it must stay self-contained (no site variables). */
+@import url("https://giscus.app/themes/dark.css");
+
+main {
+  --color-fg-default: #ecebe2;
+  --color-fg-muted: #c2c6bd;
+  --color-fg-subtle: #c2c6bd;
+  --color-canvas-default: #252b31;
+  --color-canvas-overlay: #252b31;
+  --color-canvas-inset: #1a1e23;
+  --color-canvas-subtle: #2c333a;
+  --color-border-default: rgba(236, 235, 226, 0.28);
+  --color-border-muted: rgba(236, 235, 226, 0.14);
+  --color-neutral-muted: rgba(236, 235, 226, 0.1);
+  --color-accent-fg: #9fd0ff;
+  --color-accent-emphasis: #9fd0ff;
+  --color-accent-muted: rgba(159, 208, 255, 0.35);
+  --color-accent-subtle: rgba(160, 205, 255, 0.25);
+  --color-attention-subtle: rgba(255, 233, 120, 0.3);
+  --color-danger-fg: #ffb3a8;
+  --color-btn-text: #ecebe2;
+  --color-btn-bg: #2c333a;
+  --color-btn-border: rgba(236, 235, 226, 0.35);
+  --color-btn-shadow: none;
+  --color-btn-hover-bg: #3a4652;
+  --color-btn-hover-border: rgba(236, 235, 226, 0.5);
+  --color-btn-active-bg: #3a4652;
+  --color-btn-active-border: rgba(236, 235, 226, 0.5);
+  --color-btn-selected-bg: #4a4630;
+  --color-btn-primary-text: #1f2a24;
+  --color-btn-primary-bg: #f2e38f;
+  --color-btn-primary-border: #f2e38f;
+  --color-btn-primary-shadow: none;
+  --color-btn-primary-hover-bg: #b8e8cc;
+  --color-btn-primary-hover-border: #b8e8cc;
+  --color-btn-primary-selected-bg: #b8e8cc;
+  --color-btn-primary-disabled-text: rgba(31, 42, 36, 0.6);
+  --color-btn-primary-disabled-bg: #8d8656;
+  --color-btn-primary-disabled-border: rgba(236, 235, 226, 0.4);
+  --color-segmented-control-bg: #1a1e23;
+  --color-segmented-control-button-bg: #252b31;
+  --color-segmented-control-button-selected-border: rgba(236, 235, 226, 0.35);
+  --color-social-reaction-bg-hover: #2c333a;
+  --color-social-reaction-bg-reacted-hover: #3a4652;
+}
+
+body,
+main {
+  color: var(--color-fg-default);
+  font-family: ui-rounded, "SF Pro Rounded", "Nunito", "Varela Round", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+main .gsc-comment-box,
+main .gsc-comment > div {
+  border-width: 2px;
+  border-radius: 18px 6px 16px 5px / 5px 16px 6px 18px;
+}
+
+main .btn {
+  border-width: 1.5px;
+  font-weight: 700;
+}

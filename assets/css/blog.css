@@ -310,7 +310,7 @@
 .blog-pagination__page.is-current {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--bg);
   cursor: default;
   pointer-events: none;
 }

@@ -1,7 +1,8 @@
 <section class="comments-section" aria-label="Comments">
   <h2 id="__comments">Comments</h2>
+  {#- giscus fetches custom themes cross-origin, so they always come from the live site. #}
   <script
-    src="https://giscus.app/client.js"
+    data-giscus-loader
     data-repo="john0isaac/john0isaac.github.io"
     data-repo-id="MDEwOlJlcG9zaXRvcnkzMjY0NTM5MDc="
     data-category="Announcements"
@@ -11,10 +12,32 @@
     data-reactions-enabled="0"
     data-emit-metadata="0"
     data-input-position="top"
-    data-theme="preferred_color_scheme"
+    data-theme-light="{{ site_url }}/assets/css/giscus-light.css"
+    data-theme-dark="{{ site_url }}/assets/css/giscus-dark.css"
     data-lang="en"
     data-loading="lazy"
-    crossorigin="anonymous"
-    async
-  ></script>
+  >
+    (() => {
+      const loader = document.currentScript;
+      // Browsers block giscus.app from loading themes off localhost, and an unloaded
+      // theme leaves the comments unstyled, so previews use giscus' built-in themes.
+      if (new URL(loader.dataset.themeLight).origin !== location.origin) {
+        loader.dataset.themeLight = "light";
+        loader.dataset.themeDark = "dark";
+      }
+      const { themeLight, themeDark, giscusLoader, ...config } = loader.dataset;
+      const giscus = document.createElement("script");
+      giscus.src = "https://giscus.app/client.js";
+      giscus.crossOrigin = "anonymous";
+      giscus.async = true;
+      Object.entries(config).forEach(([key, value]) => {
+        giscus.setAttribute(`data-${key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}`, value);
+      });
+      giscus.setAttribute(
+        "data-theme",
+        document.documentElement.dataset.theme === "dark" ? themeDark : themeLight,
+      );
+      loader.after(giscus);
+    })();
+  </script>
 </section>

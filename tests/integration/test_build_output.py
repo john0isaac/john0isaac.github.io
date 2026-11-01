@@ -81,13 +81,25 @@ def test_project_tech_tags_are_spans_not_buttons(built_site: Path) -> None:
     assert all(tag.name == "span" for tag in tags)
 
 
+def test_project_filter_lists_each_card_technology_once(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "projects" / "index.html"), "html.parser")
+    pills = [pill["data-tech"] for pill in soup.select("[data-project-filter] [data-tech]")]
+    assert pills[0] == ""
+    card_techs = {
+        tech
+        for card in soup.select(".project-card[data-technologies]")
+        for tech in card["data-technologies"].split("|")
+    }
+    assert sorted(pills[1:]) == sorted(card_techs)
+
+
 def test_talks_have_youtube_links(built_site: Path) -> None:
     soup = BeautifulSoup(_read(built_site / "talks" / "index.html"), "html.parser")
     links = [a["href"] for a in soup.find_all("a", href=True)]
     assert any("youtube.com/watch?v=" in href for href in links)
 
 
-def test_comments_use_preferred_color_scheme(built_site: Path) -> None:
+def test_comments_follow_site_theme(built_site: Path) -> None:
     post_pages = [
         path
         for path in (built_site / "blog").rglob("index.html")
@@ -97,7 +109,10 @@ def test_comments_use_preferred_color_scheme(built_site: Path) -> None:
     soup = BeautifulSoup(_read(post_pages[0]), "html.parser")
     giscus = soup.find("script", attrs={"data-repo": True})
     assert giscus is not None
-    assert giscus["data-theme"] == "preferred_color_scheme"
+    assert giscus["data-theme-light"].endswith("/assets/css/giscus-light.css")
+    assert giscus["data-theme-dark"].endswith("/assets/css/giscus-dark.css")
+    assert (built_site / "assets/css/giscus-light.css").exists()
+    assert (built_site / "assets/css/giscus-dark.css").exists()
 
 
 def test_search_json_is_valid_records(built_site: Path) -> None:

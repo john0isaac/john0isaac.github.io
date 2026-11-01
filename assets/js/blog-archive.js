@@ -40,13 +40,9 @@ function initBlogArchive() {
       if (open) expandActiveBranch();
     };
 
-    // Default: open on desktop, closed on mobile
-    const saved = window.localStorage.getItem(storageKey);
-    const defaultOpen = saved !== null
-      ? saved === "true"
-      : window.matchMedia("(min-width: 992px)").matches;
-
-    setOpen(defaultOpen);
+    // The archive floats over the page, so it always starts closed.
+    window.localStorage.removeItem(storageKey);
+    setOpen(false);
 
     // Skip the slide animation for the initial state so it doesn't visibly "glitch" in.
     layout.classList.add("is-initializing");
@@ -60,20 +56,24 @@ function initBlogArchive() {
     toggle.addEventListener("click", () => {
       const open = !layout.classList.contains("is-archive-open");
       setOpen(open);
-      window.localStorage.setItem(storageKey, String(open));
     });
 
     openBtn.addEventListener("click", () => {
       const open = !layout.classList.contains("is-archive-open");
       setOpen(open);
-      window.localStorage.setItem(storageKey, String(open));
+    });
+
+    // The archive floats over the page, so a click outside closes it.
+    document.addEventListener("click", (e) => {
+      if (!layout.classList.contains("is-archive-open")) return;
+      if (sidebar.contains(e.target) || openBtn.contains(e.target)) return;
+      setOpen(false);
     });
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && layout.classList.contains("is-archive-open")) {
         setOpen(false);
-        window.localStorage.setItem(storageKey, "false");
-      }
+        }
     });
   });
 }

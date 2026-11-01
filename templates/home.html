@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %} {% block content %}
 <section class="hero" aria-label="About John Aziz">
   <div class="hero__inner">
+    <p class="hero__eyebrow">{{ author_job_title }}</p>
     <h1 class="hero__heading">Hi, I'm <span class="hero__name">John</span>.</h1>
     <p class="hero__bio">
       Senior Software Engineer at Lyah and a former Microsoft MVP. I build
@@ -28,7 +29,7 @@
 </section>
 
 <section class="home-section" aria-label="Latest blog posts">
-  <h2 class="home-section__label">// Latest Blog</h2>
+  <h2 class="home-section__label"><span class="label-prefix" aria-hidden="true">// </span>Latest Blog</h2>
   <div class="home-cards">
     {% for post in posts[:3] %}
     <a class="home-card" href="{{ post.url }}">
@@ -42,7 +43,7 @@
 </section>
 
 <section class="home-section" aria-label="Popular talks">
-  <h2 class="home-section__label">// Popular Talks</h2>
+  <h2 class="home-section__label"><span class="label-prefix" aria-hidden="true">// </span>Popular Talks</h2>
   <div class="home-cards">
     {% for video in videos[:3] %}
     <a
@@ -65,7 +66,7 @@
 </section>
 
 <section class="home-section home-section--connect" aria-label="Connect">
-  <h2 class="home-section__label">// Connect</h2>
+  <h2 class="home-section__label"><span class="label-prefix" aria-hidden="true">// </span>Connect</h2>
   <nav class="connect__row" aria-label="Social links">
     {% with variant='connect' %}{% include "partials/social_links.html" %}{% endwith %}
   </nav>

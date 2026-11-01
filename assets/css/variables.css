@@ -15,6 +15,9 @@
   --muted: #5b6472;
   --accent: #3b5bcc;
   --accent-strong: #2f49a8;
+  --accent-2: #c62828;
+  --logo-bg: var(--text);
+  --logo-fg: var(--bg);
   --border: #d1d5db;
 
   /* Code */
@@ -39,8 +42,9 @@
 
   /* Type */
   --font-sans: Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-mono: "Roboto Mono", "SFMono-Regular", Menlo, Consolas,
-    "Liberation Mono", monospace;
+  --font-display: var(--font-sans);
+  --font-mono: ui-monospace, "SF Mono", "Roboto Mono", "SFMono-Regular", Menlo,
+    Consolas, "Liberation Mono", monospace;
 
   /* Accent flavors */
   --color-devcontainer: #166534;

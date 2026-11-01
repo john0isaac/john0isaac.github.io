@@ -1,6 +1,6 @@
 <article class="card blog-card">
   <p class="meta">
-    {{ post.date | date_human }} - {{ post.read_time_label }}{% if post.author_profiles %} - {% include "partials/author_list.html" %}{% endif %}
+    <span class="meta__date">{{ post.date | date_human }}</span> - {{ post.read_time_label }}{% if post.author_profiles %} - {% include "partials/author_list.html" %}{% endif %}
   </p>
   <h2 class="blog-card__title">
     <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>

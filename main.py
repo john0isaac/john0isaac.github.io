@@ -427,6 +427,15 @@ def render_taxonomy_pages(
     return entries
 
 
+def count_project_technologies(projects: list[dict[str, Any]]) -> list[tuple[str, int]]:
+    """Return each unique technology with its project count, most used first."""
+    counts: dict[str, int] = {}
+    for project in projects:
+        for tech in dict.fromkeys(project.get("technologies") or []):
+            counts[tech] = counts.get(tech, 0) + 1
+    return sorted(counts.items(), key=lambda item: (-item[1], item[0].lower()))
+
+
 def build_blog_archive(posts: list[Post], active_url: str | None = None) -> list[dict[str, Any]]:
     grouped: dict[int, dict[int, list[Post]]] = {}
     for post in posts:
@@ -751,6 +760,7 @@ def build_site(minify: bool = True, optimize: bool = True) -> None:
         page_lookup["/projects/"].output_path,
         page=page_lookup["/projects/"],
         projects=projects,
+        project_technologies=count_project_technologies(projects),
         **common_context,
     )
     render_template(

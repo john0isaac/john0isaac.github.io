@@ -124,7 +124,7 @@
       <div class="card-grid">
         {% for item in related_posts %}
         <article class="card related-card">
-          <p class="meta">{{ item.date | date_human }} - {{ item.read_time_label }}</p>
+          <p class="meta"><span class="meta__date">{{ item.date | date_human }}</span> - {{ item.read_time_label }}</p>
           <h3><a href="{{ item.url }}" title="{{ item.title }}">{{ item.title }}</a></h3>
           <p title="{{ item.description }}">{{ item.description }}</p>
           {% if related_reasons and related_reasons[item.slug] %}

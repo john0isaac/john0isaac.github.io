@@ -1,15 +1,29 @@
 {% extends "layouts/base.html" %} {% block content %}
 {% with eyebrow='Projects' %}{% include "partials/page_header.html" %}{% endwith %}
 
+{% if project_technologies %}
+<div class="category-switcher project-filter" role="group" aria-label="Filter projects by technology" data-project-filter hidden>
+  <button type="button" class="category-pill is-active" data-tech="" aria-pressed="true">
+    All <span class="category-pill__count">{{ projects | length }}</span>
+  </button>
+  {% for tech, count in project_technologies %}
+  <button type="button" class="category-pill" data-tech="{{ tech }}" aria-pressed="false">
+    {{ tech }} <span class="category-pill__count">{{ count }}</span>
+  </button>
+  {% endfor %}
+</div>
+<p class="project-filter__status visually-hidden" aria-live="polite" data-project-filter-status></p>
+{% endif %}
+
 {% for category in projects | map(attribute='category') | unique | list %}
 <section class="projects-section">
-  <h2 class="section-label home-section__label">// {{ category }}</h2>
+  <h2 class="section-label home-section__label"><span class="label-prefix" aria-hidden="true">// </span>{{ category }}</h2>
   <div class="projects-filters" aria-hidden="true">
     <span class="filter-pill filter-pill--active">{{ category }}</span>
   </div>
   <div class="project-grid">
     {% for project in projects if project.category == category %}
-    <article class="project-card">
+    <article class="project-card" data-technologies="{{ project.technologies | join('|') }}">
       <div class="project-info">
         <div class="project-meta">
           <span class="project-category">{{ project.category }}</span>

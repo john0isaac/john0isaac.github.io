@@ -187,7 +187,7 @@
 .search-box {
   display: grid;
   gap: 0.5rem;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
 }
 
 .search-box input {
