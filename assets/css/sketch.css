@@ -1096,6 +1096,11 @@ html[data-theme="dark"] .code-copy-btn.is-copied {
   border-right: 1.5px dashed var(--sk-ink-soft);
 }
 
+/* One Dark's red and grey tokens need a darker ground to reach 4.5:1. */
+html[data-theme="dark"] .code-view.cm-editor {
+  background: #1a1e23;
+}
+
 .prose table {
   overflow: hidden;
   border-radius: var(--sk-wobble-sm);

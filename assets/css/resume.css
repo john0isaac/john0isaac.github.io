@@ -40,6 +40,13 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Links inside running text need more than colour to stand out. */
+.entry-bullets a,
+.resume-section p a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ── Top action bar (screen only) ───────────────────────────────────── */
 
 .resume-top-bar {
@@ -316,7 +323,9 @@ a:hover {
     border-bottom-color: #999;
   }
 
-  a {
+  a,
+  .entry-bullets a,
+  .resume-section p a {
     color: #000;
     text-decoration: none;
   }

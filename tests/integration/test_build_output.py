@@ -294,3 +294,15 @@ def test_talk_thumbnails_are_self_hosted(built_site: Path) -> None:
     for img in thumbs:
         assert img["src"].startswith("/assets/img/talks/"), img["src"]
         assert (built_site / img["src"].lstrip("/")).is_file()
+
+
+def test_search_trigger_has_accessible_name(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "index.html"), "html.parser")
+    trigger = soup.select_one("button.navbar-search__trigger")
+    assert trigger is not None and trigger.get("aria-label")
+
+
+def test_resume_has_main_and_header_landmarks(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "resume" / "index.html"), "html.parser")
+    assert soup.find("main") is not None
+    assert soup.find("header", class_="resume-top-bar") is not None

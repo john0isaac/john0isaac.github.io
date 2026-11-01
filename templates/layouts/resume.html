@@ -69,7 +69,7 @@
   </head>
   <body>
     <!-- Top action bar (hidden in print) -->
-    <div class="resume-top-bar">
+    <header class="resume-top-bar">
       <a class="resume-top-bar__back" href="/">&#8592; johnaziz.org</a>
       <div class="resume-top-bar__actions">
         {% block top_bar_actions %}
@@ -78,10 +78,10 @@
         </a>
         {% endblock %}
       </div>
-    </div>
+    </header>
 
-    <div class="resume-wrap">
+    <main class="resume-wrap">
       {% block content %}{% endblock %}
-    </div><!-- /.resume-wrap -->
+    </main>
   </body>
 </html>
