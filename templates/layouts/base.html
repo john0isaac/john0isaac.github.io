@@ -35,9 +35,11 @@
         });
       })();
     </script>
-    <title>{% if page.title and page.title != site_name and site_name not in page.title %}{{ page.title }} | {{ site_name }}{% elif page.title %}{{ page.title }}{% else %}{{ site_name }}{% endif %}</title>
+    {% set seo_title = page.metadata.get("seo_title") if page.metadata is defined and page.metadata else none %}
+    <title>{% if seo_title %}{{ seo_title }}{% elif page.title and page.title != site_name and site_name not in page.title %}{{ page.title }} | {{ site_name }}{% elif page.title %}{{ page.title }}{% else %}{{ site_name }}{% endif %}</title>
     <meta name="description" content="{{ page.description }}" />
     <meta name="author" content="{{ author_name }}" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="{{ page.absolute_url }}" />
     <link rel="alternate" type="application/rss+xml" title="{{ site_name }} Blog" href="/rss.xml" />
     <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
@@ -78,8 +80,21 @@
           "@id": {{ (site_url ~ "/#website") | tojson }},
           "url": {{ (site_url ~ "/") | tojson }},
           "name": {{ site_name | tojson }},
+          "alternateName": {{ ([author_alternate_names[0], site_url.split("//")[1]]) | tojson }},
           "publisher": { "@id": {{ (site_url ~ "/#person") | tojson }} }
-        }
+        }{% if page and page.url and page.url not in ("/", "/404.html") %},
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ (site_url ~ "/") | tojson }} },
+            {% if page.url.startswith("/blog/") and page.url != "/blog/" %}
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": {{ (site_url ~ "/blog/") | tojson }} },
+            { "@type": "ListItem", "position": 3, "name": {{ page.title | tojson }}, "item": {{ page.absolute_url | tojson }} }
+            {% else %}
+            { "@type": "ListItem", "position": 2, "name": {{ page.title | tojson }}, "item": {{ page.absolute_url | tojson }} }
+            {% endif %}
+          ]
+        }{% endif %}
       ]
     }
     </script>
