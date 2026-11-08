@@ -3,13 +3,14 @@
 
       <!-- Header -->
       <header class="resume-header">
-        <h1 class="resume-header__name">John Isaac Aziz</h1>
-        <p class="resume-header__title">Senior Software Engineer &amp; former Microsoft MVP</p>
+        <h1 class="resume-header__name">John Aziz</h1>
+        <p class="resume-header__title">Senior AI Software Engineer</p>
         <ul class="resume-contact">
           <li><a href="mailto:johnaziz269@gmail.com">johnaziz269@gmail.com</a></li>
           <li><a href="tel:+201554602187">+201 554 602 187</a></li>
-          <li><a href="https://linkedin.com/in/john0isaac" target="_blank" rel="noopener">linkedin.com/in/john0isaac</a></li>
+          <li><a href="https://johnaziz.org" target="_blank" rel="noopener">johnaziz.org</a></li>
           <li><a href="https://github.com/john0isaac/" target="_blank" rel="noopener">github.com/john0isaac</a></li>
+          <li><a href="https://linkedin.com/in/john0isaac" target="_blank" rel="noopener">linkedin.com/in/john0isaac</a></li>
           <li>Cairo, Egypt</li>
         </ul>
       </header>
@@ -18,12 +19,8 @@
       <section class="resume-section" aria-label="Summary">
         <h2 class="resume-section__heading">Summary</h2>
         <p class="resume-summary">
-          Senior Software Engineer with 3+ years of experience delivering full-stack and cloud-native solutions using Python.
-          Currently building a new AI-powered EdTech platform at Lyah, with prior experience building distributed systems,
-          developer tools, and internal packages at startups and scale-ups.
-          Recognized as a former Microsoft MVP for impactful contributions to the tech community, including open-source tools,
-          educational content, and developer advocacy. Proven ability to lead technical initiatives, automate workflows,
-          and deliver scalable solutions across cloud platforms.
+          Senior AI Software Engineer who has shipped production software since 2021, building AI systems,
+          Python backends and cloud-native applications. Maintainer of CacheLib and former Microsoft MVP.
         </p>
       </section>
 
@@ -34,18 +31,20 @@
         <div class="resume-entry">
           <div class="entry-header">
             <div class="entry-title">
-              <p class="entry-org">Lyah Ed Tech</p>
+              <p class="entry-org"><a href="https://lyah.ai" target="_blank" rel="noopener">Lyah</a></p>
               <p class="entry-role">Senior AI Software Engineer (Python, Vue.js)</p>
             </div>
             <div class="entry-right">Dec 2025 - Present</div>
           </div>
           <ul class="entry-bullets">
-            <li>Architected and built from scratch the multi-agent framework powering all of Lyah's AI features: a modular, node-based LangGraph system in Python (replacing legacy n8n) with workflow logging, Google Chat notifications, Celery orchestration, a provider-agnostic multi-LLM layer with automatic fallback (OpenAI/Anthropic/Google), and Opik observability.</li>
-            <li>Built Lyah's core course and lecture generation experience end to end: AI agents that draft courses/lectures from a prompt, a YouTube video, or documents, plus the Session Studio and Course Builder authoring UI in Vue 3 with an AI proposal-review flow and client-side diffing.</li>
-            <li>Built a full-stack AI tutor/copilot assistant: a conversational agent with intent classification and document-grounded retrieval (RAG), surfaced through a real-time WebSocket chat with persistence, inline editing/feedback, and export-to-Word.</li>
-            <li>Developed an LLM evaluation and automated prompt-optimization pipeline (LiteLLM + Opik MetaPrompt), reaching 96.3% decision accuracy with precision/recall/F1 metrics and production drift monitoring.</li>
-            <li>Delivered full-stack instructor analytics combining computed metrics with LLM-generated narrative commentary into viewable, downloadable reports.</li>
-            <li>Integrated external LMS platforms (Moodle, Canvas) via the LTI standard, and established the testing/CI/CD foundation (pytest coverage gating, <code>uv</code>, AI-assisted PR workflows).</li>
+            <li>Designed and built the modular, node-based LangGraph framework behind Lyah's course generation, tutoring and copilot agents, replacing legacy n8n workflows, with automatic fallback across OpenAI, Anthropic and Google, Celery orchestration and Opik observability.</li>
+            <li>Replaced the single-tenant model with multi-tenant organizations in production: scoped roles, a required authorization policy on every route and socket event, session-backed auth and an append-only audit log.</li>
+            <li>Built a cost ledger that attributes vendor calls (LLMs, voice, storage, payment fees) to an organization, course and person, and reports margin in EUR and USD.</li>
+            <li>Added retries that resume a failed session workflow from the stage that failed.</li>
+            <li>Built course and lecture generation agents, the Vue 3 authoring tools with AI proposal review, a RAG tutor over WebSocket chat, and instructor analytics reports.</li>
+            <li>Built an evaluation and prompt-optimization pipeline for the slide-transition agent (LiteLLM, Opik MetaPrompt), comparing OpenAI, Anthropic and Google models across 71 experiments. On a hand-labeled production set, the production model reached 93% accuracy with no false slide changes, and stayed 92% consistent on recent traces.</li>
+            <li>Built Stripe course billing and usage limits by session and course time, and integrated Moodle and Canvas through LTI, including grade passback and embedded launches.</li>
+            <li>Extended the Pipecat voice sessions with reconnection and concurrent-session handling, step-based progress tracking and per-service usage reporting.</li>
           </ul>
         </div>
 
@@ -53,19 +52,32 @@
           <div class="entry-header">
             <div class="entry-title">
               <p class="entry-org">Orange Business</p>
-              <p class="entry-role">Software and Data Engineer (Python, React.js)</p>
+              <p class="entry-role">AI Software Engineer, Egypt AI Factory (Oct 2025 - Dec 2025)</p>
+              <p class="entry-role">Software and Data Engineer, International Data and Automation (Nov 2024 - Oct 2025)</p>
             </div>
             <div class="entry-right">Nov 2024 - Dec 2025</div>
           </div>
           <ul class="entry-bullets">
-            <li>Collaborated with business stakeholders to gather requirements, break down features, and deliver backend and frontend components using FastAPI, Python, and React.js.</li>
-            <li>Built and deployed automation scripts and services with Kubernetes CronJobs, Helm, and GitLab CI/CD.</li>
-            <li>Developed and published an internal Python package for shared logic, integrated with CI/CD pipelines and Docker images for reuse across applications.</li>
-            <li>Supported, maintained, and led development on 3 applications, including ownership of one as sole developer and managing their migration to a new cloud environment.</li>
-            <li>Integrated systems with OIDC (Orange Connect) and added Redis caching to improve API performance.</li>
-            <li>Built RAG pipelines and automated document ingestion workflows for contracts and SharePoint using pgvector, OpenAI, and scheduled batch jobs.</li>
-            <li>Provided technical leadership and code reviews, offering guidance and direction across projects for my team.</li>
-            <li>Supported production deployments and troubleshot live issues to ensure system reliability.</li>
+            <li>Managed two senior engineers in India (Jun 2025 - Oct 2025), until a restructure moved me to the AI Software Engineer role.</li>
+            <li>Built RAG and document ingestion pipelines for contracts and SharePoint using pgvector, OpenAI and scheduled batch jobs.</li>
+            <li>Responsible for 2 production applications and led development on a third, including one as sole developer, and managed their migration to a new cloud environment.</li>
+            <li>Published an internal Python package used across applications, and deployed services with Kubernetes, Helm and GitLab CI/CD.</li>
+            <li>Delivered backend and frontend features with FastAPI and React.js, working from requirements gathered with business stakeholders.</li>
+            <li>Integrated OIDC authentication and added Redis caching to improve API performance.</li>
+            <li>Provided code reviews and technical guidance across the team, and supported production deployments and live issues.</li>
+          </ul>
+        </div>
+
+        <div class="resume-entry">
+          <div class="entry-header">
+            <div class="entry-title">
+              <p class="entry-org">Manning Publications</p>
+              <p class="entry-role">Freelance Technical Proofreader</p>
+            </div>
+            <div class="entry-right">Jun 2024 - Present</div>
+          </div>
+          <ul class="entry-bullets">
+            <li>Validated code for <em>Generative AI in Action</em> and <em>LLM Customization and Fine-Tuning</em>, including fixes merged into a book's companion repository.</li>
           </ul>
         </div>
 
@@ -78,10 +90,8 @@
             <div class="entry-right">Aug 2024 - Nov 2024</div>
           </div>
           <ul class="entry-bullets">
-            <li>Designed, developed, and implemented backend services using Python, MySQL, MongoDB, Vue.js.</li>
-            <li>Integrated software components into a fully functional software system.</li>
-            <li>Collaborated with cross-functional teams to define, design, and ship new features.</li>
-            <li>Created a software integration with Egyptian Tax Authority to generate and submit digital invoices.</li>
+            <li>Built an Egyptian Tax Authority integration to generate and submit digital invoices.</li>
+            <li>Built backend services and features with Python, MySQL, MongoDB and Vue.js.</li>
           </ul>
         </div>
 
@@ -94,28 +104,53 @@
             <div class="entry-right">Mar 2024 - Aug 2024</div>
           </div>
           <ul class="entry-bullets">
-            <li>Designed, implemented, and deployed a full-stack web application using Python (FastAPI), Vue.js, and Azure.</li>
-            <li>Implemented multiple OS-independent monitoring utilities and integrated them with a distributed software.</li>
-            <li>Automated on-device testing using Pytest, GitHub Actions, and GitLab Actions.</li>
-            <li>Built a Python package to manage multi-state hardware devices and automate firmware flashing.</li>
+            <li>Built a Python package to manage multi-state hardware devices and automate firmware flashing, and automated on-device testing with Pytest.</li>
+            <li>Built and deployed a full-stack web application with FastAPI, Vue.js and Azure.</li>
+            <li>Built OS-independent monitoring utilities and integrated them with distributed software.</li>
           </ul>
         </div>
 
         <div class="resume-entry">
           <div class="entry-header">
             <div class="entry-title">
-              <p class="entry-org">OSS Contributor</p>
+              <p class="entry-org">Udacity and iSchool</p>
+              <p class="entry-role">Technical Trainer and Mentor</p>
+            </div>
+            <div class="entry-right">Jun 2022 - Apr 2024</div>
+          </div>
+          <ul class="entry-bullets">
+            <li>Taught full-stack Python, computer science and programming, and reviewed student projects.</li>
+          </ul>
+        </div>
+
+        <div class="resume-entry">
+          <div class="entry-header">
+            <div class="entry-title">
+              <p class="entry-org">Arram Group</p>
+              <p class="entry-role">Software Engineer (Python, Flask)</p>
+            </div>
+            <div class="entry-right">Jul 2021 - Jan 2022</div>
+          </div>
+          <ul class="entry-bullets">
+            <li>Sole developer of a Flask CRM used by all 14 employees, from database to deployment.</li>
+            <li>Automated data processing with Pandas, and maintained and improved the company's 3 websites.</li>
+          </ul>
+        </div>
+
+        <div class="resume-entry">
+          <div class="entry-header">
+            <div class="entry-title">
+              <p class="entry-org">Open Source</p>
+              <p class="entry-role">Maintainer and Contributor</p>
             </div>
             <div class="entry-right">Jan 2021 - Present</div>
           </div>
           <ul class="entry-bullets">
-            <li>Maintainer of the Pallets Ecosystem Python <a href="https://github.com/pallets-eco/cachelib/" target="_blank" rel="noopener">CacheLib</a> package.</li>
+            <li><a href="https://github.com/pallets-eco/cachelib/" target="_blank" rel="noopener">CacheLib</a> (Pallets Eco, maintainer since Apr 2026): restarted releases for the Python caching library behind Flask-Caching and Flask-Session, with 7.4M monthly downloads, shipping 9 releases in under 4 months, adding a Valkey backend and a JSON serializer, and fixing Redis and memcached counter bugs.</li>
+            <li><a href="https://github.com/john0isaac/markdown-checker" target="_blank" rel="noopener">markdown-checker</a> (author): link validator and GitHub Action used in <a href="https://github.com/microsoft/generative-ai-for-beginners#:~:text=%F0%9F%8C%9F%20Special%20thanks,Actions%20and%20workflows" target="_blank" rel="noopener">Microsoft's Generative AI for Beginners</a> (123k stars), <a href="https://github.com/Azure-Samples/azure-search-openai-demo" target="_blank" rel="noopener">Azure Search OpenAI Demo</a> (7.8k stars) and <a href="https://github.com/beeware/beeware-docs-tools" target="_blank" rel="noopener">BeeWare's docs tooling</a>, with 45k downloads in its peak month (Jun 2026).</li>
+            <li><a href="https://github.com/pallets-eco/flask-caching" target="_blank" rel="noopener">Flask-Caching</a> (contributor, 4.5M monthly downloads): moved it onto the latest CacheLib, made FIPS-compatible hashing the default with a configurable <code>hash_method</code>, added memcached pool options, and set up CI against real backends.</li>
             <li>Developed the landing website for Azure SQL, attracting over 5k monthly views.</li>
-            <li>Authored 12+ technical blogs, <a href="https://learn.microsoft.com/training/modules/large-language-model-deployment" target="_blank" rel="noopener">3 Microsoft Learn Modules</a>, and one tutorial attracting 150k+ combined views.</li>
-            <li>Engineered a Python package for markdown link validation used in key Microsoft GitHub repositories, which had 24k+ monthly downloads at its peak.</li>
-            <li>Automated link validation in <a href="https://github.com/microsoft/generative-ai-for-beginners#:~:text=%F0%9F%8C%9F%20Special%20thanks,Actions%20and%20workflows" target="_blank" rel="noopener">Microsoft's Generative AI repository</a> using GitHub Actions, enhancing the learning experience for 100k+ learners.</li>
-            <li><a href="https://aka.ms/contributor-stories/john-aziz" target="_blank" rel="noopener">Featured in Microsoft's Contributor Stories</a> blog series for impactful educational contributions.</li>
-            <li><a href="https://devblogs.microsoft.com/azure-sdk/azure-developer-cli-azd-november-2023-release/#:~:text=john0isaac%3A,dev%232567" target="_blank" rel="noopener">Implemented 2 features and fixed 1 bug</a> for the Azure Developer CLI (azd) using Go.</li>
+            <li>Azure Developer CLI: <a href="https://devblogs.microsoft.com/azure-sdk/azure-developer-cli-azd-november-2023-release/#:~:text=john0isaac%3A,dev%232567" target="_blank" rel="noopener">implemented 2 features and fixed 1 bug</a> in Go.</li>
           </ul>
         </div>
       </section>
@@ -129,95 +164,39 @@
               <p class="entry-org">Modern Academy for Engineering and Technology</p>
               <p class="entry-role">B.Sc. in Computer Engineering and Information Technology &mdash; CGPA: 3.44/4.0</p>
             </div>
-            <div class="entry-right">Sep 2018 - Aug 2023</div>
+            <div class="entry-right">Sep 2018 - Jul 2023</div>
           </div>
           <ul class="entry-bullets">
-            <li>Thesis: Centralized and Automated Medical Image Analysis Website Using Deep Learning. (Grade: A+ Excellent)</li>
             <li>Ranked 4th in my class in a cohort of over 150 students.</li>
           </ul>
-        </div>
-      </section>
-
-      <!-- Awards -->
-      <section class="resume-section" aria-label="Awards">
-        <h2 class="resume-section__heading">Awards &amp; Scholarships</h2>
-        <div class="resume-entry resume-entry--slim">
-          <div class="entry-header">
-            <div class="entry-left"><a href="https://www.credly.com/badges/82cc4d08-0dfd-4f8b-81aa-bf9caeeb403c" target="_blank" rel="noopener">Microsoft MVP</a></div>
-            <div class="entry-right">Jan 2024</div>
-          </div>
-        </div>
-        <div class="resume-entry resume-entry--slim">
-          <div class="entry-header">
-            <div class="entry-left"><a href="https://drive.google.com/file/d/1lFTAgMS8yJZpQiPIwpo05Mye-MLz4yke/view" target="_blank" rel="noopener">Top MENA GDSC Lead 2020-2021</a></div>
-            <div class="entry-right">Aug 2021</div>
-          </div>
         </div>
       </section>
 
       <!-- Certifications -->
       <section class="resume-section" aria-label="Professional Certifications">
         <h2 class="resume-section__heading">Professional Certifications</h2>
-
-        <div class="resume-cert-group">
-          <p class="resume-cert-group__label">Expert / Associate</p>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://learn.microsoft.com/api/credentials/share/en-us/john0isaac/12F3A4533C3436E?sharingId=studentamb_71460" target="_blank" rel="noopener">Microsoft Certified: Azure AI Engineer Associate</a></div>
-              <div class="entry-right">Mar 2023 - Mar 2027</div>
-            </div>
-          </div>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://www.credly.com/badges/7eab1283-6c1f-4f18-b137-3960de4fe043/public_url" target="_blank" rel="noopener">Google Cloud Certified: Professional Cloud Architect</a></div>
-              <div class="entry-right">Feb 2024 - Feb 2028</div>
-            </div>
-          </div>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://www.credly.com/badges/508d6c85-35b8-4243-8ddc-445ecc593af9" target="_blank" rel="noopener">AWS Certified Cloud Practitioner</a></div>
-              <div class="entry-right">Feb 2023 - Dec 2028</div>
-            </div>
-          </div>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://www.credly.com/badges/c791dc01-106e-41f4-b991-7acb520be527/public_url" target="_blank" rel="noopener">Google Cloud Certified: Associate Cloud Engineer</a></div>
-              <div class="entry-right">May 2022 - May 2028</div>
-            </div>
+        <div class="resume-entry resume-entry--slim">
+          <div class="entry-header">
+            <div class="entry-left"><a href="https://www.credly.com/badges/7eab1283-6c1f-4f18-b137-3960de4fe043/public_url" target="_blank" rel="noopener">Google Cloud Certified: Professional Cloud Architect</a></div>
+            <div class="entry-right">Feb 2024 - Feb 2028</div>
           </div>
         </div>
-
-        <div class="resume-cert-group">
-          <p class="resume-cert-group__label">Fundamental</p>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://learn.microsoft.com/api/credentials/share/en-us/john0isaac/AEC6117DD77E35A1?sharingId" target="_blank" rel="noopener">Microsoft Certified: Azure Data Fundamentals</a></div>
-              <div class="entry-right">Oct 2023</div>
-            </div>
+        <div class="resume-entry resume-entry--slim">
+          <div class="entry-header">
+            <div class="entry-left"><a href="https://learn.microsoft.com/api/credentials/share/en-us/john0isaac/12F3A4533C3436E?sharingId=studentamb_71460" target="_blank" rel="noopener">Microsoft Certified: Azure AI Engineer Associate</a></div>
+            <div class="entry-right">Mar 2023 - Mar 2027</div>
           </div>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://learn.microsoft.com/api/credentials/share/en-us/john0isaac/A22991BD954342CA?sharingId" target="_blank" rel="noopener">Microsoft Certified: Power Platform Fundamentals</a></div>
-              <div class="entry-right">Oct 2023</div>
-            </div>
+        </div>
+        <div class="resume-entry resume-entry--slim">
+          <div class="entry-header">
+            <div class="entry-left"><a href="https://www.credly.com/badges/508d6c85-35b8-4243-8ddc-445ecc593af9" target="_blank" rel="noopener">AWS Certified Cloud Practitioner</a></div>
+            <div class="entry-right">Feb 2023 - Dec 2028</div>
           </div>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://www.credly.com/badges/fbcf84ee-03d6-413a-8f7f-297de28be7f5" target="_blank" rel="noopener">Microsoft Certified: Azure Fundamentals</a></div>
-              <div class="entry-right">Aug 2022</div>
-            </div>
-          </div>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://www.credly.com/badges/9fcc9b55-6763-46b3-980f-f0a58c51aa0b" target="_blank" rel="noopener">Microsoft Certified: Azure AI Fundamentals</a></div>
-              <div class="entry-right">Jun 2022</div>
-            </div>
-          </div>
-          <div class="resume-entry resume-entry--slim">
-            <div class="entry-header">
-              <div class="entry-left"><a href="https://www.credential.net/3fa26fd8-5607-466c-a877-a849ba28a55b" target="_blank" rel="noopener">TensorFlow Developer Certificate</a></div>
-              <div class="entry-right">Feb 2022 - Feb 2025</div>
-            </div>
+        </div>
+        <div class="resume-entry resume-entry--slim">
+          <div class="entry-header">
+            <div class="entry-left"><a href="https://www.credly.com/badges/c791dc01-106e-41f4-b991-7acb520be527/public_url" target="_blank" rel="noopener">Google Cloud Certified: Associate Cloud Engineer</a></div>
+            <div class="entry-right">May 2022 - May 2028</div>
           </div>
         </div>
       </section>
@@ -257,16 +236,22 @@
       <!-- Volunteering -->
       <section class="resume-section" aria-label="Volunteering">
         <h2 class="resume-section__heading">Volunteering</h2>
+        <div class="resume-entry">
+          <ul class="entry-bullets">
+            <li><a href="https://www.credly.com/badges/82cc4d08-0dfd-4f8b-81aa-bf9caeeb403c" target="_blank" rel="noopener">Microsoft AI MVP</a> (Jan 2024), <a href="https://drive.google.com/file/d/1lFTAgMS8yJZpQiPIwpo05Mye-MLz4yke/view" target="_blank" rel="noopener">Top MENA GDSC Lead 2020-2021</a>, and Microsoft Learn Student Ambassadors Technical Lead (Jan 2021 - Aug 2024).</li>
+            <li>Wrote 12 Microsoft Tech Community articles and 3 Microsoft Learn modules (one since retired) with 150k+ combined views, and was <a href="https://aka.ms/contributor-stories/john-aziz" target="_blank" rel="noopener">featured in Microsoft's Contributor Stories</a>.</li>
+          </ul>
+        </div>
         <div class="resume-entry resume-entry--slim">
           <div class="entry-header">
             <div class="entry-left"><strong>Leader</strong> - Azure Egypt User Group</div>
-            <div class="entry-right">Feb 2021 - Jun 2025</div>
+            <div class="entry-right">Jan 2024 - Oct 2024</div>
           </div>
         </div>
         <div class="resume-entry resume-entry--slim">
           <div class="entry-header">
             <div class="entry-left"><strong>Organizer</strong> - Google Developer Groups Cloud Egypt</div>
-            <div class="entry-right">Feb 2021 - Feb 2025</div>
+            <div class="entry-right">Jan 2021 - Jul 2024</div>
           </div>
         </div>
         <div class="resume-entry resume-entry--slim">
@@ -279,6 +264,12 @@
           <div class="entry-header">
             <div class="entry-left"><strong>Judge</strong> - Imagine Cup Junior Competition</div>
             <div class="entry-right">May 2023</div>
+          </div>
+        </div>
+        <div class="resume-entry resume-entry--slim">
+          <div class="entry-header">
+            <div class="entry-left"><strong>Technical Trainer</strong> - BambooGeeks, Google IT certificate learners</div>
+            <div class="entry-right">Feb 2022 - May 2022</div>
           </div>
         </div>
         <div class="resume-entry resume-entry--slim">
@@ -298,14 +289,7 @@
       <!-- Languages -->
       <section class="resume-section" aria-label="Languages">
         <h2 class="resume-section__heading">Languages</h2>
-        <p class="resume-summary">Arabic (Native) &nbsp;&middot;&nbsp; English (Fluent) &nbsp;&middot;&nbsp; French (Beginner)</p>
-      </section>
-
-      <!-- Interests -->
-      <section class="resume-section" aria-label="Interests">
-        <h2 class="resume-section__heading">Interests</h2>
-        <p class="resume-summary"><strong>Research Interest:</strong> Open Source, Community Advocacy, Cloud Development, Full Stack Development.</p>
-        <p class="resume-summary"><strong>Other Interest:</strong> Volunteering, listening to music, watching TV series &amp; movies, playing musical instruments.</p>
+        <p class="resume-summary">Arabic (Native) &nbsp;&middot;&nbsp; English (Fluent) &nbsp;&middot;&nbsp; French (Elementary)</p>
       </section>
 
 {% endblock %}

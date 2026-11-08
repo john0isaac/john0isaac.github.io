@@ -11,9 +11,9 @@ teaching developers through blog posts, talks, and Microsoft Learn content.
 
 ## What I do
 
-I'm currently a **Senior AI Software Engineer at [Lyah](https://www.linkedin.com/company/lyah-ai)**, an AI-powered
-EdTech platform. I designed and built the multi-agent framework behind Lyah's AI features from scratch. It's a
-modular LangGraph system in Python with a provider-agnostic multi-LLM layer (OpenAI, Anthropic, Google), Celery
+I'm currently a **Senior AI Software Engineer at [Lyah](https://lyah.ai)**, an AI-powered
+EdTech platform. I designed and built the framework behind Lyah's course generation, tutoring, and copilot agents.
+It's a modular LangGraph system in Python with a provider-agnostic multi-LLM layer (OpenAI, Anthropic, Google), Celery
 orchestration, and Opik observability. I also built the course and lecture generation agents, an AI tutor with
 retrieval-augmented generation (RAG), and an LLM evaluation and prompt-optimization pipeline.
 
@@ -35,7 +35,7 @@ Most of my work falls into these areas:
 I maintain [CacheLib](https://github.com/pallets-eco/cachelib/), a caching library in the Pallets Eco ecosystem. I also
 wrote [markdown-checker](/markdown-checker), a Python package for validating links in Markdown. It runs in Microsoft
 repositories such as [Generative AI for Beginners](https://github.com/microsoft/generative-ai-for-beginners) and at its
-peak had more than 24k monthly downloads. I've contributed features and bug fixes to the
+peak had about 45k monthly downloads. I've contributed features and bug fixes to the
 [Azure Developer CLI](https://github.com/Azure/azure-dev), and I've published many
 [Azure sample apps and templates](/projects/). The code for all of these is on
 [GitHub](https://github.com/john0isaac).
