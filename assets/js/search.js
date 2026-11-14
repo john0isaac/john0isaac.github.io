@@ -172,6 +172,27 @@ function renderResults(container, results, query, activeIndex) {
     .join("");
 }
 
+// Updates the highlighted result in place. Re-rendering the list would replace
+// the element under a touch, which swallows the tap on mobile.
+function setActiveResult(container, activeIndex) {
+  container.querySelectorAll("[data-result-index]").forEach((item) => {
+    const isActive = Number(item.getAttribute("data-result-index")) === activeIndex;
+    item.classList.toggle("is-active", isActive);
+    item.setAttribute("aria-selected", String(isActive));
+
+    const metaWrap = item.querySelector(".navbar-search__item-meta-wrap");
+    const action = item.querySelector(".navbar-search__item-action");
+    if (isActive && !action && metaWrap) {
+      metaWrap.insertAdjacentHTML(
+        "beforeend",
+        '<span class="navbar-search__item-action" aria-hidden="true">↵</span>',
+      );
+    } else if (!isActive && action) {
+      action.remove();
+    }
+  });
+}
+
 function initSearchWidget(widget) {
   const input = document.querySelector("[data-search-input]");
   const modal = document.querySelector("[data-search-modal]");
@@ -323,14 +344,14 @@ function initSearchWidget(widget) {
     if (event.key === "ArrowDown") {
       event.preventDefault();
       activeIndex = (activeIndex + 1) % currentResults.length;
-      renderResults(resultsContainer, currentResults, input.value.trim(), activeIndex);
+      setActiveResult(resultsContainer, activeIndex);
       return;
     }
 
     if (event.key === "ArrowUp") {
       event.preventDefault();
       activeIndex = activeIndex <= 0 ? currentResults.length - 1 : activeIndex - 1;
-      renderResults(resultsContainer, currentResults, input.value.trim(), activeIndex);
+      setActiveResult(resultsContainer, activeIndex);
       return;
     }
 
@@ -397,11 +418,16 @@ function initSearchWidget(widget) {
     });
   }
 
-  resultsContainer.addEventListener("mousemove", (event) => {
+  // Touch taps fire emulated mouse events before click; ignore them so the tap
+  // navigates instead of only highlighting.
+  resultsContainer.addEventListener("pointermove", (event) => {
+    if (event.pointerType !== "mouse") return;
     const item = event.target.closest("[data-result-index]");
     if (!item) return;
-    activeIndex = Number(item.getAttribute("data-result-index"));
-    renderResults(resultsContainer, currentResults, input.value.trim(), activeIndex);
+    const nextIndex = Number(item.getAttribute("data-result-index"));
+    if (nextIndex === activeIndex) return;
+    activeIndex = nextIndex;
+    setActiveResult(resultsContainer, activeIndex);
   });
 
   document.addEventListener("keydown", (event) => {
