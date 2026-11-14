@@ -148,6 +148,12 @@ dependency_groups = ["test"]
 skip_install = true
 commands = [["pytest", {replace = "posargs", default = ["--cov", "--cov-report=term-missing"], extend = true}]]
 
+[tool.tox.env.e2e]
+description = "run end-to-end browser tests with Playwright"
+dependency_groups = ["e2e"]
+skip_install = true
+commands = [["pytest", "tests/e2e", {replace = "posargs", default = [], extend = true}]]
+
 [tool.tox.env.update-actions]
 description = "update GitHub Actions pins"
 labels = ["update"]

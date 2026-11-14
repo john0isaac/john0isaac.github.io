@@ -198,6 +198,7 @@
 
 .blog-archive__summary::before {
   content: "▸";
+  content: "▸" / "";
   color: var(--muted);
   font-size: 0.8rem;
   line-height: 1;

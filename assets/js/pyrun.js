@@ -89,14 +89,15 @@
     const label = button.querySelector("span");
     if (!icon || !label) return;
 
+    // aria-disabled (not disabled) keeps keyboard focus on the button while it runs.
     if (state === "running") {
-      button.disabled = true;
+      button.setAttribute("aria-disabled", "true");
       icon.outerHTML = ICONS.sync;
       label.textContent = "Running";
       return;
     }
 
-    button.disabled = false;
+    button.removeAttribute("aria-disabled");
     icon.outerHTML = ICONS.play;
     label.textContent = "Run";
   }
@@ -162,20 +163,30 @@
           results.hidden = true;
         }
         clearButton.hidden = true;
+        // The clear button just hid itself, so hand focus to Run instead of losing it.
+        button.focus();
+        window.announce?.("Output cleared");
       });
 
       button.addEventListener("click", async () => {
+        if (button.getAttribute("aria-disabled") === "true") return;
         const results = ensureResults(wrapper);
         results.hidden = true;
         setRunState(button, "running");
+        window.announce?.("Running Python code");
+        let result;
         try {
-          renderResults(results, await runPythonBlock(code));
+          result = await runPythonBlock(code);
         } catch (error) {
-          renderResults(results, { output: "", stdout: "", error: "Failed to load Python runtime: " + String(error) });
+          result = { output: "", stdout: "", error: "Failed to load Python runtime: " + String(error) };
         } finally {
           setRunState(button, "idle");
           clearButton.hidden = false;
         }
+        renderResults(results, result);
+        window.announce?.(
+          result.error ? "Python code finished with an error. Output is below the code." : "Python code finished. Output is below the code.",
+        );
       });
 
       toolbar.appendChild(button);

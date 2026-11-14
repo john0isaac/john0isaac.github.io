@@ -19,12 +19,11 @@
 
     {% if pagination and pagination.total_pages > 1 %}
     <nav aria-label="Blog pagination" class="blog-pagination">
-      <a
-        class="blog-pagination__arrow{% if not pagination.has_previous %} is-disabled{% endif %}"
-        href="{{ pagination.previous_url if pagination.has_previous else '#' }}"
-        {% if not pagination.has_previous %}aria-disabled="true" tabindex="-1"{% endif %}
-        >{{ icon("arrow-left") }} Previous</a
-      >
+      {% if pagination.has_previous %}
+      <a class="blog-pagination__arrow" href="{{ pagination.previous_url }}">{{ icon("arrow-left") }} Previous</a>
+      {% else %}
+      <a class="blog-pagination__arrow is-disabled" role="link" aria-disabled="true">{{ icon("arrow-left") }} Previous</a>
+      {% endif %}
 
       <ol class="blog-pagination__pages">
         {% for item in pagination.pages %}
@@ -39,12 +38,11 @@
         {% endfor %}
       </ol>
 
-      <a
-        class="blog-pagination__arrow{% if not pagination.has_next %} is-disabled{% endif %}"
-        href="{{ pagination.next_url if pagination.has_next else '#' }}"
-        {% if not pagination.has_next %}aria-disabled="true" tabindex="-1"{% endif %}
-        >Next {{ icon("arrow-right") }}</a
-      >
+      {% if pagination.has_next %}
+      <a class="blog-pagination__arrow" href="{{ pagination.next_url }}">Next {{ icon("arrow-right") }}</a>
+      {% else %}
+      <a class="blog-pagination__arrow is-disabled" role="link" aria-disabled="true">Next {{ icon("arrow-right") }}</a>
+      {% endif %}
     </nav>
     {% endif %}
   </div>

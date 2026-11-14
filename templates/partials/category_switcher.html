@@ -1,16 +1,19 @@
 {% if all_categories %}
-<div class="category-switcher" aria-label="Filter blog posts by category">
+<nav class="category-switcher" aria-label="Filter blog posts by category">
   <a
     class="category-pill{% if taxonomy_kind != 'category' %} is-active{% endif %}"
     href="/blog/"
+    {% if taxonomy_kind != 'category' %}aria-current="true"{% endif %}
     >All</a
   >
   {% for category in all_categories %}
+  {% set is_current = taxonomy_kind == 'category' and taxonomy_slug == category.slug %}
   <a
-    class="category-pill{% if taxonomy_kind == 'category' and taxonomy_slug == category.slug %} is-active{% endif %}"
+    class="category-pill{% if is_current %} is-active{% endif %}"
     href="{{ category.url }}"
-    >{{ category.name }} <span class="category-pill__count">{{ category.count }}</span></a
+    {% if is_current %}aria-current="true"{% endif %}
+    >{{ category.name }} <span class="category-pill__count">{{ category.count }}<span class="visually-hidden"> {{ "post" if category.count == 1 else "posts" }}</span></span></a
   >
   {% endfor %}
-</div>
+</nav>
 {% endif %}

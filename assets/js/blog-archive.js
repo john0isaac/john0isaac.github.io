@@ -14,15 +14,18 @@ function initBlogArchive() {
     if (!sidebar || !toggle) return;
 
     const storageKey = `blog-archive-open-${index}`;
+    if (!sidebar.id) sidebar.id = `blog-archive-${index}`;
 
-    // Create floating open button (tab on left edge)
+    // Create floating open button (tab on left edge). It goes right before the
+    // archive so keyboard users reach it there, not at the end of the page.
     const openBtn = document.createElement("button");
     openBtn.className = "blog-archive__open-btn";
     openBtn.type = "button";
     openBtn.setAttribute("aria-label", "Open blog archive");
     openBtn.setAttribute("title", "Open blog archive");
+    openBtn.setAttribute("aria-controls", sidebar.id);
     openBtn.innerHTML = ARCHIVE_ICONS["chevron-right"];
-    document.body.appendChild(openBtn);
+    sidebar.before(openBtn);
 
     const expandActiveBranch = () => {
       const activeLink = layout.querySelector(".blog-archive__post-link.is-active");
@@ -40,7 +43,20 @@ function initBlogArchive() {
       openBtn.setAttribute("aria-label", open ? "Close blog archive" : "Open blog archive");
       openBtn.setAttribute("title", open ? "Close blog archive" : "Open blog archive");
       toggle.setAttribute("aria-expanded", String(open));
+      openBtn.setAttribute("aria-expanded", String(open));
       if (open) expandActiveBranch();
+    };
+
+    // The open button hides while the archive is open, so focus has to move with it.
+    const openWithFocus = () => {
+      setOpen(true);
+      requestAnimationFrame(() => toggle.focus());
+    };
+
+    const closeWithFocus = () => {
+      const hadFocus = sidebar.contains(document.activeElement);
+      setOpen(false);
+      if (hadFocus) openBtn.focus();
     };
 
     // The archive floats over the page, so it always starts closed.
@@ -57,13 +73,13 @@ function initBlogArchive() {
       });
     });
     toggle.addEventListener("click", () => {
-      const open = !layout.classList.contains("is-archive-open");
-      setOpen(open);
+      if (layout.classList.contains("is-archive-open")) closeWithFocus();
+      else openWithFocus();
     });
 
     openBtn.addEventListener("click", () => {
-      const open = !layout.classList.contains("is-archive-open");
-      setOpen(open);
+      if (layout.classList.contains("is-archive-open")) closeWithFocus();
+      else openWithFocus();
     });
 
     // The archive floats over the page, so a click outside closes it.
@@ -75,8 +91,15 @@ function initBlogArchive() {
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && layout.classList.contains("is-archive-open")) {
-        setOpen(false);
-        }
+        closeWithFocus();
+      }
+    });
+
+    // Tabbing out of the floating archive closes it, like clicking outside does.
+    sidebar.addEventListener("focusout", (e) => {
+      if (!layout.classList.contains("is-archive-open")) return;
+      if (!e.relatedTarget || sidebar.contains(e.relatedTarget)) return;
+      setOpen(false);
     });
   });
 }

@@ -3,7 +3,7 @@
 import re
 
 import pytest
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Browser, Page, Playwright, expect
 
 pytestmark = pytest.mark.e2e
 
@@ -38,6 +38,38 @@ def test_search_returns_results(live_server: str, page: Page) -> None:
     search_input = page.locator("#site-search-input")
     search_input.fill("blog")
     expect(page.locator("[data-search-results] [data-result-index]").first).to_be_visible()
+
+
+def test_tapping_search_result_on_mobile_opens_it(live_server: str, browser: Browser, playwright: Playwright) -> None:
+    context = browser.new_context(**playwright.devices["Pixel 5"])
+    page = context.new_page()
+    try:
+        page.goto(live_server)
+        page.locator("[data-search-open]").first.tap()
+        page.locator("#site-search-input").fill("rag")
+        result = page.locator("[data-search-results] [data-result-index]").nth(1)
+        href = result.get_attribute("href")
+        result.tap()
+        expect(page).to_have_url(f"{live_server}{href}")
+    finally:
+        context.close()
+
+
+def test_search_result_highlight_updates_in_place(live_server: str, page: Page) -> None:
+    # Re-rendering the list on hover replaced the element under a tap, so mobile
+    # taps only highlighted results instead of opening them.
+    page.goto(live_server)
+    page.locator("[data-search-open]").first.click()
+    page.locator("#site-search-input").fill("rag")
+    result = page.locator("[data-search-results] [data-result-index]").nth(1)
+    result.evaluate("el => { el.dataset.original = 'yes'; }")
+
+    result.dispatch_event("pointermove", {"pointerType": "touch"})
+    expect(result).to_have_attribute("aria-selected", "false")
+
+    result.hover()
+    expect(result).to_have_attribute("aria-selected", "true")
+    expect(result).to_have_attribute("data-original", "yes")
 
 
 def test_theme_toggle_switches_mode(live_server: str, page: Page) -> None:

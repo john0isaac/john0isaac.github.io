@@ -13,6 +13,7 @@
   ></button>
   <div
     class="search-modal__dialog"
+    id="site-search-dialog"
     role="dialog"
     aria-modal="true"
     aria-label="Search the site"
@@ -29,8 +30,14 @@
           type="search"
           placeholder="Search"
           autocomplete="off"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="site-search-results"
+          aria-describedby="site-search-hint"
           data-search-input
         />
+        <span id="site-search-hint" class="visually-hidden">Use the up and down arrow keys to move through results, Enter to open one, and Escape to close search.</span>
         <button
           class="search-modal__filters-toggle"
           type="button"
@@ -74,20 +81,39 @@
     <div class="search-modal__layout">
       <section class="search-modal__results-pane">
         <p class="search-modal__count" data-search-count hidden></p>
-        <div class="search-modal__results" data-search-results></div>
+        <p class="search-modal__hint" data-search-hint>Start typing to search posts, projects and talks.</p>
+        <div
+          class="search-modal__results"
+          id="site-search-results"
+          role="listbox"
+          aria-label="Search results"
+          data-search-results
+        ></div>
+        <p class="visually-hidden" role="status" aria-live="polite" data-search-status></p>
       </section>
       <aside
         class="search-modal__filters"
         id="site-search-filters"
+        aria-label="Search filters"
         data-search-filters
       >
         <div class="search-modal__filters-group">
-          <span class="search-modal__filters-label">Categories</span>
-          <div class="search-modal__filter-list" data-search-category-filter-list></div>
+          <span class="search-modal__filters-label" id="site-search-categories-label">Categories</span>
+          <div
+            class="search-modal__filter-list"
+            role="group"
+            aria-labelledby="site-search-categories-label"
+            data-search-category-filter-list
+          ></div>
         </div>
         <div class="search-modal__filters-group">
-          <span class="search-modal__filters-label">Tags</span>
-          <div class="search-modal__filter-list" data-search-filter-list></div>
+          <span class="search-modal__filters-label" id="site-search-tags-label">Tags</span>
+          <div
+            class="search-modal__filter-list"
+            role="group"
+            aria-labelledby="site-search-tags-label"
+            data-search-filter-list
+          ></div>
         </div>
       </aside>
     </div>

@@ -14,7 +14,8 @@ map('truncate', 4, true, '') | unique | list %}
         target="_blank"
         rel="noopener noreferrer"
         class="video-card__thumb-link"
-        aria-label="Watch {{ video.title }} on YouTube"
+        tabindex="-1"
+        aria-hidden="true"
       >
         <div class="video-card__thumb-wrap">
           <img
@@ -23,7 +24,7 @@ map('truncate', 4, true, '') | unique | list %}
             srcset="{{ video.thumbnail | replace('.webp', '-400.webp') }} 400w, {{ video.thumbnail | replace('.webp', '-800.webp') }} 800w, {{ video.thumbnail }} 1280w"
             sizes="(max-width: 640px) calc(100vw - 2.5rem), (max-width: 1024px) 45vw, 360px"
             {% endif %}
-            alt="{{ video.title }}"
+            alt=""
             width="1280"
             height="720"
             loading="lazy"
@@ -59,7 +60,7 @@ map('truncate', 4, true, '') | unique | list %}
           href="{{ video_url }}"
           target="_blank"
           rel="noopener noreferrer"
-          >Watch</a
+          >Watch<span class="visually-hidden"> {{ video.title }} on YouTube</span></a
         >
       </div>
     </article>

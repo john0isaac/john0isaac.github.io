@@ -13,6 +13,33 @@
   }
 }
 
+/* Honour the OS "reduce motion" setting everywhere (drawer, archive, modal, spinners). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* Windows High Contrast replaces background colours, so mark current/selected
+ * items with an outline instead. */
+@media (forced-colors: active) {
+  .nav-link[aria-current="page"],
+  .nav-drawer__link[aria-current="page"],
+  .category-pill.is-active,
+  .search-modal__filter.is-active,
+  .navbar-search__item.is-active,
+  .blog-pagination__page.is-current,
+  .blog-archive__post-link.is-active {
+    outline: 2px solid Highlight;
+    outline-offset: 1px;
+  }
+}
+
 body {
   margin: 0;
   font-size: 1rem;

@@ -33,6 +33,15 @@
             window.scrollTo({ top: parseInt(saved, 10), behavior: 'instant' });
           }
         });
+
+        // Reads short status messages ("Copied", "Finished running") to screen readers.
+        // The region is cleared first so repeating the same message is announced again.
+        window.announce = (message) => {
+          const region = document.querySelector('[data-a11y-status]');
+          if (!region) return;
+          region.textContent = '';
+          window.setTimeout(() => { region.textContent = message; }, 100);
+        };
       })();
     </script>
     {% set seo_title = page.metadata.get("seo_title") if page.metadata is defined and page.metadata else none %}
@@ -121,5 +130,6 @@
     <main id="main" class="shell main-content" tabindex="-1">{% block content %}{% endblock %}</main>
 
     {% include "partials/footer.html" %}
+    <div class="visually-hidden" role="status" aria-live="polite" data-a11y-status></div>
   </body>
 </html>

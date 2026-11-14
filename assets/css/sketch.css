@@ -758,6 +758,7 @@ html[data-theme="dark"] .category-pill.is-active {
 
 .tag::before {
   content: "#";
+  content: "#" / "";
   color: var(--sk-red);
   margin-right: 0.1em;
 }
@@ -1272,6 +1273,7 @@ html[data-theme="dark"] .project-devcontainer {
 .project-link-btn::after,
 .video-watch-btn::after {
   content: " \2192";
+  content: " \2192" / "";
 }
 
 .project-link-btn:hover,
@@ -1349,6 +1351,12 @@ html[data-theme="dark"] .search-modal__dialog {
 
 .search-modal__bar {
   border-bottom: 2px solid var(--sk-ink);
+}
+
+/* The input itself has no outline, so mark the whole bar while it has focus. */
+.search-modal__bar:focus-within {
+  outline: 2px dashed var(--sk-link);
+  outline-offset: -5px;
 }
 
 .search-modal__results-pane,
@@ -1443,10 +1451,10 @@ html[data-theme="dark"] .search-modal__dialog {
   padding: 1rem 0.7rem;
 }
 
-/* Hint instead of a blank pane before anything is typed. */
-.search-modal__results:empty::before {
-  content: "Start typing to search posts, projects and talks.";
-  display: block;
+/* Hint instead of a blank pane before anything is typed. It's real text, not
+ * CSS content, so screen readers read it outside the results listbox. */
+.search-modal__hint {
+  margin: 0;
   padding: 1.25rem 0.7rem;
   color: var(--sk-ink-soft);
 }

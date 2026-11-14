@@ -176,9 +176,11 @@ function attachCopyButtons() {
       try {
         await copyText(text);
         setCopiedState(button, true);
+        window.announce?.("Code copied to clipboard");
         window.setTimeout(() => setCopiedState(button, false), 1200);
       } catch (error) {
         console.error("Failed to copy code block", error);
+        window.announce?.("Couldn't copy the code");
       }
     });
 

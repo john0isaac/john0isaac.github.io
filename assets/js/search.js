@@ -123,11 +123,15 @@ function renderFilterList(container, tags, selectedTags) {
           aria-pressed="${isActive ? "true" : "false"}"
         >
           <span class="search-modal__filter-name">${escapeHtml(tag)}</span>
-          <span class="search-modal__filter-count">${count}</span>
+          <span class="search-modal__filter-count">${count}<span class="visually-hidden"> ${count === 1 ? "post" : "posts"}</span></span>
         </button>
       `;
     })
     .join("");
+}
+
+function resultId(index) {
+  return `site-search-result-${index}`;
 }
 
 function renderResults(container, results, query, activeIndex) {
@@ -137,7 +141,9 @@ function renderResults(container, results, query, activeIndex) {
   }
 
   if (!results.length) {
-    container.innerHTML = '<p class="navbar-search__empty">No matches found.</p>';
+    // Children of a listbox must be options, so the message is a disabled one.
+    container.innerHTML =
+      '<div class="navbar-search__empty" role="option" aria-disabled="true" aria-selected="false">No matches found.</div>';
     return;
   }
 
@@ -153,9 +159,11 @@ function renderResults(container, results, query, activeIndex) {
       return `
         <a
           class="navbar-search__item${activeIndex === record.__index ? " is-active" : ""}"
+          id="${resultId(record.__index)}"
           href="${escapeHtml(record.url)}"
           data-result-index="${record.__index}"
           role="option"
+          tabindex="-1"
           aria-selected="${activeIndex === record.__index ? "true" : "false"}"
         >
           <span class="navbar-search__item-top">
@@ -203,6 +211,8 @@ function initSearchWidget(widget) {
   const categoryFilterList = document.querySelector("[data-search-category-filter-list]");
   const filtersToggle = document.querySelector("[data-search-filters-toggle]");
   const filtersBadge = document.querySelector("[data-search-filters-badge]");
+  const statusNode = document.querySelector("[data-search-status]");
+  const hintNode = document.querySelector("[data-search-hint]");
   const openButtons = widget.querySelectorAll("[data-search-open]");
   const closeButtons = document.querySelectorAll("[data-search-close]");
 
@@ -213,14 +223,45 @@ function initSearchWidget(widget) {
   let activeIndex = -1;
   let lastActiveElement = null;
   let filtersCollapsed = false;
+  let inertElements = [];
+  let statusTimer = 0;
   const selectedTags = new Set();
   const selectedCategories = new Set();
+
+  // Waits for typing to pause so screen readers aren't interrupted on every keystroke.
+  const announce = (message) => {
+    if (!statusNode) return;
+    window.clearTimeout(statusTimer);
+    statusTimer = window.setTimeout(() => {
+      statusNode.textContent = message;
+    }, 500);
+  };
+
+  const syncCombobox = () => {
+    const activeItem =
+      activeIndex >= 0 ? resultsContainer.querySelector(`#${resultId(activeIndex)}`) : null;
+    input.setAttribute("aria-expanded", String(currentResults.length > 0));
+    if (activeItem) {
+      input.setAttribute("aria-activedescendant", activeItem.id);
+    } else {
+      input.removeAttribute("aria-activedescendant");
+    }
+  };
+
+  const highlightResult = (scroll) => {
+    setActiveResult(resultsContainer, activeIndex);
+    syncCombobox();
+    if (scroll) {
+      resultsContainer.querySelector(`#${resultId(activeIndex)}`)?.scrollIntoView({ block: "nearest" });
+    }
+  };
 
   const setFiltersCollapsed = (collapsed) => {
     filtersCollapsed = collapsed;
     modal.classList.toggle("is-filters-collapsed", collapsed);
     if (filtersNode) {
-      filtersNode.setAttribute("aria-hidden", String(collapsed));
+      // inert (not just aria-hidden) so the invisible filter buttons can't be tabbed to.
+      filtersNode.inert = collapsed;
     }
     syncFiltersToggle();
   };
@@ -245,6 +286,7 @@ function initSearchWidget(widget) {
     syncFiltersToggle();
 
     const hasSelectedFilters = selectedTags.size > 0 || selectedCategories.size > 0;
+    if (hintNode) hintNode.hidden = Boolean(query) || hasSelectedFilters;
 
     currentResults = index
       .map((record) => ({ record, score: scoreRecord(record, query) }))
@@ -262,6 +304,8 @@ function initSearchWidget(widget) {
       }
       resultsContainer.innerHTML = "";
       activeIndex = -1;
+      syncCombobox();
+      announce("");
       return;
     }
 
@@ -272,16 +316,31 @@ function initSearchWidget(widget) {
       activeIndex = 0;
     }
 
+    const filterCount = selectedTags.size + selectedCategories.size;
+    const countText = query
+      ? `${currentResults.length} result${currentResults.length === 1 ? "" : "s"}`
+      : `${currentResults.length} result${currentResults.length === 1 ? "" : "s"} for selected filter${filterCount === 1 ? "" : "s"}`;
+
     if (countNode) {
       countNode.hidden = false;
-      if (query) {
-        countNode.textContent = `${currentResults.length} result${currentResults.length === 1 ? "" : "s"}`;
-      } else {
-        countNode.textContent = `${currentResults.length} result${currentResults.length === 1 ? "" : "s"} for selected filter${selectedTags.size + selectedCategories.size === 1 ? "" : "s"}`;
-      }
+      countNode.textContent = countText;
     }
 
     renderResults(resultsContainer, currentResults, query, activeIndex);
+    syncCombobox();
+    announce(currentResults.length ? `${countText} available.` : "No matches found.");
+  };
+
+  const setBackgroundInert = (inert) => {
+    if (inert) {
+      inertElements = [...document.body.children].filter(
+        (el) => el !== modal && !el.matches("script") && !el.inert,
+      );
+      inertElements.forEach((el) => (el.inert = true));
+    } else {
+      inertElements.forEach((el) => (el.inert = false));
+      inertElements = [];
+    }
   };
 
   const showModal = () => {
@@ -294,6 +353,8 @@ function initSearchWidget(widget) {
     modal.hidden = false;
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("search-open");
+    // Keep keyboard and screen reader focus inside the dialog while it's open.
+    setBackgroundInert(true);
     syncFiltersToggle();
     window.requestAnimationFrame(() => {
       input.focus();
@@ -312,6 +373,7 @@ function initSearchWidget(widget) {
     modal.hidden = true;
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("search-open");
+    setBackgroundInert(false);
     input.value = "";
     activeIndex = -1;
     currentResults = [];
@@ -323,6 +385,10 @@ function initSearchWidget(widget) {
       countNode.textContent = "";
     }
     resultsContainer.innerHTML = "";
+    if (hintNode) hintNode.hidden = false;
+    syncCombobox();
+    window.clearTimeout(statusTimer);
+    if (statusNode) statusNode.textContent = "";
     if (lastActiveElement && typeof lastActiveElement.focus === "function") {
       lastActiveElement.focus();
     }
@@ -331,12 +397,6 @@ function initSearchWidget(widget) {
   input.addEventListener("input", update);
   input.addEventListener("focus", update);
   input.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      hideModal();
-      return;
-    }
-
     if (!currentResults.length) {
       return;
     }
@@ -344,14 +404,14 @@ function initSearchWidget(widget) {
     if (event.key === "ArrowDown") {
       event.preventDefault();
       activeIndex = (activeIndex + 1) % currentResults.length;
-      setActiveResult(resultsContainer, activeIndex);
+      highlightResult(true);
       return;
     }
 
     if (event.key === "ArrowUp") {
       event.preventDefault();
       activeIndex = activeIndex <= 0 ? currentResults.length - 1 : activeIndex - 1;
-      setActiveResult(resultsContainer, activeIndex);
+      highlightResult(true);
       return;
     }
 
@@ -374,6 +434,24 @@ function initSearchWidget(widget) {
     button.addEventListener("click", hideModal);
   });
 
+  // Escape closes the dialog wherever focus is, including <body> after tabbing
+  // past the last control, not only from the input.
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modal.hidden) {
+      event.preventDefault();
+      hideModal();
+    }
+  });
+
+  // Re-rendering the filter list replaces the clicked button, so move focus to
+  // its replacement to keep keyboard users where they were.
+  const refocusFilter = (list, value) => {
+    const replacement = [...list.querySelectorAll("[data-search-filter]")].find(
+      (button) => button.getAttribute("data-search-filter") === value,
+    );
+    (replacement || input).focus();
+  };
+
   if (filterList) {
     filterList.addEventListener("click", (event) => {
       const button = event.target.closest("[data-search-filter]");
@@ -389,7 +467,7 @@ function initSearchWidget(widget) {
       }
 
       update();
-      input.focus();
+      refocusFilter(filterList, rawTag);
     });
   }
 
@@ -408,7 +486,7 @@ function initSearchWidget(widget) {
       }
 
       update();
-      input.focus();
+      refocusFilter(categoryFilterList, rawCategory);
     });
   }
 
@@ -427,7 +505,7 @@ function initSearchWidget(widget) {
     const nextIndex = Number(item.getAttribute("data-result-index"));
     if (nextIndex === activeIndex) return;
     activeIndex = nextIndex;
-    setActiveResult(resultsContainer, activeIndex);
+    highlightResult(false);
   });
 
   document.addEventListener("keydown", (event) => {

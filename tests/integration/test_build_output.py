@@ -145,6 +145,33 @@ def test_blog_pagination_output(built_site: Path) -> None:
         assert soup.select_one("header.site-header")
 
 
+def test_disabled_pagination_arrows_are_not_links(built_site: Path) -> None:
+    pages = [built_site / "blog" / "index.html", *(built_site / "blog" / "page").rglob("index.html")]
+    arrows = [
+        arrow
+        for path in pages
+        if path.is_file()
+        for arrow in BeautifulSoup(_read(path), "html.parser").select(".blog-pagination__arrow")
+    ]
+    if not arrows:
+        pytest.skip("blog has a single page")
+    disabled = [arrow for arrow in arrows if "is-disabled" in arrow.get("class", [])]
+    assert disabled, "first and last pages should have a disabled arrow"
+    for arrow in disabled:
+        assert not arrow.has_attr("href"), "a disabled arrow should not be a focusable link"
+        assert arrow.get("aria-disabled") == "true"
+
+
+def test_talk_thumbnails_are_not_duplicate_tab_stops(built_site: Path) -> None:
+    soup = BeautifulSoup(_read(built_site / "talks" / "index.html"), "html.parser")
+    thumbs = soup.select(".video-card__thumb-link")
+    assert thumbs, "expected at least one talk thumbnail"
+    for link in thumbs:
+        assert link.get("tabindex") == "-1"
+        assert link.get("aria-hidden") == "true"
+        assert link.img.get("alt") == ""
+
+
 def test_social_cards_are_generated(built_site: Path) -> None:
     social_dir = built_site / "assets" / "social"
     assert social_dir.is_dir(), "assets/social/ directory should exist after build"
