@@ -24,7 +24,11 @@ function initBlogArchive() {
     openBtn.setAttribute("aria-label", "Open blog archive");
     openBtn.setAttribute("title", "Open blog archive");
     openBtn.setAttribute("aria-controls", sidebar.id);
-    openBtn.innerHTML = ARCHIVE_ICONS["chevron-right"];
+    // Both icons stay in the button and only their visibility flips. Swapping
+    // innerHTML removed the <svg> under the finger mid-tap, so the outside-click
+    // handler thought the tap was outside and closed the archive straight away.
+    openBtn.innerHTML = ARCHIVE_ICONS["chevron-right"] + ARCHIVE_ICONS["chevron-left"];
+    const [iconClosed, iconOpen] = openBtn.querySelectorAll("svg");
     sidebar.before(openBtn);
 
     const expandActiveBranch = () => {
@@ -39,7 +43,8 @@ function initBlogArchive() {
     const setOpen = (open) => {
       layout.classList.toggle("is-archive-open", open);
       openBtn.classList.toggle("is-open", open);
-      openBtn.innerHTML = ARCHIVE_ICONS[open ? "chevron-left" : "chevron-right"];
+      iconClosed.style.display = open ? "none" : "";
+      iconOpen.style.display = open ? "" : "none";
       openBtn.setAttribute("aria-label", open ? "Close blog archive" : "Open blog archive");
       openBtn.setAttribute("title", open ? "Close blog archive" : "Open blog archive");
       toggle.setAttribute("aria-expanded", String(open));
@@ -85,7 +90,10 @@ function initBlogArchive() {
     // The archive floats over the page, so a click outside closes it.
     document.addEventListener("click", (e) => {
       if (!layout.classList.contains("is-archive-open")) return;
-      if (sidebar.contains(e.target) || openBtn.contains(e.target)) return;
+      // composedPath() is captured at dispatch, so it still works if a handler
+      // changed the DOM under the tap.
+      const path = e.composedPath();
+      if (path.includes(sidebar) || path.includes(openBtn)) return;
       setOpen(false);
     });
 
@@ -96,9 +104,13 @@ function initBlogArchive() {
     });
 
     // Tabbing out of the floating archive closes it, like clicking outside does.
+    // Safari doesn't focus a clicked link; it moves focus to the nearest focusable
+    // ancestor (<main tabindex="-1">). Tab never lands on an ancestor, so ignore
+    // that case, otherwise the archive closes on mousedown and the click is lost.
     sidebar.addEventListener("focusout", (e) => {
       if (!layout.classList.contains("is-archive-open")) return;
-      if (!e.relatedTarget || sidebar.contains(e.relatedTarget)) return;
+      const next = e.relatedTarget;
+      if (!next || sidebar.contains(next) || next.contains(sidebar)) return;
       setOpen(false);
     });
   });

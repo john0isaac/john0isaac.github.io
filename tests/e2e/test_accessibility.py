@@ -130,8 +130,10 @@ def test_blog_archive_moves_focus_in_and_back_out(live_server: str, page: Page) 
     expect(open_button).to_have_attribute("aria-expanded", "false")
 
 
-def test_code_copy_is_announced(live_server: str, page: Page) -> None:
-    page.context.grant_permissions(["clipboard-read", "clipboard-write"], origin=live_server)
+def test_code_copy_is_announced(live_server: str, page: Page, browser_name: str) -> None:
+    # Chromium needs clipboard permission granted; WebKit allows writes from a click.
+    if browser_name == "chromium":
+        page.context.grant_permissions(["clipboard-read", "clipboard-write"], origin=live_server)
     page.goto(f"{live_server}/blog/zsh-config/")
     page.locator(".code-copy-btn").first.click()
     expect(page.locator("[data-a11y-status]")).to_have_text("Code copied to clipboard")

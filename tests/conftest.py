@@ -87,8 +87,11 @@ def live_server(built_site: Path) -> Iterator[str]:
     """Serve the built site on a background thread and yield its base URL."""
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(built_site))
 
-    class QuietServer(socketserver.TCPServer):
+    # Threaded: WebKit opens idle speculative connections, which would block a
+    # single-threaded server and stall every later test.
+    class QuietServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
         allow_reuse_address = True
+        daemon_threads = True
 
         def handle_error(self, request, client_address):  # noqa: D401, ANN001
             """Silence noisy disconnect tracebacks during teardown."""

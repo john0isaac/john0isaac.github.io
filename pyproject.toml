@@ -149,10 +149,14 @@ skip_install = true
 commands = [["pytest", {replace = "posargs", default = ["--cov", "--cov-report=term-missing"], extend = true}]]
 
 [tool.tox.env.e2e]
-description = "run end-to-end browser tests with Playwright"
+description = "run end-to-end browser tests with Playwright on Chromium and WebKit (Safari's engine)"
 dependency_groups = ["e2e"]
 skip_install = true
-commands = [["pytest", "tests/e2e", {replace = "posargs", default = [], extend = true}]]
+commands = [
+    # No-op once the browsers are downloaded; keeps a fresh checkout from failing.
+    ["playwright", "install", "chromium", "webkit"],
+    ["pytest", "tests/e2e", "--browser", "chromium", "--browser", "webkit", {replace = "posargs", default = [], extend = true}],
+]
 
 [tool.tox.env.update-actions]
 description = "update GitHub Actions pins"

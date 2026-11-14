@@ -111,7 +111,7 @@ function matchesSelectedFilters(record, selectedTags, selectedCategories) {
 function renderFilterList(container, tags, selectedTags) {
   if (!container) return;
 
-  container.innerHTML = tags
+  const html = tags
     .map(({ tag, count }) => {
       const normalizedTag = normalize(tag);
       const isActive = selectedTags.has(normalizedTag);
@@ -128,7 +128,14 @@ function renderFilterList(container, tags, selectedTags) {
       `;
     })
     .join("");
+
+  // Rebuilding identical buttons would replace the one under a tap or focus.
+  if (filterListHtml.get(container) === html) return;
+  filterListHtml.set(container, html);
+  container.innerHTML = html;
 }
+
+const filterListHtml = new WeakMap();
 
 function resultId(index) {
   return `site-search-result-${index}`;
@@ -225,6 +232,7 @@ function initSearchWidget(widget) {
   let filtersCollapsed = false;
   let inertElements = [];
   let statusTimer = 0;
+  let renderedKey = null;
   const selectedTags = new Set();
   const selectedCategories = new Set();
 
@@ -303,6 +311,7 @@ function initSearchWidget(widget) {
         countNode.textContent = "";
       }
       resultsContainer.innerHTML = "";
+      renderedKey = null;
       activeIndex = -1;
       syncCombobox();
       announce("");
@@ -315,6 +324,21 @@ function initSearchWidget(widget) {
     if (activeIndex < 0 && currentResults.length) {
       activeIndex = 0;
     }
+
+    // update() also runs on focus, on open and when the index loads. If the
+    // results haven't changed, only move the highlight: rebuilding the list would
+    // replace the element under a tap and swallow it.
+    const key = JSON.stringify([
+      query,
+      [...selectedTags].sort(),
+      [...selectedCategories].sort(),
+      currentResults.map((record) => record.url),
+    ]);
+    if (key === renderedKey) {
+      highlightResult(false);
+      return;
+    }
+    renderedKey = key;
 
     const filterCount = selectedTags.size + selectedCategories.size;
     const countText = query
@@ -385,6 +409,7 @@ function initSearchWidget(widget) {
       countNode.textContent = "";
     }
     resultsContainer.innerHTML = "";
+    renderedKey = null;
     if (hintNode) hintNode.hidden = false;
     syncCombobox();
     window.clearTimeout(statusTimer);

@@ -870,8 +870,12 @@ html[data-theme="dark"] .blog-pagination__page.is-current {
 
 .blog-archive__months {
   margin: 0.1rem 0 0.3rem 0.85rem;
-  padding-left: 0.4rem;
-  border-left: 2px dashed var(--sk-ink-soft);
+  padding-left: calc(0.4rem + 2px);
+  /* Drawn as a background: Safari/WebKit often paints only the first dash of a
+   * dashed border here, which showed up as a stray dot under the year. */
+  border-left: 0;
+  background: repeating-linear-gradient(to bottom, var(--sk-ink-soft) 0 6px, transparent 6px 12px) left top / 2px 100%
+    no-repeat;
 }
 
 .blog-archive__count {
@@ -959,6 +963,16 @@ html[data-theme="dark"] .blog-archive__post-link.is-active {
     top: calc(var(--header-height) + 3.25rem);
     left: max(0.75rem, calc((100vw - var(--shell-max-width)) / 2 - 4rem));
     max-height: calc(100dvh - var(--header-height) - 4.75rem);
+  }
+}
+
+/* Narrower screens: the open button sits bottom-left, so the archive opens at
+ * the bottom next to it (still sliding in from the left) instead of under the header. */
+@media (max-width: 1259.98px) {
+  .blog-archive {
+    top: auto;
+    bottom: 1rem;
+    max-height: min(70dvh, calc(100dvh - var(--header-height) - 2rem));
   }
 }
 
